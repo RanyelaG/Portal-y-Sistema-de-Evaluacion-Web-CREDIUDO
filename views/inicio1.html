@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+
+	<meta charset="utf-8">
+
+	<title>Iniciar Sesion</title>
+    
+    <!-- Main Style -->
+  
+    <link rel="stylesheet"  media="screen" href="assets/css/estiloinicio1.css">
+     
+    <!-- Extras -->
+    <!-- -->
+   
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+
+<body> 
+
+
+    <div id="login-form">
+
+        <h1>INICIAR SESION</h1>
+
+        <center><fieldset>
+
+            <form action="/inicio1/ingresar" method="post">
+
+                <input type="text" name="cedula" required value="Cedula" onBlur="if(this.value=='')this.value='Cedula'" onFocus="if(this.value=='Cedula')this.value='' "> <!-- JS because of IE support; better: placeholder="Email" -->
+
+                <input type="password" name="password" required value="Password" onBlur="if(this.value=='')this.value='Password'" onFocus="if(this.value=='Password')this.value='' "> <!-- JS because of IE support; better: placeholder="Password" -->
+
+                <input type="submit" value="Login" onclick="javascript:mywindow.close();">
+
+
+
+            </form>
+
+             <footer class="clearfix">
+
+                    <p><span  class="info">?</span><a style="margin-right: 50px;" href="reccon.html">Olvido Contraseña</a></p>
+                    
+                <p><span  class="info">?</span><a style="margin-right: 138px;" href="reccon.html">Nuevo Registro</a></p>                    
+
+                </footer>
+
+        </fieldset></center>
+
+    </div> 
+
+
+    
+</body>
+</html>
