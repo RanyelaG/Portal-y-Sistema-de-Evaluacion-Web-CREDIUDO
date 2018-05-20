@@ -8,7 +8,7 @@ router.use(function(req, res, next) {
     next();
   }else {
     console.log('no estas logueado')
-    res.render('index-web-principal-definitivo', {session: req.session})
+    res.render('./index-admin', {session: req.session})
   }
 })
 
@@ -22,15 +22,7 @@ router.get('/', function(req,res){
 
 /*===================================INSTRUMENTOS=========================================*/
     /*===============ADD INSTRUMENTO=======================*/
-    router.get('/add',function(req, res ){
-      models.Category.findAll({})
-      .then(function(Category) {
-        models.T_instrument.findAll({})
-        .then(function(T_instrument){
-          res.render('instrumento/create',{dataCategory:Category, dataT_instrument:T_instrument})
-        })
-      })
-    })
+    
 
     router.post('/add', function(req, res){
       models.Instrument.create({
