@@ -12,18 +12,17 @@ router.use(function(req, res, next) {
   }
 })
 
+//PRIMERA RUTA UNA VEZ LOGUEADO
 router.get('/', function(req,res){
   models.Instrument.findAll({
   })
   .then(function(Instrument){
-    res.render('instrumento/index_3', {dataInstrument:Instrument})
+    res.render('coor_evaluacion/instrumento/index', {dataInstrument:Instrument})
   });
 });
 
 /*===================================INSTRUMENTOS=========================================*/
     /*===============ADD INSTRUMENTO=======================*/
-    
-
     router.post('/add', function(req, res){
       models.Instrument.create({
         name: req.body.name,
@@ -70,6 +69,35 @@ router.get('/', function(req,res){
     /*===============FIN DELETE INSTRUMENTO=====================*/
 /*===================================FIN INSTRUMENTOS=========================================*/
 
+/*=========ADD FACTOR A INSTRUMENTO==============*/
+  //ESTE CONTROLADOR MUESTRA TODOS LOS FACTORES EXISTENTES
+  router.get('/:id/add-factor', (req,res) => {
+    models.Instrument.findOne({
+      where: { id: req.params.id }
+    }).then(Instrument => {
+      models.Factor.findAll({
+        where: { instrumentId: req.params.id },
+        include: [ models.Instrument ],
+        attribute: ['id', 'nameFactor', 'instrumentId']
+      }).then(Factor => {
+        //res.status(201).send(Factor)
+        res.render('coor_evaluacion/factor/index', {dataFactor:Factor, dataInstrument:Instrument})
+      })  
+    })
+  });
+
+  //ESTE CONTROLADOR AGREGA NUEVOS FACTORES
+  router.post('/:id/add-factor', (req,res) => {
+    models.Factor.create({
+      nameFactor: req.body.nameFactor,
+      instrumentId: req.params.id
+    }).then(Factor => {
+      res.redirect('/coord_eval/instrumento/'+req.params.id+'/add-factor')
+      //console.log(req.params.id)
+    })
+  })
+/*=========FIN ADD FACTOR A INSTRUMENTO==============*/
+
 /*====================================DETALLES============================================*/
     /*==============LISTAR DETALLES DE EXAMEN ESPECIFICO===========*/
       router.get('/:id_inst/add-factor/:id', (req,res) => {
@@ -83,12 +111,13 @@ router.get('/', function(req,res){
                 where: { id: req.params.id_inst }
               }).then(Instrument => {
                 //res.status(201).send(Instrument)  
-                res.render('instrumento/detalles_3', { dataItem:Item, dataFactor:Factor, dataInstrument:Instrument })
+                res.render('coor_evaluacion/instrumento/detalles', { dataItem:Item, dataFactor:Factor, dataInstrument:Instrument })
               })    
             })
           })
         })
 
+      //AGREGAR ITEM A UN FACTOR ESPECIFICO DE UN INSTRUMENTO ESPECIFICO
       router.post('/:id_inst/add-factor/:id/add-item', (req,res) => {
         models.Item.create({
           name: req.body.name,
@@ -113,62 +142,74 @@ router.get('/', function(req,res){
             res.redirect('/coord_eval/instrumento/'+ req.params.id);
           })
       })
+
     /*=======FIN CREAR PREGUNTA PARA EXAMEN ESPECIFICO=============*/
 
-    /*=========ADD FACTOR A INSTRUMENTO==============*/
-      router.get('/:id/add-factor', (req,res) => {
-        models.Instrument.findOne({
-          where: { id: req.params.id }
-        }).then(Instrument => {
-          models.Factor.findAll({
-            where: { instrumentId: req.params.id }
-          }).then(Factor => {
-            //res.status(201).send(Factor)
-            res.render('factor/index_3', {dataFactor:Factor, dataInstrument:Instrument})
-          })
-            
-        })
-      });
-
-      router.post('/:id/add-factor', (req,res) => {
-        models.Factor.create({
-          nameFactor: req.body.nameFactor,
-          instrumentId: req.params.id
-        }).then(Factor => {
-          res.redirect('/coord_eval/instrumento/'+req.params.id+'/add-factor')
-          //console.log(req.params.id)
-        })
-      })
-    /*=========FIN ADD FACTOR A INSTRUMENTO==============*/
+    
 
      /* ===================EDITAR ITEM ESPECIFICO================== */
-      router.post('/:id/edit-item', (req, res) => {
+      router.post('/:id_inst/add-factor/:id/edit-item', (req, res) => {
         models.Item.update({
-          name: req.body.name
+          name: req.body.name,
+          factorId: req.params.id,
+          instrumentId: req.params.id_inst
         },{
           where: {
             id: req.body.id
           }
         })
         .then(()=>{
-          res.redirect('/coord_eval/instrumento/'+req.params.id)
+          res.redirect('/coord_eval/instrumento/'+ req.params.id_inst +'/add-factor/'+ req.params.id)
+          //res.redirect('/coord_eval/instrumento/'+req.params.id)
           //res.status(201).send(Item)
         })
       })
      /* ===============FIN EDITAR ITEM ESPECIFICO============== */
 
      /* =======================ELIMINAR ITEM(PREGUNTA)===================*/ 
-      router.get('/:id_i/item/delete/:id', (req, res) => {
+      router.get('/:id_inst/factor/:id_fact/item-delete/:id', (req, res) => {
         models.Item.destroy({
           where: {
             id: req.params.id
           }
         })
         .then(()=>{
-          res.redirect('/coord_eval/instrumento/'+req.params.id_i)
+          res.redirect('/coord_eval/instrumento/'+req.params.id_inst+'/add-factor/'+req.params.id_fact)
         })
       })
       /*===================FIN ELIMINAR ITEM(PREGUNTA)=================== */
+
+    /*==========DELETE FACTOR DE UN INSTRUMENTO===================*/
+    router.get('/:id_inst/factor-delete/:id', (req, res) => {
+      models.Factor.destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(()=>{
+        res.redirect('/coord_eval/instrumento/'+req.params.id_inst+'/add-factor')
+      })
+    })
+    /*==========FIN DELETE FACTOR DE UN INSTRUMENTO===================*/
+
+    /*==========EDITAR FACTOR=============================*/
+    router.post('/:id/factor-edit', (req, res) => {
+      models.Factor.update({
+        nameFactor: req.body.nameFactor
+      },{
+        where: {
+          id: req.body.id
+        }
+      })
+      .then(()=>{
+        res.redirect('/coord_eval/instrumento/'+req.params.id+'/add-factor')
+      })
+      .catch((data)=>{
+        res.redirect('/coord_eval/instrumento')
+      })
+    })
+    /*==========FIN EDITAR FACTOR=============================*/
+
 /*====================================FIN DETALLES============================================*/
 
 module.exports = router;
