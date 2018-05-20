@@ -210,6 +210,39 @@ router.get('/', function(req,res){
     })
     /*==========FIN EDITAR FACTOR=============================*/
 
+    /*============================VISUALIZAR INSTRUMENTO================*/
+      router.get('/ver', (req,res) => {
+        models.Instrument.findAll({
+
+        }).then(Instrument => {
+          res.render('coor_evaluacion/instrumento/ver_todos', { Instruments:Instrument })  
+        })
+      })
+
+      router.post('/por_category', (req,res) => {
+        if ( req.body.buscar == 'todos' ) {
+          models.Instrument.findAll({
+
+          }).then(Instrument => {
+            res.redirect('/coord_eval/instrumento/ver')
+            //res.render('coor_evaluacion/instrumento/ver_todos', { Instruments:Instrument })  
+          })
+        } else if( req.body.buscar == 'pers_admin' ){
+          models.Instrument.findAll({
+            where: { category: req.body.buscar }
+          }).then(Instrument => {
+            res.render('coor_evaluacion/instrumento/ver_admin', { Instruments:Instrument })
+          })
+        } else if( req.body.buscar == 'cent_inves' ){
+          models.Instrument.findAll({
+            where: { category: req.body.buscar }
+          }).then(Instrument => {
+            res.render('coor_evaluacion/instrumento/ver_centros', { Instruments:Instrument })
+          })
+        }
+      })
+    /*============================VISUALIZAR INSTRUMENTO================*/
+
 /*====================================FIN DETALLES============================================*/
 
 module.exports = router;

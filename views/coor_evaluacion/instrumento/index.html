@@ -44,7 +44,7 @@
                 <div class="row" style="width: 100%">
                   <div class="container">
                     <center>
-                      <img src="../assets/img/testimonial/img32.jpg" alt="" style="width: 100%;"> 
+                      <img src="../assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
                     </center>
                     <!-- Search Ends -->                  
                   </div> 
@@ -72,36 +72,25 @@
             <center>
               <!--===============FORMULARIO PARA ADD INSTRUMENTO===========-->
               <form class="form-inline" method="POST" action="/coord_eval/Instrumento/add">
-                <label>Nombre: </label>
-                <input type="text" name="name" class="form-control">
+                <input style="width: 35%;" type="text" name="name" class="form-control" placeholder="Nombre del Instrumento">
 
-                <label for="category">Categoria </label>
-                <select name="category" class="form-control" required>
+                <select style="width: 25%;" name="category" class="form-control" required>
                   <option value="cent_inves">Centro de Investigación</option>
                   <option value="pers_admin">Personal Administrativo</option>
                 </select>
 
-                <label>Tipo Evaluacion: </label>
-                <select name="t_instrument" class="form-control">
+              
+                <select  style="width: 25%;"  name="t_instrument" class="form-control">
                   <option value="aut_eval">Auto-Evaluación</option>
                   <option value="coo_eval">Co-Evaluación</option>
-                  <option value="eval_sub">Evaluación-Subordinado</option>
-                  <option value="eval_jef">Evaluación-Jefe</option> 
+                  <option value="eval_sub">Evaluación Subordinado-Jefe</option>
+                  <option value="eval_jef">Evaluación Jefe-Subordinado</option> 
                 </select>
 
-                <button class="btn btn-primary">Guardar</button>
-                <!--
-                <div class="form-group">  
-                  <button style="margin-top: 10px; border-radius: 2px;background:#00aad4ff;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addInstrument">
-                    Crear Instrumento de Evaluación
-                  </button>
-                </div>
-                
-                <div class="form-group">
-                  <a href="/coord_eval/factor" class="btn btn-primary" style="margin-top: 10px;border-radius: 2px;">  Crear Factor
+                <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px;" >
+                  <a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;">
                   </a>
-                </div>
-                -->
+                </button>
               </form>
               <!--=================FIN FORMULARIO ADD INSTRUMENTO============-->
             </center>

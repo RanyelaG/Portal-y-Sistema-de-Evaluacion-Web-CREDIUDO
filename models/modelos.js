@@ -208,7 +208,71 @@ codigo: {type: Sequelize.INTEGER, primaryKey: true},
 
 module.exports.Eventos_l = Eventos_l;
 
-//relaciones modelos Monasterio
+
+
+	Actividad.belongsToMany(Personal, {foreignKey: 'codigo_actividad', through: 'actividad_personal'});
+    Personal.belongsToMany(Actividad, {foreignKey: 'cedula_personal', through: 'actividad_personal'});
+           
+
+            //actividad-encuentros_nacionales
+
+    Actividad.belongsToMany(Enc_nace, {foreignKey: 'codigo_actividad', through: 'actividad_encuentros'});
+    Enc_nace.belongsToMany(Actividad, {foreignKey: 'codigo_enc', through: 'actividad_encuentros'});
+
+
+
+//Universidad.belongsToMany(Enc_nace, {through: 'Univ_enc'});
+//Enc_nace.belongsToMany(Universidad, {through: 'Univ_enc'});
+
+/*=======================================DE LA CRUZ============================================*/
+	/*==========MODELOS ANDRES===========================*/
+		const Instrument = sequelize.define('instruments', {
+		  name: Sequelize.STRING,
+		  category: Sequelize.STRING,
+		  t_instrument: Sequelize.STRING
+		});
+
+		const Factor = sequelize.define('factors', {
+		  nameFactor: Sequelize.STRING
+		});
+
+		const Item = sequelize.define('items', {
+		  name: Sequelize.STRING
+		});
+
+		var Evento = sequelize.define('Eventos', {
+		  nombre: Sequelize.STRING,
+		  direccion: Sequelize.STRING,
+		  dirigido_a: Sequelize.STRING,
+		  fecha: Sequelize.DATE,
+		  nucleo: Sequelize.ENUM('anz', 'bol', 'mon', 'nuv_esp', 'suc', 'rect', 'anac', 'carup'),
+		  capacidad: Sequelize.INTEGER,
+		  tipo: Sequelize.ENUM('nacional', 'charla', 'taller', 'conferencia', 'curso'),
+		  descripcion: Sequelize.STRING,
+		});
+
+		const Evaluacion = sequelize.define('Evaluacion', {
+		  tipo: Sequelize.ENUM('administrativos', 'centros'),
+		  name: Sequelize.STRING,
+		  enfoque: Sequelize.ENUM('Auto-Evaluacion', 'Jefe-Subordinado', 'Subordinado-Jefe', 'Co-Evaluación'),
+		  cantidad: Sequelize.INTEGER,
+		  inicio: Sequelize.DATE,
+		  fin: Sequelize.DATE
+		});
+	/*==========FIN MODELOS ANDRES========================*/
+
+	/*===================RELACIONES ANDRES========================*/
+		Factor.hasMany(Item, { onDelete:'cascade' }) //un factor tienen muchos items
+		Item.belongsTo(Factor) //un item pertenece a un factor
+
+		Instrument.hasMany(Item, { onDelete:'cascade' }) //un instrumento tiene muchos items
+		Item.belongsTo(Instrument) //un item pertenece a un instrumento
+
+		Instrument.hasMany(Factor, { onDelete:'cascade' }) //un instrumento tiene muchos factores
+		Factor.belongsTo(Instrument) //un factor pertenece a un instrumento
+	/*===================RELACIONES ANDRES========================*/
+
+	//relaciones modelos Monasterio
 	Unidad.hasMany(Evaluacion, {foreignKey: 'codigo_unidad'}); // relacion uno a muchoo unidad informe clave foranea esta en informe
 	Evaluacion.belongsTo(Unidad, { foreignKey: 'codigo_unidad', onDelete: 'CASCADE', });
 
@@ -253,59 +317,6 @@ module.exports.Eventos_l = Eventos_l;
 
 	// relacion muchos a muchos
 			//actividad-personal 
-
-	Actividad.belongsToMany(Personal, {foreignKey: 'codigo_actividad', through: 'actividad_personal'});
-    Personal.belongsToMany(Actividad, {foreignKey: 'cedula_personal', through: 'actividad_personal'});
-           
-
-            //actividad-encuentros_nacionales
-
-    Actividad.belongsToMany(Enc_nace, {foreignKey: 'codigo_actividad', through: 'actividad_encuentros'});
-    Enc_nace.belongsToMany(Actividad, {foreignKey: 'codigo_enc', through: 'actividad_encuentros'});
-
-
-
-//Universidad.belongsToMany(Enc_nace, {through: 'Univ_enc'});
-//Enc_nace.belongsToMany(Universidad, {through: 'Univ_enc'});
-
-/*=======================================DE LA CRUZ============================================*/
-	/*==========MODELOS ANDRES===========================*/
-		const Instrument = sequelize.define('instruments', {
-		  name: Sequelize.STRING,
-		  category: Sequelize.STRING,
-		  t_instrument: Sequelize.STRING
-		});
-
-		const Factor = sequelize.define('factors', {
-		  nameFactor: Sequelize.STRING
-		});
-
-		const Item = sequelize.define('items', {
-		  name: Sequelize.STRING
-		});
-
-		var Evento = sequelize.define('Eventos', {
-		  nombre: Sequelize.STRING,
-		  direccion: Sequelize.STRING,
-		  dirigido_a: Sequelize.STRING,
-		  fecha: Sequelize.DATE,
-		  nucleo: Sequelize.ENUM('anz', 'bol', 'mon', 'nuv_esp', 'suc', 'rect', 'anac', 'carup'),
-		  capacidad: Sequelize.INTEGER,
-		  tipo: Sequelize.ENUM('nacional', 'charla', 'taller', 'conferencia', 'curso'),
-		  descripcion: Sequelize.STRING,
-		});
-	/*==========FIN MODELOS ANDRES========================*/
-
-	/*===================RELACIONES ANDRES========================*/
-		Factor.hasMany(Item, { onDelete:'cascade' }) //un factor tienen muchos items
-		Item.belongsTo(Factor) //un item pertenece a un factor
-
-		Instrument.hasMany(Item, { onDelete:'cascade' }) //un instrumento tiene muchos items
-		Item.belongsTo(Instrument) //un item pertenece a un instrumento
-
-		Instrument.hasMany(Factor, { onDelete:'cascade' }) //un instrumento tiene muchos factores
-		Factor.belongsTo(Instrument) //un factor pertenece a un instrumento
-	/*===================RELACIONES ANDRES========================*/
 
 	module.exports.Instrument = Instrument;
 	module.exports.Factor = Factor;
