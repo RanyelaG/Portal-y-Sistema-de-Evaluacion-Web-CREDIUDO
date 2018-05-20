@@ -254,6 +254,9 @@ Item.belongsTo(Factor)
 Instrument.hasMany(Item)
 Item.belongsTo(Instrument)
 
+Instrument.hasMany(Factor)
+Factor.belongsTo(Instrument)
+
 
 /*===========FIN ASOCIASIONES O RELACIONES ENTRE MODELOS=============*/
 
@@ -284,11 +287,12 @@ console.log('modelos creados')
 			//relacion Unidad.
 
 //relaciones modelos de andres
-Factor.hasMany(Item)
-Item.belongsTo(Factor)
 
-Instrument.hasMany(Item)
-Item.belongsTo(Instrument)
+//Instrument.hasMany(Factor, {foreignKey: 'codigo_Instrument'})
+//Factor.belongsTo(Instrument, {foreignKey: 'codigo_Instrument'})
+
+
+
 
 //relaciones modelos Monasterio
 	Unidad.hasMany(Evaluacion, {foreignKey: 'codigo_unidad'}); // relacion uno a muchoo unidad informe clave foranea esta en informe

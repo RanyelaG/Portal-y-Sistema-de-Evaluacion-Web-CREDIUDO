@@ -20,7 +20,7 @@
 
      <link rel="stylesheet" media="screen" href="assets/css/info.css">
      <link rel="stylesheet" media="screen" href="assets/css/eva.css">
-     
+     <link rel="stylesheet" media="screen" href="../assets/css/login.css">
 
 
       
@@ -45,98 +45,7 @@
     <header id="header-wrap">
       <section id="header">                                                                           <!--SECCIÓN 1-->
         <!-- Navbar Starts -->
-        <nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-          <div class="container">
-
-            <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu'
-                    data-toggle='collapse' type='button'>☰
-            </button>
-
-            <!-- Brand -->
-            <a class="navbar-brand" href="index.html">
-              <img src=" assets/img/crediudo1.png" alt="" style="margin-top:-3px;">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-right" id="main-menu">
-              <!-- Navbar Starts -->
-              <ul class="nav nav-inline">
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link active" href="/" role="button" aria-haspopup="true" aria-expanded="false">Inicio</a>                  
-                </li> 
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    CREDIUDO
-                  </a>
-                  <div class="dropdown-menu">                      
-                    <a class="dropdown-item" href="/informacion">Creacion,Mision y Proposito</a>
-                    <a class="dropdown-item" href="/objetivo">Objetivos</a>
-                    <a class="dropdown-item" href="/funcion">Funciones</a>
-                    <a class="dropdown-item" href="/sub-comi">Sub Comisiones</a>
-                    <a class="dropdown-item" href="/etapas">Etapas</a>
-                    <a class="dropdown-item" href="/reglamento">Reglamentos</a>
-                    <a class="dropdown-item" href="/noti-crediudo">Noticias</a>
-                  </div>
-                </li> 
-
-
-                <!-- - - - - - BOLETINES INFORMATIVOS  - - - - - - -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-                     href="/boletines" role="button" aria-haspopup="true" 
-                     aria-expanded="false">Boletines Informativos 
-                  </a>
-                </li>
-
-
-                <!-- - - - - EVALUACION EN LOS NUCLEOS - - - - - - -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-                     href="#" role="button" aria-haspopup="true" 
-                     aria-expanded="false">Evaluacion en los Nucleos
-                  </a> 
-                  <div class="dropdown-menu">                      
-                    <a class="dropdown-item" href="/eva-sucre">Sucre</a>
-                    <a class="dropdown-item" href="/eva-nva">Nueva Esparta</a>
-                    <a class="dropdown-item" href="/eva-mona">Monagas</a>
-                    <a class="dropdown-item" href="/eva-boli">Bolivar</a>
-                    <a class="dropdown-item" href="/eva-anzo">Anzoategui</a>
-                  </div>  
-                </li>
-
-                <!-- - - - -    INFORME DE GESTION - - -  - - - - - -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-                     href="/info-crediudo" role="button" aria-haspopup="true" 
-                     aria-expanded="false">Informes de Gestion
-                  </a> 
-                </li> 
-
-               <% if(session.hasOwnProperty('cedula')){ %>
-                    <li class="nav-item dropdown">
-                    <a>
-                    <span  class="fa fa-user" style="color: green;font-size:24px;"></span>
-                    </a>
-                    <div class="dropdown-menu" style="width: 20%;">
-                      <a class="dropdown-item" href="">Mi Cuenta</a>
-                      <a class="dropdown-item" href="">Actualizar Datos</a>
-                      <a class="dropdown-item" href="/cerrar/cerrar">Cerrar Sesion</a>
-                    </div>
-                </li> 
-                <%} else{%>
-                <li class="nav-item dropdown">
-                <a data-toggle="modal" data-target="#login-modal" >
-                <span  class="fa fa-user" style="color: black;font-size:24px;"></span>
-                </a>
-                </li> 
-                <% } %>                    
-              </ul>  
-            </div>
- 
-          </div>
-        </nav><!-- Navbar Ends -->
-
-
+        <%- include('../partials/web_principal/navbar.html')%>
    <!--seccion donde va la informacion de la pagina-->
 <div class="container">
   <div class="row" style="margin-top: 40px;">

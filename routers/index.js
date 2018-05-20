@@ -29,18 +29,6 @@ router.get('/', function(req, res){
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 router.get('/informacion', function(req, res){
 	models.Unidad.findOne({where:{codigo: '12'}})
 	.then(function(Unidad){
@@ -83,27 +71,15 @@ for(let i = 0; i < Sub_comision.length; i ++){
 })
 
 router.get('/etapas', function(req, res){ res.render('./informacion_crediudo/etapas-crediudo', {session: req.session}) })
-
-
 router.get('/boletines', function(req, res){ res.render('./informacion_crediudo/boletines-informativos', {session: req.session}) })
-
 router.get('/detalle', function(req, res){ res.render('./informacion_crediudo/detalle-noticias', {session: req.session}) })
-
 router.get('/eva-anzo', function(req, res){ res.render('./informacion_crediudo/eva-anzo', {session: req.session}) })
-
 router.get('/eva-boli', function(req, res){ res.render('./informacion_crediudo/eva-boli', {session: req.session}) })
-
 router.get('/eva-mona', function(req, res){ res.render('./informacion_crediudo/eva-mona',  {session: req.session}) })
-
 router.get('/eva-nva', function(req, res){ res.render('./informacion_crediudo/eva-nva',  {session: req.session}) })
-
 router.get('/eva-sucre', function(req, res){ res.render('./informacion_crediudo/eva-sucre',  {session: req.session}) })
-
-
 router.get('/info-crediudo', function(req, res){ res.render('./informacion_crediudo/info-crediudo',  {session: req.session}) })
-
 router.get('/reglamento', function(req, res){ res.render('./informacion_crediudo/reglamentos-crediudo',  {session: req.session}) })
-
 router.get('/noti-crediudo', function(req, res){ res.render('./informacion_crediudo/noti-crediudo',  {session: req.session}) })
 
 

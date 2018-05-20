@@ -1,0 +1,250 @@
+<!-- DOCTYPE -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+   <head>
+          <meta charset="utf-8">
+       <!-- Viewport Meta Tag -->
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Actualizar Datos</title>
+       <!-- Bootstrap -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+       <!-- Main Style -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <!-- Responsive Style -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+          <link rel="stylesheet" type="text/css" href="/assets/css/actualizar-datos.css">
+        <!--Fonts-->
+          <link rel="stylesheet" media="screen" href="/assets/fonts/font-awesome/font-awesome.min.css">
+          <link rel="stylesheet" media="screen" href="/assets/fonts/simple-line-icons.css">    
+        <!-- Extras -->
+          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.carousel.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.theme.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/animate.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/normalize.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/settings.css">
+
+
+        <!-- Color CSS Styles  -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/colors/green.css" media="screen" />       
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!--<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+
+
+
+   </head>
+
+<body style="overflow-x: hidden;">
+  <header id="header-wrap">
+         <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
+           <section id="header">
+            <div class="container">
+              <div class="row">
+             <!-- Navbar Starts -->
+              <div id="free-promo" style="text-align: center; margin-top: 0px;">
+              <div class="row" style="width: 100%">
+              <div class="container">
+                  <center>
+                      <img src="/assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
+                   </center>
+                   <!-- Search Ends -->                  
+                
+              </div> 
+              </div>
+              </div>
+            </div>
+          </div>
+            </section>
+  
+     </header>
+
+</body>
+
+<!-- INTERFAZ---------------------------------------------------------------------------->
+   <body>
+     <!-- Header area wrapper starts -->
+
+<header id="header-wrap">
+         <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
+<section id="header">
+  <!--=================NAVBAR========================-->
+    <%- include('../partials/coordinador_planificacion/navbar-plani.html')%>
+  <!--=================FIN NAVBAR========================-->
+</section>
+</header>
+
+
+  <!-----------------------------------seccion de actualizacion de datos -->
+
+
+<div class="container" style="background:  #F1F3FA;margin-top: 50px;">
+    <div class="row profile">
+    <div class="col-md-3" style="margin-top: 20px;">
+      <div class="profile-sidebar">
+        <!-- SIDEBAR USERPIC -->
+        <div class="profile-userpic">
+          <center><img src="/assets/img/presidenta.png" class="img-responsive" alt=""></center>
+        </div>
+        <!-- END SIDEBAR USERPIC -->
+        <!-- SIDEBAR USER TITLE -->
+        <div class="profile-usertitle">
+          <div class="profile-usertitle-name">
+           <%=dataCargo.Personal.nombre%>
+          </div>
+          <div class="profile-usertitle-job">
+            <%=dataCargo.descripcion%>
+          </div>
+        </div>
+        <!-- END SIDEBAR USER TITLE -->
+     
+        <!-- END SIDEBAR BUTTONS -->
+        <!-- SIDEBAR MENU -->
+        <div class="profile-usermenu">
+          <ul class="nav">
+            <li class="active">
+              <a href="gestionar-eventos-coordinador-evaluacion.html">
+              <i class="fa fa-home" style="color: black;font-size:20px;margin-left: 10px;"></i>
+              Inicio </a>
+            </li>
+            <li>
+              <a href="actualizar-datos-coordinador-evaluacion.html">
+              <i class="fa fa-user" style="color: black;font-size:20px;margin-left: 10px;"></i>
+              Actualizacion de Datos </a>
+            </li>
+        
+        
+          </ul>
+        </div>
+        <!-- END MENU -->
+      </div>
+    </div>
+    <div class="col-md-9">
+          <form method="POST" action="/modificar_datos/edit">
+            <input type="hidden" name="cedula" value="<%=dataCargo.cedula_personal%>">
+            <div class="profile-content">
+
+                  <center><div class="form-group">
+                  <b><p  style=" color: black; ">Correo Electronico</p></b>
+                  <input  style="width:480px;" type="text" name="email" class="form-control" value="<%=dataCargo.Personal.email%>" autofocus>
+                
+                </div></center>
+
+                  <center>
+                    <div class="form-inline">
+                  <div class="form-group">
+                  <b><p style=" color: black; ">Telefono Movil</p></b>
+                 
+                  <input  type="text" name="tmovil" class="form-control" value="<%=dataCargo.Personal.tmovil%>">
+                  
+                  </div>
+                <div class="form-group">
+                <b><p style=" color: black;">Telefono de Habitacion</p></b>
+               
+                <input  type="text" name="thabitacion" class="form-control" value="<%=dataCargo.Personal.thabitacion%>">
+              
+                 </div>
+
+                  </div></center>
+
+       <br><center><div class="form-group">
+                <b><p for="nameInstrument" style=" color: black; ">Direccion</p></b>
+                <input  style="width:480px;" type="text" name="direccion" class="form-control" value="<%=dataCargo.Personal.direccion%>">
+                </div></center>
+
+                <center>
+                  <div class="form-inline">
+                  <div class="form-group">
+                  <b><p style=" color: black; ">Clave Actual</p></b>
+                 
+                  <input  type="text" name="password_act" placeholder="Ingrese su clave actual" class="form-control">
+                  
+                  </div>
+                <div class="form-group">
+                <b><p style=" color: black;">Cambiar Clave</p></b>
+               
+                <input  type="text" name="new_password" placeholder="Ingrese su nueva clave" class="form-control">
+              
+                 </div>
+
+                  </div></center>
+
+                <center><div  data-toggle="buttons" style="margin-top:20px;">
+              <!--<label class="btn btn-info float-right" style="border-radius: 2px;margin-top: 25px;" >
+               <input type="radio" name="options" id="option1" autocomplete="off" checked>Guardar
+               </label>-->
+               <button class="btn btn-primary">Modificar</button>
+              </div></center>
+
+       
+            </div>
+            </form>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+
+         <footer>
+
+      <div class="footer wow fadeIn">
+            <div id="free-promo" style="text-align: center; margin-top: 30px;">
+            <br>
+            <p>Av Gran Mariscal-Edificio Rectorado 
+            <br>Cumaná-Venezuela.
+            <br>Telefono. +58(0293) 400 01 01</p>
+            <div class="social-footer" style="margin-top: -10px;">
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-facebook icon-round" ></i></a>
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-twitter icon-round"></i></a>
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-google-plus icon-round"></i></a>
+                </div>
+                <br>           
+            </div>
+
+
+      </div>
+      
+    </footer>
+
+
+    <!-- Footer Section End-->
+
+                         
+
+
+    <div class="bottom"> <a href="#" class="settings"></a> </div>
+
+    <!-- -----------------------------------JavaScript & jQuery Plugins --------------------------------------------->
+    <!-- jQuery Load -->
+    <script src="/assets/js/jquery-min.js"></script>
+    <!-- Bootstrap JS -->
+    <!--<script src="assets/js/bootstrap.min.js"></script>-->
+    <!--Text Rotator-->
+    <script src="/assets/js/jquery.mixitup.js"></script>
+    <!--WOW Scroll Spy-->
+    <script src="/assets/js/wow.js"></script>
+    <!-- OWL Carousel -->
+    <script src="/assets/js/owl.carousel.js"></script>
+ 
+    <!-- WayPoint -->
+    <script src="/assets/js/waypoints.min.js"></script>
+    <!-- CounterUp -->
+    <script src="/assets/js/jquery.counterup.min.js"></script>
+    <!-- ScrollTop -->
+    <script src="/assets/js/scroll-top.js"></script>
+    <!-- Appear -->
+    <script src="/assets/js/jquery.appear.js"></script>
+    <script src="/assets/js/jquery.vide.js"></script>
+     <!-- All JS plugin Triggers -->
+    <script src="/assets/js/main.js"></script>
+    
+  </body>
+
+</html>

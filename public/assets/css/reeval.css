@@ -256,7 +256,7 @@ top:4px;
 }
 
 .formulario input[type="radio"]:checked + label {
-	padding: 5px 15px;
+	padding: 3px 3px;
 	background: #0074d9;
 	border-radius: 2px;
 	color:#fff;

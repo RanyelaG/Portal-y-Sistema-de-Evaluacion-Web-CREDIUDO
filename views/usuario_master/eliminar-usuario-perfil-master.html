@@ -71,59 +71,7 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="../../assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 50px;">
-                     <a style="color:black;" class="nav-link active" href="/buscar_usuario" role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR USUARIO
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 90px;">
-                     <a style="color:black;" class="nav-link active" href="/portal" role="button" aria-haspopup="true" aria-expanded="false">
-                       MODIFICAR PORTAL WEB 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left: 110px;">
-                    <a style="color:black;" class="nav-link active" href="visualizar-reportes-admin-usuario-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                    INSTRUMENTO DE EVALUACIÓN
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-120px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp USUARIO MASTER
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+<%- include('../partials/usuario_master/navbar-master.html')%>
 </section>
 </header>
 

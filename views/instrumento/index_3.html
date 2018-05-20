@@ -5,7 +5,7 @@
       <meta charset="utf-8">
       <!-- Viewport Meta Tag -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Coord. Eval | Instrumento de Eval.</title>
+      <title>Coordinador Eval | Instrumento de Evaluación</title>
       <!-- Bootstrap -->
       <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
       <!-- Main Style -->
@@ -63,62 +63,9 @@
       <header id="header-wrap">
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
       <section id="header">
-        <!-- Navbar Starts -->
-        <nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-          <div class="container">
-            <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-              ☰
-            </button>
-                
-            <!-- Brand -->
-            <a class="navbar-brand" href="index.html">
-              <img src="/assets/img/crediudo1.png" alt="">
-            </a>
-            
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 30px;">
-                     <a style="color:black;" class="nav-link active" href="Crear-usuario-perfil-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR EVENTOS
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 20px;">
-                     <a style="color:black;" class="nav-link active" href="/coord_eval/instrumento" role="button" aria-haspopup="true" aria-expanded="false">
-                       GESTIONAR INSTRUMENTOS DE EVALUACION 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left:20px;">
-                    <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                    VISUALIZAR INSTRUMENTOS
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-20px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp COOR EVALUACION
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+        <!--=================NAVBAR========================-->
+        <%- include('../partials/coordinador_evaluacion/navbar.html')%>
+        <!--=================FIN NAVBAR========================-->
 </section>
 </header>
 
@@ -126,80 +73,96 @@
         <br>
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
+            <center>
+              <form class="form-inline" method="POST" action="/coord_eval/Instrumento/add">
+                <label>Nombre: </label>
+                <input type="text" name="name" class="form-control">
 
-            <center><form class="form-inline" >
-                  <div class="form-group">
-                  
-                <button style="margin-top: 10px; border-radius: 2px;background:#00aad4ff;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addInstrument">
-                  Crear Instrumento de Evaluación
-                </button>
-   
-                </div>
-                 <div class="form-group">
-        
-                <a href="/coord_eval/factor" class="btn btn-primary" style="margin-top: 10px;border-radius: 2px;">Crear Factor</a>
- 
-                </div>
+                <label for="category">Categoria </label>
+                <select name="category" class="form-control" required>
+                  <option value="cent_inves">Centro de Investigación</option>
+                  <option value="pers_admin">Personal Administrativo</option>
+                </select>
 
-                </form></center>
-            
+                <label>Tipo Evaluacion: </label>
+                <select name="t_instrument" class="form-control">
+                  <option value="aut_eval">Auto-Evaluación</option>
+                  <option value="coo_eval">Co-Evaluación</option>
+                  <option value="eval_sub">Evaluación-Subordinado</option>
+                  <option value="eval_jef">Evaluación-Jefe</option> 
+                </select>
 
-            
-      <!--================MODAL ADD INSTRUMENTO=========================-->
-      <div class="modal fade" id="addInstrument" style="margin-top: 5%">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <center><h4 class="modal-title" style="margin-top: 20px;">Instrumento de Evaluación</h4></center>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <form method="POST" action="/coord_eval/Instrumento/add">
-              <div class="modal-body">           
-                <div class="form-group">
-                  <label for="name">Nombre del Instrumento</label>
-                  <input type="text" name="name" id="name" placeholder="Ingrese el Nombre o Titulo del Instrumento" class="form-control" autofocus>
-                </div>
-
-                <div class="form-group">
-                  <label for="category">Categoria </label>
-                  <select name="category" class="form-control" required>
-                    <option value="cent_inves">Centro de Investigación</option>
-                    <option value="pers_admin">Personal Administrativo</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="t_instrument">Tipo de Instrumento </label>
-                  <select name="t_instrument" class="form-control" required>
-                    <option value="aut_eval">Auto-Evaluación</option>
-                    <option value="coo_eval">Co-Evaluación</option>
-                    <option value="eval_sub">Evaluación-Subordinado</option>
-                    <option value="eval_jef">Evaluación-Jefe</option>          
-                  </select>
+                <button class="btn btn-primary">Guardar</button>
+                <!--
+                <div class="form-group">  
+                  <button style="margin-top: 10px; border-radius: 2px;background:#00aad4ff;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#addInstrument">
+                    Crear Instrumento de Evaluación
+                  </button>
                 </div>
                 
-                <!--
-                <div class="form-group" style="margin-top:-30px;">
-                  <label for="tInstrumentId">Escala de Ponderacion </label>
-                  <label  style="margin-top: 70px;" class="radio-inline"><input type="radio" name="optradio">1-5</label>
-                  <label style="margin-top: 70px;"  class="radio-inline"><input type="radio" name="optradio">1-10</label>
-                  <label style="margin-top: 70px;"  class="radio-inline"><input type="radio" name="optradio">1-20</label>
+                <div class="form-group">
+                  <a href="/coord_eval/factor" class="btn btn-primary" style="margin-top: 10px;border-radius: 2px;">  Crear Factor
+                  </a>
                 </div>
-                -->    
-              </div>  
-              <div class="modal-footer">
+                -->
+              </form>
+            </center>
+          
+            <!--================MODAL ADD INSTRUMENTO=========================-->
+            <div class="modal fade" id="addInstrument" style="margin-top: 5%">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <center><h4 class="modal-title" style="margin-top: 20px;">Instrumento de Evaluación</h4></center>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
 
-                <center><button type="submit" class="btn btn-primary" style="margin-top: 20px;background:#00aad4ff; border-radius: 2px;">Guardar</button></center>
-              </div>      
-            </form>
-          </div>
-        </div>
-      </div>
-      <!--===================FIN MODAL ADD INSTRUMENT====================-->
-      <br>
+                  <!-- Modal body -->
+                  <form method="POST" action="/coord_eval/Instrumento/add">
+                    <div class="modal-body">           
+                      <div class="form-group">
+                        <label for="name">Nombre del Instrumento</label>
+                        <input type="text" name="name" id="name" placeholder="Ingrese el Nombre o Titulo del Instrumento" class="form-control" autofocus>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="category">Categoria </label>
+                        <select name="category" class="form-control" required>
+                          <option value="cent_inves">Centro de Investigación</option>
+                          <option value="pers_admin">Personal Administrativo</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="t_instrument">Tipo de Instrumento </label>
+                        <select name="t_instrument" class="form-control" required>
+                          <option value="aut_eval">Auto-Evaluación</option>
+                          <option value="coo_eval">Co-Evaluación</option>
+                          <option value="eval_sub">Evaluación-Subordinado</option>
+                          <option value="eval_jef">Evaluación-Jefe</option>          
+                        </select>
+                      </div>
+                      
+                      <!--
+                      <div class="form-group" style="margin-top:-30px;">
+                        <label for="tInstrumentId">Escala de Ponderacion </label>
+                        <label  style="margin-top: 70px;" class="radio-inline"><input type="radio" name="optradio">1-5</label>
+                        <label style="margin-top: 70px;"  class="radio-inline"><input type="radio" name="optradio">1-10</label>
+                        <label style="margin-top: 70px;"  class="radio-inline"><input type="radio" name="optradio">1-20</label>
+                      </div>
+                      -->    
+                    </div>  
+                    <div class="modal-footer">
+
+                      <center><button type="submit" class="btn btn-primary" style="margin-top: 20px;background:#00aad4ff; border-radius: 2px;">Guardar</button></center>
+                    </div>      
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!--===================FIN MODAL ADD INSTRUMENT====================-->
+            <br>
 
 <div class="table-responsive">
   <!-- ===============TABLA DE INSTRUMENTOS EXISTENTES=============== -->
@@ -210,7 +173,7 @@
         <th scope="col"><center>Nombre</center></th>
         <th scope="col"><center>Categoria</center></th>
         <th scope="col"><center>Tipo</center></th>
-        <th scope="col"><center>Detalles</center></th>
+        <th scope="col"><center>Factor</center></th>
         <th scope="col"><center>Accion</center></th>
         <th scope="col"><center>Accion</center></th>
       </tr>
@@ -246,7 +209,7 @@
           </td>
             <td>
               <center>
-                <a href="/coord_eval/instrumento/<%= dataInstrument[i].id%>" class="fa fa-plus-circle" style="color:#00aad4ff;font-size:24px;"></a>
+                <a href="/coord_eval/instrumento/<%=dataInstrument[i].id%>/add-factor" class="fa fa-plus-circle" style="color:#00aad4ff;font-size:24px;"></a>
               </center>
             </td>
             <td>

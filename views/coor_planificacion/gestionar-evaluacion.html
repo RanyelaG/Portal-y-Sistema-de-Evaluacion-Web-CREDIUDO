@@ -7,7 +7,7 @@
           <meta charset="utf-8">
        <!-- Viewport Meta Tag -->
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Coordinador de Planificacion-Gestionar Evaluacion </title>
+          <title>Gestionar Evaluacion </title>
        <!-- Bootstrap -->
           <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
        <!-- Main Style -->
@@ -80,59 +80,7 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="../../assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 50px;">
-                     <a style="color:black;" class="nav-link active" href="Crear-usuario-perfil-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR NOTICIAS
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 90px;">
-                     <a style="color:black;" class="nav-link active"  role="button" aria-haspopup="true" aria-expanded="false">
-                       PROGRAMACION DE EVENTOS 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left: 110px;">
-                    <a style="color:black;" class="nav-link active" href="gestionar-evaluacion-coordinador-planificacion.html" role="button" aria-haspopup="true" aria-expanded="false">
-                    GESTIONAR EVALUACION
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-120px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp COOR.PLANIFICACION
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+<%- include('../partials/coordinador_planificacion/navbar-plani.html')%>
 </section>
 </header>
 
@@ -157,7 +105,7 @@
               </figure>
               <div class="button btn-xs" >
                 <button class="press" style="background:#2a7fffff; border-radius: 2px;" href=" " >
-                   <a   style="color: white;" href="gestionar-evaluacion-coordinador-planificacion.html">  Crear  Evaluacion</a>
+                   <a   style="color: white;" href="/evaluacion">  Crear  Evaluacion</a>
                 </button>  
               </div>
             </div>
@@ -174,7 +122,7 @@
 
             <div class="button btn-xs" >
                 <button  class="press btn btn-info"  style="background:#2a7fffff; border-radius: 2px;">
-                  <center><a ID="modificar" href="desicion.html" style="color: white;">Modificar Evaluacion</a></center>
+                  <center><a ID="modificar" href="#" style="color: white;">Modificar Evaluacion</a></center>
                 </button>
                 <div class="modal fade" id="#miventana" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
               </div>
@@ -190,7 +138,7 @@
               </figure>
              <div class="button btn-xs" >
                 <button class="press" style="background:#2a7fffff; border-radius: 2px;">
-                  <center><a href="" style="color: white;"> Visualizar Evaluaciones</a></center>
+                  <center><a href="#" style="color: white;"> Visualizar Evaluaciones</a></center>
                 </button>
               </div>
             </div>
@@ -204,7 +152,7 @@
               </figure>
              <div class="button btn-xs" >
                 <button class="press" style="background:#2a7fffff; border-radius: 2px;">
-                  <center><a href="" style="color: white;"> Reportes de Evaluacion</a></center>
+                  <center><a href="#" style="color: white;"> Reportes de Evaluacion</a></center>
                 </button>
               </div>
             </div>

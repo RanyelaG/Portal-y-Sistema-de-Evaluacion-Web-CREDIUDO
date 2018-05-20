@@ -72,59 +72,9 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="/assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 30px;">
-                     <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR EVENTOS
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 20px;">
-                     <a style="color:black;" class="nav-link active" href="gestion-instrumento-coordinador-evaluacion.html" role="button" aria-haspopup="true" aria-expanded="false">
-                       GESTIONAR INSTRUMENTOS DE EVALUACION 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left:20px;">
-                    <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                    VISUALIZAR INSTRUMENTOS
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-20px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp COOR EVALUACION
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+    <!--=================NAVBAR========================-->
+        <%- include('../partials/coordinador_evaluacion/navbar.html')%>
+        <!--=================FIN NAVBAR========================-->
 </section>
 </header>
 
@@ -138,39 +88,95 @@
 <div class="table-responsive" style="margin-top: 20px;">
 
  <div class="text-center">
-              <h4><%=dataInstrument.name%></h4>
-            </div>
-            
-            <div>
-              <p><strong>Categoria: </strong>
-                <%=dataInstrument.category%>
-              </p>
-              <p><strong>Tipo de Instrumento: </strong><%=dataInstrument.t_instrument%></p>
-            </div>
-            <hr>
+    <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/add-item">
+      <div class="form-group">
+        <label for="item">Item: </label>
+        <input type="text" name="name" required autofocus class="form-control">
+      </div>
 
-            <center>
-              <form class="form-inline" method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/add-item">
-                  <div class="form-group">
+      <button class="btn btn-primary">Crear</button>
+    </form>
+
+    <hr>
+              
+    <table class="table table-bordered" style="margin-top: 30px;">
+      <thead>
+        <tr>
+          <th><center>#</center></th>
+          <th style="width: 40%"><center>Item</center></th>
+          <th><center>Factor</center></th>
+          <th>Instrumento</th>
+          <th style="width: 10%">Operación</th>
+          <th style="width: 10%">Operación</th>
+        </tr>
+      </thead>
+        <tbody>
+          <% let i=0 %>
+          <%dataItem.forEach((dataItem)=>{%>
+            <th scope="row" style="width: 2%"><%= i=i+1 %></th>
+            <td><%= dataItem.name %></td>
+            <!--
+            <td style="width: 2%">
+              <div class="radio">
+                <input type="radio" style="margin-left: -5px;" name="" value=2>
+              </div>
+            </td>
+           
+            <td style="width: 2%">
+              <div class="radio">
+                <input type="radio" style="margin-left: -5px;" name="" value=2>
+              </div>
+            </td>
+
+            <td style="width: 2%">
+              <div class="radio">
+                <input type="radio" style="margin-left: -5px;" name="" value=3>
+              </div>
+            </td>
                   
-                <br> 
-                <select class="form-control enlinea" name="factorId" style="width: 250px;margin-bottom: 10px;">
-                  <%dataFactor.forEach((dataFactor)=>{%>
-                    <option value=<%=dataFactor.id%>><%=dataFactor.nameFactor%></option>
-                  <%})%>
-                </select>
-   
-                </div>
-                <div class="form-group" style="margin-top: 9px;">
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese aqui el Item">
-                </div>
+            <td style="width: 2%">
+              <div class="radio">
+                <input type="radio" style="margin-left: -5px;" name="" value=4>
+              </div>
+            </td>
+                  
+            <td style="width: 2%">
+              <div class="radio">
+                <input type="radio" style="margin-left: -5px;" name="" value=5>
+              </div>
+            </td>
+                  
+            <td>
+              <center></center>
+            </td>
+            -->
+            <td>
+              <%=dataFactor.nameFactor%>
+            </td>
+            <td>
+              <%=dataInstrument.name%>
+            </td>      
+            <td>
+              <center>
+                <a class="fa fa-pencil edit-item" data-toggle="modal" data-target="#editItem" style="color:#00aad4ff;font-size:24px;" data-id="<%=dataItem.id%>" data-name="<%=dataItem.name%>"></a>
+              </center>
+            </td>
+                  
+            <td>
+              <center><center>
+                <a href="" class="fa fa-trash-o" onclick="myFunction()" style="color:red;font-size:24px;"></a>
+              </center>
 
-                <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px; margin-left: 0px;margin-top: 8px;" ><a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
-                </button>
-
-                </form>
-              </center>  
-                            
+              <script>
+                function myFunction() {
+                  document.getElementById("demo").innerHTML = alert("Desea Eliminar Este Instrumento?");;
+                }
+              </script>
+            </td>
+          </tr>
+        <%})%>
+        </tbody>
+    </table>                    
    
   </div>
 
@@ -178,63 +184,7 @@
 
 
 
-            <table class="table table-bordered" style="margin-top: 30px;">
-              <thead>
-                <tr>
-                  <th colspan="7"></th>
-                  <th><center>Nombre del Factor</center></th>
-                  <th><center>Action</center></th>
-                  <th><center>Action</center></th>
-                  
-                </tr>
-              </thead>
-              <tbody>
-                <% let i=0 %>
-                <%dataItem.forEach((dataItem)=>{%>
-                  <th scope="row" style="width: 2%"><%= i=i+1 %></th>
-                  <td><%= dataItem.name %></td>
-                  <td style="width: 2%">
-                    <div class="radio">
-                      <input type="radio" style="margin-left: -5px;" name="" value=2>
-                    </div>
-                  </td>
-                  <td style="width: 2%">
-                    <div class="radio">
-                      <input type="radio" style="margin-left: -5px;" name="" value=2>
-                    </div>
-                  </td>
-                  <td style="width: 2%">
-                    <div class="radio">
-                      <input type="radio" style="margin-left: -5px;" name="" value=3>
-                    </div>
-                  </td>
-                  <td style="width: 2%">
-                    <div class="radio">
-                      <input type="radio" style="margin-left: -5px;" name="" value=4>
-                    </div>
-                  </td>
-                  <td style="width: 2%">
-                    <div class="radio">
-                      <input type="radio" style="margin-left: -5px;" name="" value=5>
-                    </div>
-                  </td>
-                  <td><center><%= dataItem.factor.nameFactor %></center></td>
-                  <td >
-                    <center><a class="fa fa-pencil edit-item" data-toggle="modal" data-target="#editItem" style="color:#00aad4ff;font-size:24px;" data-id="<%=dataItem.id%>" data-name="<%=dataItem.name%>"></a></center>
-                  </td>
-                  <td>
-                    <center><center><a href="/coord_eval/instrumento/<%=dataInstrument.id%>/item/delete/<%=dataItem.id%>" class="fa fa-trash-o" onclick="myFunction()" style="color:red;font-size:24px;"></a></center>
-
-                    <script>
-                      function myFunction() {
-                        document.getElementById("demo").innerHTML = alert("Desea Eliminar Este Instrumento?");;
-                      }
-                    </script>
-                  </td>
-                </tr>
-              <%})%>
-              </tbody>
-            </table>
+            
 
 
 
@@ -250,7 +200,7 @@
                       </div>
 
                       <!-- Modal body -->
-                      <form method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/edit-item">
+                      <form method="POST" action="">
                         <input type="hidden" name="id" id="edit-form-id">
                         <div class="modal-body">
                           

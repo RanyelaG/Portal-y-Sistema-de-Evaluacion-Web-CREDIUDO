@@ -40,6 +40,7 @@ var usuario_udo = require('./routers/usuario_udo.js')
 //RUTAS DE LA CRUZ
 var instrumento = require('./routers/instrumento.js');
 var factor = require('./routers/factor.js')
+var modificar_datos = require('./routers/modificar_datos.js')
 //-----------------------------------------------------------------------------------
 //aqui van las vistas. 
 //VISTA MONASTERIO
@@ -63,6 +64,8 @@ app.use('/usuario_udo', usuario_udo);
 
 app.use('/coord_eval/instrumento', instrumento);
 app.use('/coord_eval/factor', factor);
+app.use('/modificar_datos', modificar_datos);
+
 
 
 app.listen(8080); // inicializamos el servidor para que escuche por el puerto 8080  
