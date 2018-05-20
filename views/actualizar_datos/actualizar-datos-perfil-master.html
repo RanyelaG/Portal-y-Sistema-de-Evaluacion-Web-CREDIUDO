@@ -95,7 +95,7 @@
         <!-- SIDEBAR USER TITLE -->
         <div class="profile-usertitle">
           <div class="profile-usertitle-name">
-           <%=dataCargo.Personal.nombre%>
+           <%=dataCargo.Personal.nombre%>&nbsp<%=dataCargo.Personal.apellido%>
           </div>
           <div class="profile-usertitle-job">
             <%=dataCargo.descripcion%>
@@ -107,15 +107,17 @@
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
           <ul class="nav">
+           
             <li class="active">
-              <a href="gestionar-eventos-coordinador-evaluacion.html">
-              <i class="fa fa-home" style="color: black;font-size:20px;margin-left: 10px;"></i>
-              Inicio </a>
-            </li>
-            <li>
               <a href="actualizar-datos-coordinador-evaluacion.html">
               <i class="fa fa-user" style="color: black;font-size:20px;margin-left: 10px;"></i>
               Actualizacion de Datos </a>
+            </li>
+
+             <li >
+              <a href="/buscar_usuario">
+              <i class="fa fa-home" style="color: black;font-size:20px;margin-left: 10px;"></i>
+              Inicio </a>
             </li>
         
         
@@ -131,7 +133,7 @@
 
                   <center><div class="form-group">
                   <b><p  style=" color: black; ">Correo Electronico</p></b>
-                  <input  style="width:480px;" type="text" name="email" class="form-control" value="<%=dataCargo.Personal.email%>" autofocus>
+                  <input  style="width:450px;" type="text" name="email" class="form-control" value="<%=dataCargo.Personal.email%>" autofocus>
                 
                 </div></center>
 
@@ -154,7 +156,7 @@
 
        <br><center><div class="form-group">
                 <b><p for="nameInstrument" style=" color: black; ">Direccion</p></b>
-                <input  style="width:480px;" type="text" name="direccion" class="form-control" value="<%=dataCargo.Personal.direccion%>">
+                <input  style="width:450px;" type="text" name="direccion" class="form-control" value="<%=dataCargo.Personal.direccion%>">
                 </div></center>
 
                 <center>

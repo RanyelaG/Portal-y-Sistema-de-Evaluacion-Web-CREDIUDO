@@ -5,7 +5,7 @@
     <meta charset="utf-8">
       <!-- Viewport Meta Tag -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Gestionar Instrumento de Evaluacion</title>
+      <title>Agregar Factor</title>
       <!-- Bootstrap -->
       <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
       <!-- Main Style -->
@@ -65,59 +65,7 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="/assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 30px;">
-                     <a style="color:black;" class="nav-link active" href="Crear-usuario-perfil-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR EVENTOS
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 20px;">
-                     <a style="color:black;" class="nav-link active" href="modificar-portal.html" role="button" aria-haspopup="true" aria-expanded="false">
-                       GESTIONAR INSTRUMENTOS DE EVALUACION 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left:20px;">
-                    <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                    VISUALIZAR INSTRUMENTOS
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-20px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp COOR EVALUACION
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+<%- include('../partials/coordinador_evaluacion/navbar.html')%>
 </section>
 </header>
 
@@ -126,24 +74,26 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
 
-           
-  <div class="form-row align-items-center" style="margin-top: 25px;">
+
+ <div class="form-row align-items-center" style="margin-top: 25px;">
+  <form method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor">
     <div class="col-sm-6 my-1">
-      <form method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor">
-        <label class="sr-only" for="nameFactor"></label>
-        <input style="margin-left: 220px; width: 80%;" type="text" class="form-control" id="nameFactor" placeholder="Nombre del Factor" name="nameFactor" required autofocus>
-
-        <div class="col-auto my-1">
-          <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px; margin-left: 118px;" ><a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
-          </button>
-        </div>
-      </form>
+      <label class="sr-only" for="name"></label>
+      <input style="margin-left: 220px; width: 80%;" type="text" class="form-control" id="name" placeholder="Nombre del Factor" name="name" required autofocus>
     </div>
+
+                            
+    <div class="col-auto my-1">
+      <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px; margin-left: 118px;" ><a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
+       
+      </button>
+    </div>
+    </form>
   </div>
+           
+ 
 
-            
-
-    
+      
   <!-- ===============TABLA CON FACTORES EXISTENTES=============== -->
   <div class="table-responsive">
     <table class="table" style="margin-top: 30px;">
@@ -152,8 +102,8 @@
           <th scope="col"><center>Instrumento</center></th>
           <th scope="col"><center>Nombre del factor</center></th>
           <th scope="col"><center>Item</center></th>
-          <th scope="col"><center>Accion</center></th>
-          <th scope="col"><center>Accion</center></th>
+          <th scope="col"><center>Editar</center></th>
+          <th scope="col"><center>Eliminar</center></th>
         </tr>
       </thead>
 
@@ -165,7 +115,9 @@
                 <td><center><%= dataFactor[i].nameFactor %></center></td>
                 <td>
                   <center>
-                    <a href="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor[i].id%>" class="btn btn-primary">Add</a>
+                    <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px;" ><a href="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor[i].id%>" class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
+                  
+                    
                   </center>
                 </td>
                 <td>
