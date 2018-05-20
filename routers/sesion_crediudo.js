@@ -80,5 +80,13 @@ if(!req.body.cedula || !req.body.password){
 
 })
 
+router.get('/cerrar',(req, res)=>{
+  req.session.destroy(()=>{
+    console.log('cerrando sesion');
+  });
+res.render('./sesion_crediudo/index-admin');
+});
+
 module.exports = router;
+
 
