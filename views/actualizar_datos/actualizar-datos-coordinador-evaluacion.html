@@ -95,10 +95,10 @@
         <!-- SIDEBAR USER TITLE -->
         <div class="profile-usertitle">
           <div class="profile-usertitle-name">
-            Ranyela Gomez
+            <%=dataCargo.Personal.nombre%>&nbsp<%=dataCargo.Personal.apellido%>
           </div>
           <div class="profile-usertitle-job">
-            Coordinador de Evaluacion
+            <%=dataCargo.descripcion%>
           </div>
         </div>
         <!-- END SIDEBAR USER TITLE -->
@@ -107,16 +107,19 @@
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
           <ul class="nav">
-            <li class="active">
-              <a href="gestionar-eventos-coordinador-evaluacion.html">
-              <i class="fa fa-home" style="color: black;font-size:20px;margin-left: 10px;"></i>
-              Inicio </a>
-            </li>
-            <li>
+
+             <li class="active">
               <a href="actualizar-datos-coordinador-evaluacion.html">
               <i class="fa fa-user" style="color: black;font-size:20px;margin-left: 10px;"></i>
               Actualizacion de Datos </a>
             </li>
+
+            <li >
+              <a href="gestionar-eventos-coordinador-evaluacion.html">
+              <i class="fa fa-home" style="color: black;font-size:20px;margin-left: 10px;"></i>
+              Inicio </a>
+            </li>
+           
         
         
           </ul>

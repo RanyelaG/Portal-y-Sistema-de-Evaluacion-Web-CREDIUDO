@@ -49,7 +49,7 @@
               <div class="row" style="width: 100%">
               <div class="container">
                   <center>
-                      <img src="/assets/img/testimonial/img32.jpg" alt="" style="width: 100%;"> 
+                      <img src="/assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
                    </center>
                    <!-- Search Ends -->                  
                 
@@ -85,36 +85,44 @@
             
           <br>
 
-<div class="table-responsive" style="margin-top: 20px;">
+ <div class="form-row align-items-center" style="margin-top: 25px;">
+  <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/add-item">
+    <div class="col-sm-6 my-1">
+      <label class="sr-only" for="name"></label>
+      <input style="margin-left: 50px; width: 150%;" type="text" class="form-control" id="name" placeholder="Descripcion del Item" name="name" required autofocus>
+    </div>
 
- <div class="text-center">
-    <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/add-item">
-      <div class="form-group">
-        <label for="item">Item: </label>
-        <input type="text" name="name" required autofocus class="form-control">
-      </div>
-
-      <button class="btn btn-primary">Crear</button>
+                            
+    <div class="col-auto my-1">
+      <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px; margin-left: 253px;" ><a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
+       
+      </button>
+    </div>
     </form>
+  </div>
+
+
 
     <hr>
+
+    <div class="table-responsive">
               
-    <table class="table table-bordered" style="margin-top: 30px;">
+    <table class="table " style="margin-top: 30px;">
       <thead>
         <tr>
-          <th><center>#</center></th>
-          <th style="width: 40%"><center>Item</center></th>
+          <th><center>Numeracion</center></th>
+          <th style="width: 30%;"><center>Descripcion del Item</center></th>
           <th><center>Factor</center></th>
-          <th>Instrumento</th>
-          <th style="width: 10%">Operación</th>
-          <th style="width: 10%">Operación</th>
+          <th style="width: 30%;"><center>Instrumento</center></th>
+          <th ><center>Editar</center></th>
+          <th ><center>Eliminar</center></th>
         </tr>
       </thead>
         <tbody>
           <% let i=0 %>
           <%dataItem.forEach((dataItem)=>{%>
-            <th scope="row" style="width: 2%"><%= i=i+1 %></th>
-            <td><%= dataItem.name %></td>
+            <th scope="row" style="width: 2%"><center><%= i=i+1 %></center></th>
+            <td><center><%= dataItem.name %></center></td>
             <!--
             <td style="width: 2%">
               <div class="radio">
@@ -151,10 +159,10 @@
             </td>
             -->
             <td>
-              <%=dataFactor.nameFactor%>
+             <center> <%=dataFactor.nameFactor%></center>
             </td>
             <td>
-              <%=dataInstrument.name%>
+              <center><%=dataInstrument.name%></center>
             </td>      
             <td>
               <center>
@@ -163,7 +171,7 @@
             </td>
                   
             <td>
-              <center><center>
+              <center>
                 <a href="" class="fa fa-trash-o" onclick="myFunction()" style="color:red;font-size:24px;"></a>
               </center>
 
@@ -176,7 +184,9 @@
           </tr>
         <%})%>
         </tbody>
-    </table>                    
+    </table>
+
+    </div>                    
    
   </div>
 

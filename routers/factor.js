@@ -17,6 +17,7 @@ router.get('/', function(req, res) {
     models.Instrument.findAll({
 
     }).then(Instrument => {
+      console.log(Factor)
       res.render('factor/index_3',{dataFactor:Factor, dataInstrument:Instrument})  
     })
   })
@@ -38,6 +39,7 @@ router.post('/add', function(req, res){
   models.Factor.create({
     nameFactor: req.body.nameFactor,
   }).then(() => {
+    console.log('estas en agregar factor ',Factor)
     res.redirect('/coord_eval/factor')  
   })
 })

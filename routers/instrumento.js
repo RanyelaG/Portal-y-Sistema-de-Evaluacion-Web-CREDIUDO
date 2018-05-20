@@ -8,7 +8,7 @@ router.use(function(req, res, next) {
     next();
   }else {
     console.log('no estas logueado')
-    res.render('./index-admin', {session: req.session})
+    res.render('./sesion_crediudo/index-admin', {session: req.session})
   }
 })
 
