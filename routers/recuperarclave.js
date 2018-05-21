@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 var Op = Sequelize.Op;
 
 
-router.get('/', function(req, res){ res.render('demo');})
+router.get('/', function(req, res){ res.render('./recuperar-clave');})
 
 
 module.exports = router;

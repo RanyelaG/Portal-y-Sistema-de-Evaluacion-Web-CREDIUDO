@@ -34,6 +34,10 @@ var portal = require('./routers/portal.js');
 var sesion_crediudo = require('./routers/sesion_crediudo.js');
 var evaluacion = require('./routers/evaluacion.js')
 var usuario_udo = require('./routers/usuario_udo.js')
+var demo = require('./routers/demo.js')
+var demo1 = require('./routers/demo1.js')
+var demo2 = require('./routers/demo2.js')
+var recuperarclave = require('./routers/recuperarclave.js')
 //var personal = require ('./routers/personal.js')
 //var nucleo = require ('./routers/nucleo.js')
 
@@ -53,6 +57,10 @@ app.use('/portal', portal);
 app.use('/sesion_crediudo', sesion_crediudo);
 app.use('/evaluacion', evaluacion);
 app.use('/usuario_udo', usuario_udo);
+app.use('/demo', demo);
+app.use('/demo1', demo1);
+app.use('/demo2', demo2);
+app.use('/recuperarclave', recuperarclave);
 //app.use('/indexSucre', indexSucre);
 //app.use('/indexMonagas', indexMonagas);
 //app.use('/indexBolivar', indexBolivar);

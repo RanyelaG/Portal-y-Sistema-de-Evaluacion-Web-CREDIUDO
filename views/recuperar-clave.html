@@ -3,20 +3,33 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<link rel="stylesheet" media="screen" href="assets/css/index-admin.css">
+    <script type="text/javascript">
+    //EVENTOS EN javascript
+
+    function hacer_click()
+    {
+        alert("se ha enviado una clave provisional a su correo");
+       // history.back();
+        window.location.href='/index';
+    }
+
+    
+    </script>
+
+<link rel="stylesheet" media="screen" href="assets/css/index-admin2.css">
 <link rel="stylesheet" media="screen" href="assets/css/login.css">
 
 <div id="fullscreen_bg" class="fullscreen_bg"/>
 
 <div class="container">
 
-<div class="loginmodal-container" style="margin-top: 150px;">
-                      <center><h2 style="color: #808080ff;margin-top:0px;">Recuperar Contraseña</h2></center><br>
+<div class="loginmodal-container" style="margin-top: 200px;">
+                      <center><h3 style="color: #808080ff;margin-top:0px;">Recuperar Contraseña</h3></center><br>
 
             <form action="/inicio/ingresar" method="post">
                         <input type="text" name="cedula" placeholder="Ingrese su Cedula">
                         <input type="password" name="password" placeholder="Ingrese su Correo Electronico">
-                        <input type="submit" name="Ingresar" class="login loginmodal-submit" value="Enviar" style="background:#00aad4ff; ">
+                        <input type="submit" name="Ingresar" class="login loginmodal-submit" value="Enviar" style="background:#00aad4ff; " onclick="hacer_click()">
                       </form>
 
       
