@@ -81,6 +81,10 @@ router.get('/eva-sucre', function(req, res){ res.render('./informacion_crediudo/
 router.get('/info-crediudo', function(req, res){ res.render('./informacion_crediudo/info-crediudo',  {session: req.session}) })
 router.get('/reglamento', function(req, res){ res.render('./informacion_crediudo/reglamentos-crediudo',  {session: req.session}) })
 router.get('/noti-crediudo', function(req, res){ res.render('./informacion_crediudo/noti-crediudo',  {session: req.session}) })
-
+router.get('/sucre', function(req, res){ res.render('./paginas-nucleos/sucre/index-sucre')})
+router.get('/monagas', function(req, res){ res.render('./paginas-nucleos/monagas/index-monagas')})
+router.get('/nvaesparta', function(req, res){ res.render('./paginas-nucleos/nvaesparta/index-nvaesparta')})
+router.get('/bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/index-bolivar')})
+router.get('/anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/index-anzoategui')})
 
 module.exports = router;
