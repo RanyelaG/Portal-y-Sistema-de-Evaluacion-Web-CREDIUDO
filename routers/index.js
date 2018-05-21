@@ -20,9 +20,21 @@ router.get('/', function(req, res){
 		.then(function(Evaluacion){
 			models.Evaluacion.findOne({where: {tipo:'centros'}})
 			.then(function(Evaluacion1){
-			   res.render('index-web-principal-definitivo', {session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
-               console.log('Administravos Evaluacion', Evaluacion)
-               console.log(' Centros evaluacion', Evaluacion1)
+				models.Evento.findOne({
+					order: [
+						['id', 'DESC']
+					]
+				}).then(Evento => {
+					//res.status(201).send(Evento)
+					res.render('index-web-principal-definitivo', {
+				   	session: req.session, 
+				   	dataEvaluacion:Evaluacion,
+				   	dataEvaluacion1:Evaluacion1,
+				   	dataEvento:Evento
+				   })
+	               console.log('Administravos Evaluacion', Evaluacion)
+	               console.log(' Centros evaluacion', Evaluacion1)
+				})
  			})
 		})
 }
@@ -69,6 +81,30 @@ for(let i = 0; i < Sub_comision.length; i ++){
 } res.render('./informacion_crediudo/sub-comi', {dataSub:Sub_comision, informacion, session: req.session}) 
 })
 })
+
+/*=================================DE LA CRUZ=====================================*/
+	router.post('/institucion/add-evento', (req,res) => {
+		/*models.Institucion.findOrCreate({
+			where: 
+		})*/
+		models.Institucion.create({
+			nombre: req.body.nombre,
+			representante: req.body.representante,
+			rif: req.body.rif,
+			email: req.body.email,
+			tmovil: req.body.tmovil,
+			thabitacion: req.body.thabitacion
+		}).then(Institucion => {
+			models.Institucion.findOne({
+				order: [
+					['id', 'DESC']
+				]
+			}).then(Institucion => {
+				res.status(201).send(Institucion)
+			})
+		})
+	})
+/*=================================DE LA CRUZ=====================================*/
 
 router.get('/etapas', function(req, res){ res.render('./informacion_crediudo/etapas-crediudo', {session: req.session}) })
 router.get('/boletines', function(req, res){ res.render('./informacion_crediudo/boletines-informativos', {session: req.session}) })

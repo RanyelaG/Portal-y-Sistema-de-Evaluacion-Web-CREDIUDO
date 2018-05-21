@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+	$('.add-evento').on('click', function(){
+		$('#evento-id').val($(this).data('id'));
+	});
+
+
 	$('.edit-factor').on('click', function(){
 		$('#edit-form-name').val($(this).data('name'));
 		$('#edit-form-id').val($(this).data('id'));

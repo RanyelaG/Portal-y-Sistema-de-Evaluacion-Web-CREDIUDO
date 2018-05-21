@@ -250,6 +250,15 @@ module.exports.Eventos_l = Eventos_l;
 		  descripcion: Sequelize.STRING,
 		});
 
+		var Institucion = sequelize.define('Instituciones', {
+			nombre: Sequelize.STRING,
+			representante: Sequelize.STRING,
+			rif: Sequelize.STRING,
+			email: Sequelize.STRING,
+			tmovil: Sequelize.STRING,
+			thabitacion: Sequelize.STRING,
+		});
+
 		const Evaluacion = sequelize.define('Evaluacion', {
 		  tipo: Sequelize.ENUM('administrativos', 'centros'),
 		  name: Sequelize.STRING,
@@ -257,6 +266,14 @@ module.exports.Eventos_l = Eventos_l;
 		  cantidad: Sequelize.INTEGER,
 		  inicio: Sequelize.DATE,
 		  fin: Sequelize.DATE
+		});
+
+		Evento_Institucion = sequelize.define('Evento_Institucion', {
+		  id: {
+		    type: Sequelize.INTEGER,
+		    primaryKey: true,
+		    autoIncrement: true
+		  }
 		});
 	/*==========FIN MODELOS ANDRES========================*/
 
@@ -272,6 +289,10 @@ module.exports.Eventos_l = Eventos_l;
 
 		Nucleo.hasMany(Evento, { onDelete:'cascade' })	
 		Evento.belongsTo(Nucleo)
+
+		Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion', foreignKey: 'eventoId' })
+		Institucion.belongsToMany(Evento, { as: 'EventoInstitucion', through: 'Evento_Institucion', foreignKey: 'institucionId' })
+
 	/*===================RELACIONES ANDRES========================*/
 
 	//relaciones modelos Monasterio
@@ -325,6 +346,8 @@ module.exports.Eventos_l = Eventos_l;
 	module.exports.Item = Item;
 	module.exports.Evaluacion = Evaluacion;
 	module.exports.Evento = Evento;
+	module.exports.Institucion = Institucion;
+	module.exports.Evento_Institucion = Evento_Institucion;
 /*=======================================DE LA CRUZ============================================*/
 
 // _________________________________________
