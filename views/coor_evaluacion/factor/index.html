@@ -5,7 +5,7 @@
     <meta charset="utf-8">
       <!-- Viewport Meta Tag -->
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Agregar Factor</title>
+       <title>Agregar Factor</title>
       <!-- Bootstrap -->
       <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
       <!-- Main Style -->
@@ -64,8 +64,7 @@
  <header id="header-wrap">
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
-             <!-- Navbar Starts -->
-<%- include('../partials/coordinador_evaluacion/navbar.html')%>
+ <%- include('../../partials/coordinador_evaluacion/navbar.html')%>
 </section>
 </header>
 
@@ -74,12 +73,11 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
 
-
  <div class="form-row align-items-center" style="margin-top: 25px;">
   <form method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor">
     <div class="col-sm-6 my-1">
-      <label class="sr-only" for="name"></label>
-      <input style="margin-left: 220px; width: 80%;" type="text" class="form-control" id="name" placeholder="Nombre del Factor" name="name" required autofocus>
+      <label class="sr-only" for="nameFactor"></label>
+      <input style="margin-left: 220px; width: 80%;" type="text" class="form-control" id="nameFactor" placeholder="Nombre del Factor" name="nameFactor" required autofocus>
     </div>
 
                             
@@ -91,19 +89,21 @@
     </form>
   </div>
            
- 
 
-      
+
+            
+
+    
   <!-- ===============TABLA CON FACTORES EXISTENTES=============== -->
   <div class="table-responsive">
-    <table class="table" style="margin-top: 30px;">
+    <table class="table" style="margin-top: 40px;">
       <thead >
         <tr>
           <th scope="col"><center>Instrumento</center></th>
           <th scope="col"><center>Nombre del factor</center></th>
           <th scope="col"><center>Item</center></th>
-          <th scope="col"><center>Editar</center></th>
-          <th scope="col"><center>Eliminar</center></th>
+          <th scope="col"><center>Accion</center></th>
+          <th scope="col"><center>Accion</center></th>
         </tr>
       </thead>
 
@@ -111,23 +111,22 @@
           <% for(let i = 0; i < dataFactor.length; i ++) {%>
             <% if(dataFactor) { %>
               <tr>
-                <td><center><%= dataInstrument.name %></center></td>
+                <td><center><%= dataFactor[i].instrument.name %></center></td>
                 <td><center><%= dataFactor[i].nameFactor %></center></td>
                 <td>
                   <center>
-                    <a href="/coord_eval/instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor[i].id%>" class="fa fa-plus-circle" style="color:black;font-size:24px;"></a>
-                  
-                    
+                    <a href="/coord_eval/instrumento/<%=dataFactor[i].instrumentId%>/add-factor/<%=dataFactor[i].id%>" class="fa fa-plus-circle" style="color:black;font-size:24px;"></a>
+
                   </center>
                 </td>
                 <td>
                   <center>
-                    <a class="fa fa-pencil edit-factor" data-toggle="modal" data-target="#editFactor" data-name="<%=dataFactor[i].nameFactor%>" data-id="<%=dataFactor[i].id%>" style="color:#00aad4ff;font-size:24px;"></a>
+                    <a class="fa fa-pencil  edit-factor" data-toggle="modal" data-target="#editFactor" data-name="<%=dataFactor[i].nameFactor%>" data-id="<%=dataFactor[i].id%>" style="color:#00aad4ff;font-size:24px;"></a>
                   </center>  
                 </td>
                 <td>
                   <center><center>
-                    <a onclick="myFunction()" href="/coord_eval/factor/delete/<%=dataFactor[i].id%>" class="fa fa-trash-o" style="color:red;font-size:24px;">
+                    <a onclick="myFunction()" href="/coord_eval/instrumento/<%=dataInstrument.id%>/factor-delete/<%=dataFactor[i].id%>" class="fa fa-trash-o" style="color:red;font-size:24px;">
                     </a>
 
                     <script>
@@ -156,7 +155,7 @@
           </div>
 
           <!-- Modal body -->
-          <form method="POST" action="/coord_eval/factor/edit">
+          <form method="POST" action="/coord_eval/instrumento/<%=dataInstrument.id%>/factor-edit">
             <input type="hidden" name="id" id="edit-form-id">
             <div class="modal-body">              
               <div class="form-group">

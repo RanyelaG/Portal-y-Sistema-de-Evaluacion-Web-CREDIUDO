@@ -41,7 +41,7 @@
 <body style="overflow-x: hidden;">
   <header id="header-wrap">
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
-           <section id="header">
+      <section id="header">
             <div class="container">
               <div class="row">
              <!-- Navbar Starts -->
@@ -73,133 +73,81 @@
 <section id="header">
              <!-- Navbar Starts -->
     <!--=================NAVBAR========================-->
-        <%- include('../partials/coordinador_evaluacion/navbar.html')%>
+        <%- include('../../partials/coordinador_evaluacion/navbar.html')%>
         <!--=================FIN NAVBAR========================-->
 </section>
 </header>
-
-<div class="container">
-  
+      
+      <!--=========================AQUI CONTENIDO DE LA PAGINA=======================-->
+      <div class="container">
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            
-          <br>
+            <br>
+            <div class="table-responsive" style="margin-top: 30px;">
+                <div class="text-center">
+                  <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/add-item">
 
- <div class="form-row align-items-center" style="margin-top: 25px;">
-  <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/add-item">
-    <div class="col-sm-6 my-1">
-      <label class="sr-only" for="name"></label>
-      <input style="margin-left: 50px; width: 150%;" type="text" class="form-control" id="name" placeholder="Descripcion del Item" name="name" required autofocus>
-    </div>
+                    <div class="col-sm-6 my-1">
+                   <label class="sr-only" for="item"></label>
+                    <input style="margin-left: 50px; width: 150%;" type="text" class="form-control" id="name" placeholder="Descripcion del Item" name="name" required autofocus>
+                   </div>
 
-                            
-    <div class="col-auto my-1">
+                  
+
+                    <div class="col-auto my-1">
       <button type="submit" class="btn btn-primary btn-xs" style="height: 38px;border-radius: 2px; margin-left: 253px;" ><a class="fa fa-plus-circle" style="color:white;font-size:24px;margin-top: -3px;margin-left: 3px;"></a>
        
       </button>
     </div>
-    </form>
-  </div>
+                  </form>
 
+<div class="table-responsive">
+                  <table class="table " style="margin-top: 40px;">
+                    <thead>
+                      <tr>
+                        <th><center>Id</center></th>
+                        <th style="width: 50%"><center>Item</center></th>
+                        <th style="width: 20%"><center>Instrumento</center></th>
+                        <th style="width: 10%"><center>Editar</center></th>
+                        <th style="width: 10%"><center>Eliminar</center></th>
+                      </tr>
+                    </thead>
+                      <tbody>
+                        <% let i=0 %>
+                        <%dataItem.forEach((dataItem)=>{%>
+                          <th scope="row" style="width: 2%"><center><%= i=i+1 %></center></th>
+                          <td><center><%= dataItem.name %></center></td>
+               
+                       
+                          <td>
+                            <center><%=dataInstrument.name%></center>
+                          </td>      
+                          <td>
+                            <center>
+                              <a class="fa fa-pencil edit-item" data-toggle="modal" data-target="#editItem" style="color:#00aad4ff;font-size:24px;" data-id="<%=dataItem.id%>" data-name="<%=dataItem.name%>"></a>
+                            </center>
+                          </td>
+                                
+                          <td>
+                            <center><center>
+                              <a href="/coord_eval/instrumento/<%=dataInstrument.id%>/factor/<%=dataFactor.id%>/item-delete/<%=dataItem.id%>" class="fa fa-trash-o" onclick="myFunction()" style="color:red;font-size:24px;"></a>
+                            </center>
 
-
-    <hr>
-
-    <div class="table-responsive">
-              
-    <table class="table " style="margin-top: 30px;">
-      <thead>
-        <tr>
-          <th><center>Numeracion</center></th>
-          <th style="width: 30%;"><center>Descripcion del Item</center></th>
-          <th><center>Factor</center></th>
-          <th style="width: 30%;"><center>Instrumento</center></th>
-          <th ><center>Editar</center></th>
-          <th ><center>Eliminar</center></th>
-        </tr>
-      </thead>
-        <tbody>
-          <% let i=0 %>
-          <%dataItem.forEach((dataItem)=>{%>
-            <th scope="row" style="width: 2%"><center><%= i=i+1 %></center></th>
-            <td><center><%= dataItem.name %></center></td>
-            <!--
-            <td style="width: 2%">
-              <div class="radio">
-                <input type="radio" style="margin-left: -5px;" name="" value=2>
-              </div>
-            </td>
-           
-            <td style="width: 2%">
-              <div class="radio">
-                <input type="radio" style="margin-left: -5px;" name="" value=2>
-              </div>
-            </td>
-
-            <td style="width: 2%">
-              <div class="radio">
-                <input type="radio" style="margin-left: -5px;" name="" value=3>
-              </div>
-            </td>
-                  
-            <td style="width: 2%">
-              <div class="radio">
-                <input type="radio" style="margin-left: -5px;" name="" value=4>
-              </div>
-            </td>
-                  
-            <td style="width: 2%">
-              <div class="radio">
-                <input type="radio" style="margin-left: -5px;" name="" value=5>
-              </div>
-            </td>
-                  
-            <td>
-              <center></center>
-            </td>
-            -->
-            <td>
-             <center> <%=dataFactor.nameFactor%></center>
-            </td>
-            <td>
-              <center><%=dataInstrument.name%></center>
-            </td>      
-            <td>
-              <center>
-                <a class="fa fa-pencil edit-item" data-toggle="modal" data-target="#editItem" style="color:#00aad4ff;font-size:24px;" data-id="<%=dataItem.id%>" data-name="<%=dataItem.name%>"></a>
-              </center>
-            </td>
-                  
-            <td>
-              <center>
-                <a href="" class="fa fa-trash-o" onclick="myFunction()" style="color:red;font-size:24px;"></a>
-              </center>
-
-              <script>
-                function myFunction() {
-                  document.getElementById("demo").innerHTML = alert("Desea Eliminar Este Instrumento?");;
-                }
-              </script>
-            </td>
-          </tr>
-        <%})%>
-        </tbody>
-    </table>
-
-    </div>                    
-   
-  </div>
-
-
-
-
-
-            
-
-
-
-  
-          <div class="modal fade" id="editItem" style="margin-top: 5%">
+                            <script>
+                              function myFunction() {
+                                document.getElementById("demo").innerHTML = alert("Desea Eliminar Este Item?");;
+                              }
+                            </script>
+                          </td>
+                        </tr>
+                      <%})%>
+                      </tbody>
+                  </table>                       
+                </div>
+                <!--===================CIERRE CONTENIDO DE LA PAGINA====================-->
+                
+                <!--=====================MODAL EDIT ITEM===========================================--> 
+                <div class="modal fade" id="editItem" style="margin-top: 5%">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       
@@ -210,37 +158,36 @@
                       </div>
 
                       <!-- Modal body -->
-                      <form method="POST" action="">
+                      <form method="POST" action="/coord_eval/Instrumento/<%=dataInstrument.id%>/add-factor/<%=dataFactor.id%>/edit-item">
                         <input type="hidden" name="id" id="edit-form-id">
-                        <div class="modal-body">
-                          
-                          <div class="form-group">
-                            <label for="name">Nombre del Item</label>
-                            <input type="text" name="name" id="edit-form-name" class="form-control" autofocus>
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="name">Nombre del Item</label>
+                              <input type="text" name="name" id="edit-form-name" class="form-control" autofocus>
+                            </div>
                           </div>
-               
-          
-                        </div>  
-                        <div class="modal-footer">
 
-                        <center><button type="submit" class="btn btn-primary" style="margin-top: 20px;background:#00aad4ff; border-radius: 2px;">Guardar</button></center>
-                      </div>
-                  
+                        <div class="modal-footer">
+                          <center><button type="submit" class="btn btn-primary" style="margin-top: 20px;background:#00aad4ff; border-radius: 2px;">Guardar</button></center>
+                        </div>
                       </form>
                     </div>
                   </div>
-              </div>
-              <!--===================FIN MODAL CATEGORIA=========================-->
+                </div>
+                <!--===================FIN MODAL EDIT ITEM=========================-->
+            </div>
+          </div>
+        </div>
+      </div>
 
+
+</center>
+</td>
+</tbody>
+</table>
 </div>
 </div>
 </div>
-
-
-</div>
-
-
-
 
     <!-- Footer Section End-->
 

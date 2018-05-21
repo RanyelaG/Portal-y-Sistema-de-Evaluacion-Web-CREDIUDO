@@ -49,7 +49,7 @@ if(!req.body.cedula || !req.body.password){
         
          }else if(Cargo.codigo =='2'){
           models.Instrument.findAll({})
-          .then(function(Instrument){ res.render('instrumento/index_3', {dataInstrument:Instrument, session: req.session})
+          .then(function(Instrument){ res.render('./coor_evaluacion/instrumento/index', {dataInstrument:Instrument, session: req.session})
            });
          
           
