@@ -41,7 +41,8 @@ var usuario_udo = require('./routers/usuario_udo.js')
 var instrumento = require('./routers/instrumento.js');
 var factor = require('./routers/factor.js')
 var perfil_eval = require('./routers/perfil_coord_eval.js')
-var modificar_datos = require('./routers/modificar_datos.js')
+var eventos = require('./routers/evento.js')
+//var modificar_datos = require('./routers/modificar_datos.js')
 //-----------------------------------------------------------------------------------
 //aqui van las vistas. 
 //VISTA MONASTERIO
@@ -66,7 +67,8 @@ app.use('/usuario_udo', usuario_udo);
 app.use('/coord_eval/instrumento', instrumento);
 app.use('/coord_eval/factor', factor);
 app.use('/coord_eval/perfil', perfil_eval)
-app.use('/modificar_datos', modificar_datos);
+app.use('/coord_eval/eventos', eventos)
+//app.use('/modificar_datos', modificar_datos);
 
 
 

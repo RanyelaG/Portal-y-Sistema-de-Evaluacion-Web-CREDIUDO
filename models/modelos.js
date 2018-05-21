@@ -245,9 +245,8 @@ module.exports.Eventos_l = Eventos_l;
 		  direccion: Sequelize.STRING,
 		  dirigido_a: Sequelize.STRING,
 		  fecha: Sequelize.DATE,
-		  nucleo: Sequelize.ENUM('anz', 'bol', 'mon', 'nuv_esp', 'suc', 'rect', 'anac', 'carup'),
 		  capacidad: Sequelize.INTEGER,
-		  tipo: Sequelize.ENUM('nacional', 'charla', 'taller', 'conferencia', 'curso'),
+		  tipo: Sequelize.ENUM('nacional', 'otros'),
 		  descripcion: Sequelize.STRING,
 		});
 
@@ -270,6 +269,9 @@ module.exports.Eventos_l = Eventos_l;
 
 		Instrument.hasMany(Factor, { onDelete:'cascade' }) //un instrumento tiene muchos factores
 		Factor.belongsTo(Instrument) //un factor pertenece a un instrumento
+
+		Nucleo.hasMany(Evento, { onDelete:'cascade' })	
+		Evento.belongsTo(Nucleo)
 	/*===================RELACIONES ANDRES========================*/
 
 	//relaciones modelos Monasterio

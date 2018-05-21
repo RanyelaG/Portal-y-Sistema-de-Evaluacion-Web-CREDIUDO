@@ -242,7 +242,6 @@ router.get('/', function(req,res){
         }
       })
     /*============================VISUALIZAR INSTRUMENTO================*/
-
 /*====================================FIN DETALLES============================================*/
 
 module.exports = router;
