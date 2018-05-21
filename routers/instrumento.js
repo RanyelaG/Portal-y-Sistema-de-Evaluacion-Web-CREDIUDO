@@ -3,15 +3,12 @@ let router = express.Router() // llamamos al manejador de rutas de express
 let models = require('../models/modelos')
 
 //MUY UTIL: res.status(201).send(todo)
-
-//VALIDACION PARA VERIFICAR SI ESTA LOGUEADO
 router.use(function(req, res, next) {
   if(req.session.hasOwnProperty('cedula')){
     next();
-    //SI NO ESTA LOGUEADO
   }else {
     console.log('no estas logueado')
-    res.render('index-web-principal-definitivo', {session: req.session})
+    res.render('./sesion_crediudo/index-admin', {session: req.session})
   }
 })
 
@@ -212,6 +209,39 @@ router.get('/', function(req,res){
       })
     })
     /*==========FIN EDITAR FACTOR=============================*/
+
+    /*============================VISUALIZAR INSTRUMENTO================*/
+      router.get('/ver', (req,res) => {
+        models.Instrument.findAll({
+
+        }).then(Instrument => {
+          res.render('coor_evaluacion/instrumento/ver_todos', { Instruments:Instrument })  
+        })
+      })
+
+      router.post('/por_category', (req,res) => {
+        if ( req.body.buscar == 'todos' ) {
+          models.Instrument.findAll({
+
+          }).then(Instrument => {
+            res.redirect('/coord_eval/instrumento/ver')
+            //res.render('coor_evaluacion/instrumento/ver_todos', { Instruments:Instrument })  
+          })
+        } else if( req.body.buscar == 'pers_admin' ){
+          models.Instrument.findAll({
+            where: { category: req.body.buscar }
+          }).then(Instrument => {
+            res.render('coor_evaluacion/instrumento/ver_admin', { Instruments:Instrument })
+          })
+        } else if( req.body.buscar == 'cent_inves' ){
+          models.Instrument.findAll({
+            where: { category: req.body.buscar }
+          }).then(Instrument => {
+            res.render('coor_evaluacion/instrumento/ver_centros', { Instruments:Instrument })
+          })
+        }
+      })
+    /*============================VISUALIZAR INSTRUMENTO================*/
 
 /*====================================FIN DETALLES============================================*/
 

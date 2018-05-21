@@ -26,7 +26,7 @@ router.get('/', function(req, res){
 		if(Cargo.codigo=='1'){
 		res.render('./actualizar_datos/actualizar-datos-perfil-master', { dataCargo:Cargo })
 	}else if(Cargo.codigo=='2'){
-		res.render('./actualizar_datos/actualizar-datos-coordinador-planificacion', { dataCargo:Cargo })
+		res.render('./actualizar_datos/actualizar-datos-coordinador-evaluacion', { dataCargo:Cargo })
 
 	}else if(Cargo.codigo=='3'){
 	res.render('./actualizar_datos/actualizar-datos-coordinador-planificacion', { dataCargo:Cargo })
