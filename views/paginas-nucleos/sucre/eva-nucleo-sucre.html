@@ -45,90 +45,7 @@
     <header id="header-wrap">
       <section id="header">                                                                           <!--SECCIÓN 1-->
         <!-- Navbar Starts -->
-        <nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-          <div class="container">
-
-            <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu'
-                    data-toggle='collapse' type='button'>☰
-            </button>
-
-            <!-- Brand -->
-            <a class="navbar-brand" href="index.html">
-              <img src=" assets/img/CREDIUDO1.png" alt="" style="margin-top:-8px;">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-right" id="main-menu">
-              <!-- Navbar Starts -->
-              <ul class="nav nav-inline">
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link active" href="index.html" role="button" aria-haspopup="true" aria-expanded="false">Inicio</a>                  
-                </li> 
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                   COMISION NUCLEO SUCRE
-                  </a>
-                  <div class="dropdown-menu">                      
-                    <a class="dropdown-item" href="informacion-crediudo.html">Informacion Institucional</a>
-                    <a class="dropdown-item" href="objetivos-crediudo.html">Eventos</a>
-                    
-                  </div>
-                </li>
-
-
-                <!-- - - - - - BOLETINES INFORMATIVOS  - - - - - - -->
-                <li class="nav-item dropdown">
-                  <a style="color: black;" class="nav-link active" href="boletines-sucre.html" role="button" aria-haspopup="true" aria-expanded="false">Boletines Informativos 
-                  </a>
-                </li>
-
-
-                <!-- - - - - EVALUACION EN LOS NUCLEOS - - - - - - -->
-                <li class="nav-item dropdown">
-                  <a style="color: black;" class="nav-link active" href="eva-nucleo-sucre.html" role="button" aria-haspopup="true" aria-expanded="false">Evaluaciones en el Nucleo
-                  </a> 
- 
-                </li>
-
-                <!-- - - - -    INFORME DE GESTION - - -  - - - - - -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" 
-                     href="#" role="button" aria-haspopup="true" 
-                     aria-expanded="false">Contacto
-                  </a> 
-                </li> 
-
-              
-               <li class="nav-item dropdown">
-                    <a data-toggle="modal" data-target="#login-modal" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>
-                    </a>
-                </li> 
-
-
-<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-        <div class="loginmodal-container">
-          <h1>Iniciar Sesion</h1><br>
-          <form>
-          <input type="text" name="user" placeholder="Username">
-          <input type="password" name="pass" placeholder="Password">
-          <input type="submit" name="Ingresar" class="login loginmodal-submit" value="Ingresar" style="background:#00aad4ff; ">
-          </form>
-          
-          <div class="login-help">
-          <a href="#">Recuperar Contraseña</a>
-          </div>
-        </div>
-      </div>
-      </div>
-               
-              </ul>  
-            </div>
- 
-          </div>
-        </nav><!-- Navbar Ends -->
-
+       <%- include('../../partials/web_sucre/nav-sucre.html')%>
 
      
 
@@ -367,10 +284,6 @@
 
     
     <!-- Go To Top Link -->
-    <a href="#" class="back-to-top" >
-      <i class="fa fa-angle-up" style="background:#00aad4ff;" >
-      </i>
-    </a>
 
     <div class="bottom"> <a href="#" class="settings"></a> </div>
 <!------                                                                     LIBRERIAS UTILIZADA ---------------->
@@ -378,7 +291,7 @@
     <!-- jQuery Load -->
     <script src="assets/js/jquery-min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <!--<script src="assets/js/bootstrap.min.js"></script>-->
     <!--Text Rotator-->
     <script src="assets/js/jquery.mixitup.js"></script>
     <!--WOW Scroll Spy-->

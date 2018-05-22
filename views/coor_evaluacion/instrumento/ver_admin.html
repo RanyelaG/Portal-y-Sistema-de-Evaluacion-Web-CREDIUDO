@@ -93,7 +93,7 @@
             </div>
             
             <div class="form-group">
-              <button type="submit" class="btn btn-default botones enlinea" style="background:#2a7fffff; border-radius: 2px;margin-top: 5px;">Buscar</button>
+              <button type="submit" class="btn btn-default botones enlinea fa fa-search" style="background:#2a7fffff; border-radius: 2px;margin-top: 8px;font-size: 19px;"></button>
             </div>
 
             <div class="form-group">
@@ -127,7 +127,7 @@
                   <center><%=Instruments[i].t_instrument%></center>
                 </td>
                 <td>
-                  <center><a href="detalle-instrumento.html" class="fa fa-file-pdf-o fa-1x" style="color:black;font-size:24px;"></a></center>
+                  <center><i class="fa fa-file-pdf-o fa-2x" id="generar" style="color:black;"></i></center>
                 </td>
                 <td>
                   <center><a href="" class="fa fa-share-alt" style="color:#00aad4ff;font-size:24px;"></a></center>        
@@ -142,6 +142,38 @@
   </div>
 
 
+<!--Tabla que se genera en el PDF-->
+<table id="basic-table" style="display: none;">
+  <thead>
+    <tr>
+      <td> </td>
+      <th>RESPONSABILIDAD</th>
+      <th align="center">1</th>
+      <th align="center">2</th>
+      <th align="center">3</th>
+      <th align="center">4</th>
+      <th align="center">5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="right">1</td>
+      <td>Asiste Puntualmente a su Lugar de Trabajo</td>
+    </tr>
+    <tr>
+      <td align="right">2</td>
+      <td>Acepta las orientaciones y Sugerencias del Supervisor Inmediato</td>
+    </tr>
+    <tr>
+      <td align="right">3</td>
+      <td>Cumple con los Horarios de Trabajo</td>
+    </tr>
+    <tr>
+      <td align="right">4</td>
+      <td>Cuida los Equipos a Su Cargo</td>
+    </tr>
+  </tbody>
+</table>
 
 
     <!-- Footer Section End-->
@@ -207,6 +239,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/js/main.js"></script>
+
+     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/jspdf.min.js"></script>
+  <script src="../../assets/js/jspdf.plugin.autotable.min.js"></script>
+  <script src="../../assets/js/generarpdf.js"></script>
 
 
   </body>

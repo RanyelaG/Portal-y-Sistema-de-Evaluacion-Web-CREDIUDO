@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <!-- Viewport Meta Tag -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CREDIUDO-Detalle Noticias</title>
+    <title>Noticias CREDIUDO-Sucre</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -16,14 +16,15 @@
     <!--Fonts-->
     <link rel="stylesheet" media="screen" href="assets/fonts/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" media="screen" href="assets/fonts/simple-line-icons.css"> 
-    <link rel="stylesheet" media="screen" href="assets/css/card.css">
+    
 
      <link rel="stylesheet" media="screen" href="assets/css/info.css">
-  <link rel="stylesheet" media="screen" href="assets/css/detalle-noti.css">
-  <link rel="stylesheet" media="screen" href="../assets/css/login.css">
+     <link rel="stylesheet" media="screen" href="../assets/css/noti.css">
+     <link rel="stylesheet" media="screen" href="../assets/css/login.css">
+        <link rel="stylesheet" media="screen" href="../assets/css/card.css">
 
-
-  
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
      
      
@@ -45,9 +46,10 @@
     <header id="header-wrap">
       <section id="header">                                                                           <!--SECCIÓN 1-->
         <!-- Navbar Starts -->
-        <%- include('../partials/web_principal/navbar.html')%>
+        <%- include('../../partials/web_sucre/nav-sucre.html')%>
 
         <!-- seccion de noticias crediudo-->
+
 <div class="container">
   <div class="row col-7 " >
      <!-- HEADER -->
@@ -84,23 +86,17 @@
                 <center><p style="margin-bottom:0px;margin-top:10px;"><b>Mas Noticias de Interes</b></p></center><br>
                 <ul class="list-group">
                     <li class="list-group-item" ><big><b>1.</b></big><a href="/detalle" style="color: black;">Cras justo odio</a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>2.</b></big><a href="/detalle" style="color: black;"> Dapibus ac facilisis in</a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>3.</b></big> <a href="/detalle" style="color: black;">Morbi leo risus</a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>4.</b></big><a href="/detalle" style="color: black;"> Porta ac consectetur ac</li>
-                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle" style="color: black;">Vestibulum at eros</li>
-                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle" style="color: black;">Vestibulum at eros</a></a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big><a href="/detalle" style="color: black;"> Vestibulum at eros</a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle" style="color: black;">Vestibulum at eros</a></li>
-                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle" style="color: black;">Vestibulum at eros</a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>2.</b></big><a href="/detalle-sucre" style="color: black;"> Dapibus ac facilisis in</a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>3.</b></big> <a href="/detalle-sucre" style="color: black;">Morbi leo risus</a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>4.</b></big><a href="/detalle-sucre" style="color: black;"> Porta ac consectetur ac</li>
+                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle-sucre" style="color: black;">Vestibulum at eros</li>
+                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle-sucre" style="color: black;">Vestibulum at eros</a></a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big><a href="/detalle-sucre" style="color: black;"> Vestibulum at eros</a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle-sucre" style="color: black;">Vestibulum at eros</a></li>
+                    <li class="list-group-item" href="/detalle"><big><b>5.</b></big> <a href="/detalle-sucre" style="color: black;">Vestibulum at eros</a></li>
                 </ul>
 
-                  <br><center><img style="max-width: 100%" src="assets/img/esta.png" alt="Photograph" ></center><br>
-                  <center><p style="margin-bottom:0px;"><b>Estadísticas</b></p></center>
-                <center><div class="statistics">
-                    <p><span class="label label-default fa fa-users" style="font-size: 14px;"> &nbsp Visitas 2550</span></p>
-                    <p><span class="label label-default fa fa-share-alt" style="font-size: 14px;">&nbsp   Compartido 50 veces</span></p>
-                    <p><span class="label label-default fa fa-thumbs-o-up" style="font-size: 14px;">&nbsp Me gusta 20</span></p>
-                </div></center>
+                  
 
                 </small>
                 
@@ -108,10 +104,9 @@
         </div>
   </div>
 </div>
-
-
    <!-- Footer Section -->
-   <!-- Footer Section --> <footer >
+   <!-- Footer Section -->
+  <footer >
     <div class="container" style="margin-top: 100px;" >
 
             <div class="footer-widget col-md-3 col-xs-12 wow fadeIn" >
@@ -158,10 +153,10 @@
             <div class="contact-us" style="top: 35px; text-align: center;">
               <p style="margin-top:30px; text-align: center;">Recibe Nuestros Boletines Informativos</p>
 
-              <form>
+                 <form>
               <div class="form-group">
                 <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Ingresa tu Email">
-                <button  class="btn" style="color: white; height:30px;margin-top: 10px;background:#2a7fffff; border-radius: 2px;"><p style="position: center;margin-top:-7px;">Enviar</p></button>
+                <button  class="btn" style="color: white; height:30px;margin-top: 10px;background:#2a7fffff; border-radius: 2px;"><p style="position: center;margin-top:-5px;"><b>Enviar</b></p></button>
                 
               </div>
               
@@ -171,8 +166,7 @@
 
     </div>
 
-  </footer>
- 
+  </footer> 
     <!-- Footer Section End-->
 
 
@@ -181,7 +175,7 @@
 
     
     <!-- Go To Top Link -->
- 
+
 
     <div class="bottom"> <a href="#" class="settings"></a> </div>
 <!------                                                                     LIBRERIAS UTILIZADA ---------------->
