@@ -15,8 +15,9 @@
   padding-top: 60px;
   width: 100%;
   width: 100vw;
-  height: 550px;
-  background: #3a6186; /* fallback for old browsers */
+  height: 700px;
+  background-image: url("../../../assets/img/hola.png");
+  margin-top:1px;/* fallback for old browsers */
  
     color : #fff;    
 }

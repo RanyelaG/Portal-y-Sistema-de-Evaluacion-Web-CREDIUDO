@@ -92,5 +92,6 @@ router.get('/contacto-sucre', function(req, res){ res.render('./paginas-nucleos/
 router.get('/info-sucre', function(req, res){ res.render('./paginas-nucleos/sucre/info-sucre',{session: req.session})})
 router.get('/noti-sucre', function(req, res){ res.render('./paginas-nucleos/sucre/noti-sucre',{session: req.session})})
 router.get('/detalle-sucre', function(req, res){ res.render('./paginas-nucleos/sucre/detalle-sucre',{session: req.session})})
+router.get('/info-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/info-monagas',{session: req.session})})
 
 module.exports = router;
