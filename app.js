@@ -46,6 +46,8 @@ var recuperarclave = require('./routers/recuperarclave.js')
 var instrumento = require('./routers/instrumento.js');
 var factor = require('./routers/factor.js')
 var modificar_datos = require('./routers/modificar_datos.js')
+
+var eventos = require('./routers/evento.js')
 //-----------------------------------------------------------------------------------
 //aqui van las vistas. 
 //VISTA MONASTERIO
@@ -75,6 +77,11 @@ app.use('/recuperarclave', recuperarclave);
 app.use('/coord_eval/instrumento', instrumento);
 app.use('/coord_eval/factor', factor);
 app.use('/modificar_datos', modificar_datos);
+
+//VISTA DE LA CRUZ
+
+
+app.use('/coord_eval/eventos', eventos)
 
 
 

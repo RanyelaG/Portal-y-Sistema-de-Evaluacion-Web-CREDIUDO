@@ -1,0 +1,274 @@
+<!-- DOCTYPE -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+   <head>
+          <meta charset="utf-8">
+       <!-- Viewport Meta Tag -->
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Instituciones Inscritas</title>
+       <!-- Bootstrap -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+       <!-- Main Style -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+        <!-- Responsive Style -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+        <!--Fonts-->
+          <link rel="stylesheet" media="screen" href="/assets/fonts/font-awesome/font-awesome.min.css">
+          <link rel="stylesheet" media="screen" href="/assets/fonts/simple-line-icons.css">    
+        <!-- Extras -->
+          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.carousel.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.theme.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/animate.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/normalize.css">
+          <link rel="stylesheet" type="text/css" href="/assets/extras/settings.css">
+        <!-- Color CSS Styles  -->
+          <link rel="stylesheet" type="text/css" href="/assets/css/colors/green.css" media="screen" /> 
+
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+           <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+            
+            <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+            <link rel="stylesheet" href="assets/css/tecnoTiempo.min.css">
+
+      
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!--<script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+
+
+
+   </head>
+
+<body style="overflow-x: hidden;">
+  <header id="header-wrap">
+         <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
+           <section id="header">
+            <div class="container">
+              <div class="row">
+             <!-- Navbar Starts -->
+              <div id="free-promo" style="text-align: center; margin-top: 0px;">
+              <div class="row" style="width: 100%">
+              <div class="container">
+                  <center>
+                      <img src="/assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
+                   </center>
+                   <!-- Search Ends -->                  
+                
+              </div> 
+              </div>
+              </div>
+            </div>
+          </div>
+            </section>
+  
+     </header>
+
+</body>
+
+<!-- INTERFAZ---------------------------------------------------------------------------->
+   <body>
+     <!-- Header area wrapper starts -->
+
+ <header id="header-wrap">
+         <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
+<section id="header">
+             <!-- Navbar Starts -->
+    <!--=================NAVBAR========================-->
+    <%- include('../../partials/coordinador_evaluacion/navbar.html')%>
+    <!--=================FIN NAVBAR========================-->
+</section>
+</header>
+
+
+
+  <!-----------------------------------CUADRO DE LAS FUNCIONALIDADES DE CREAR, MODIFICAR Y ELIMINAR -->
+
+<section id="team" class="section" style="background-color:#f9f9f9ff; margin-top:0px; position: center;">
+      <!-- Container Starts -->
+<%- include('../../partials/coordinador_evaluacion/menu_eventos.html')%>
+</section>
+
+  <div id="free-promo" style="text-align: center; ">
+    <section class="split section " >
+
+      <nav class=" " data-spy="affix" >
+      <div class="container">
+      <div class="row">
+      <center>
+     <div class="container" style="text-align:center; margin-top: 0px;">
+        <h2><a rel=" " style="color:#374845ff; " >Instituciones Inscritas</a></h2><br>
+       </div>
+
+      
+
+<div class="container">
+        <br>
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+
+                <center><form class="form-inline" style="margin-top: -40px;" >
+                  <div class="form-group">
+                  
+                 <br> <br> <select class="form-control enlinea" style="width: 250px;margin-bottom: 10px;margin-top: -15px">
+            | <option value="">Ver Todos</option>
+               <%for(let i=0; i < Eventos.length; i++){%>
+                    <option value=""><%=Eventos[i].nombre%></option>  
+                  <%}%>
+            
+              </select>
+               
+
+                <button type="submit" class="btn btn-xs botones enlinea fa fa-search" style="background:#2a7fffff; margin-top: -25px;border-radius: 2px;font-size: 15px;"></button>
+   
+                </div>
+                  <div class="form-group">
+        
+                <input type="nombre" class="form-control" id="email" placeholder="14/05/2018" style="margin-top: 15px;">
+ 
+                </div>
+
+                </form></center> 
+
+ 
+
+      <nav class=" " data-spy="affix" >
+      <div class="container">
+      <div class="row">
+      <center>
+     <div class="container social-footer" style="text-align:center;margin-left: 730px;">
+          <from type="button" class="btn btn-default" value="Imprime esta pagina" onclick="window.print()" style="width: 13%">
+                 <a href="detalle-instrumento.html" class="fa fa-file-pdf-o fa-1x" style="color:black;font-size:22px; "></a>
+            </from>
+
+
+            <form type="button" class="btn btn-default" >
+             <center><a href="" class="fa fa-refresh" style="color:#00aad4ff;font-size:22px;margin-left: 5px;"></a></center>
+            </form>
+
+     
+       </div>
+     </center>
+   </div>
+ </div>
+</nav>
+
+
+
+                                    
+
+<br><div class="table-responsive">
+
+  <table class="table" style="margin-top: 10px;">
+
+    <thead >
+                <tr>
+                  <th scope="col"><center>Nombre de la Institucion</center></th>
+                  <th scope="col"><center>Representante</center></th>
+                  <th scope="col"><center>Correo</center></th>
+                  <th scope="col"><center>Telefono</center></th>
+                  
+                </tr>
+              </thead>
+
+              <tbody>
+                <%for(let j=0; j < Registrados.length; j++){%>
+                  <%if( Registrados ){%>
+                    <tr>
+                      <td><center><%=Registrados[j].Institucione.nombre%></center></td>
+                      <td><center><%=Registrados[j].Institucione.representante%></center></td>
+                      <td><center><%=Registrados[j].Institucione.email%></center></td>
+                      <td><center><%=Registrados[j].Institucione.tmovil%></center></td>
+                    </tr>
+
+                  <%} else{%>
+                    <h3>No hay Registros</h3>
+                  <%}%>
+                <%}%>
+              </tbody>
+   
+  </table>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+
+</center>
+</div>
+</div>
+</nav>
+</section>
+</div>
+
+
+
+  
+         <footer>
+
+      <div class="footer wow fadeIn">
+            <div id="free-promo" style="text-align: center; margin-top: 180px;">
+            <br>
+            <p>Av Gran Mariscal-Edificio Rectorado 
+            <br>Cumaná-Venezuela.
+            <br>Telefono. +58(0293) 400 01 01</p>
+            <div class="social-footer" style="margin-top: -10px;">
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-facebook icon-round" ></i></a>
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-twitter icon-round"></i></a>
+                   <a href="#"><i style=" background:#2a7fffff;" class="fa fa-google-plus icon-round"></i></a>
+                </div>
+                <br>           
+            </div>
+
+
+      </div>
+      
+    </footer>
+
+
+
+    <!-- Footer Section End-->
+
+                         
+
+
+    <div class="bottom"> <a href="#" class="settings"></a> </div>
+
+    <!-- -----------------------------------JavaScript & jQuery Plugins --------------------------------------------->
+    <!-- jQuery Load -->
+    <script src="/assets/js/jquery-min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!--Text Rotator-->
+    <script src="/assets/js/jquery.mixitup.js"></script>
+    <!--WOW Scroll Spy-->
+    <script src="/assets/js/wow.js"></script>
+    <!-- OWL Carousel -->
+    <script src="/assets/js/owl.carousel.js"></script>
+ 
+    <!-- WayPoint -->
+    <script src="/assets/js/waypoints.min.js"></script>
+    <!-- CounterUp -->
+    <script src="/assets/js/jquery.counterup.min.js"></script>
+    <!-- ScrollTop -->
+    <script src="/assets/js/scroll-top.js"></script>
+    <!-- Appear -->
+    <script src="/assets/js/jquery.appear.js"></script>
+    <script src="/assets/js/jquery.vide.js"></script>
+     <!-- All JS plugin Triggers -->
+    <script src="/assets/js/main.js"></script>
+
+
+
+  
+  </body>
+
+</html>

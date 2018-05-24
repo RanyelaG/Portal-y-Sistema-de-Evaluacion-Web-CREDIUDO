@@ -19,6 +19,10 @@ var Universidad = sequelize.define('Universidad', {
 	representante: Sequelize.STRING
 	})
  module.exports.Universidad = Universidad;
+
+
+
+ 
 //  2=========================================================modelo de encuentro nacionales.
  var Enc_nace = sequelize.define('Enc_nace', {
    codigo: {type: Sequelize.INTEGER, primaryKey: true},
@@ -209,6 +213,16 @@ codigo: {type: Sequelize.INTEGER, primaryKey: true},
 module.exports.Eventos_l = Eventos_l;
 
 //==============================================================Modelos de andres.
+
+var Institucion = sequelize.define('Instituciones', {
+            nombre: Sequelize.STRING,
+            representante: Sequelize.STRING,
+            rif: Sequelize.STRING,
+            email: Sequelize.STRING,
+            tmovil: Sequelize.STRING,
+            thabitacion: Sequelize.STRING,
+        });
+        
 var Evento = sequelize.define('Eventos', {
   nombre: Sequelize.STRING,
   direccion: Sequelize.STRING,
@@ -245,6 +259,35 @@ const Evaluacion = sequelize.define('Evaluacion', {
   inicio: Sequelize.DATE,
   fin: Sequelize.DATE
 });
+
+
+
+
+Evento_Institucion = sequelize.define('Evento_Institucion', {
+	id: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	}
+});
+
+
+
+
+//RELACIONES
+Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
+Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
+
+Institucion.hasMany(Evento_Institucion)
+Institucion.belongsToMany(Evento, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
+
+
+Evento_Institucion.belongsTo(Evento)
+Evento_Institucion.belongsTo(Institucion)
+
+//AL FINAL
+module.exports.Institucion=Institucion;
+module.exports.Evento_Institucion = Evento_Institucion;
 
 /*===================FIN MODELOS Y TABLAS========================*/
 

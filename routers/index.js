@@ -93,5 +93,55 @@ router.get('/info-sucre', function(req, res){ res.render('./paginas-nucleos/sucr
 router.get('/noti-sucre', function(req, res){ res.render('./paginas-nucleos/sucre/noti-sucre',{session: req.session})})
 router.get('/detalle-sucre', function(req, res){ res.render('./paginas-nucleos/sucre/detalle-sucre',{session: req.session})})
 router.get('/info-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/info-monagas',{session: req.session})})
+router.get('/boletines-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/boletines-monagas',{session: req.session})})
+router.get('/eva-nucleo-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/eva-nucleo-monagas',{session: req.session})})
+router.get('/detalle-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/detalle-monagas',{session: req.session})})
+router.get('/noti-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/noti-monagas',{session: req.session})})
+router.get('/contacto-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/contacto-monagas',{session: req.session})})
+
+
+
+
+
+
+
+
+/*=================================DE LA CRUZ=====================================*/
+	router.post('/institucion/add-evento', (req,res) => {
+		//CREAR LA INSTITUCION
+		models.Institucion.create({
+			nombre: req.body.nombre,
+			representante: req.body.representante,
+			rif: req.body.rif,
+			email: req.body.email,
+			tmovil: req.body.tmovil,
+			thabitacion: req.body.thabitacion
+		}).then(Institucion => {
+			//BUSCAR LA INSTITUCION MAS RECIENTE
+			models.Institucion.findOne({
+				order: [
+					['id', 'DESC']
+				]
+			}).then(Institucion => {
+				//REGISTRAR LA INSTITUCION EN UN EVENTO
+				models.Evento_Institucion.create({
+					EventoId: req.body.eventoId,
+					InstitucioneId: Institucion.id
+				}).then(() => {
+					//res.status(201).send(Institucion)
+					res.redirect('/')
+				})
+				
+			})
+		})
+	})
+/*=================================DE LA CRUZ=====================================*/
+
+
+
+
+
+
+
 
 module.exports = router;
