@@ -1,0 +1,93 @@
+    <nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
+          <div class="container">
+
+            <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu'
+                    data-toggle='collapse' type='button'>☰
+            </button>
+
+            <!-- Brand -->
+            <a class="navbar-brand" href="/bolivar">
+              <img src=" assets/img/CREDIUDO1.png" alt="" style="margin-top:-8px;">
+            </a>
+            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-right" id="main-menu">
+              <!-- Navbar Starts -->
+              <ul class="nav nav-inline">
+
+               
+
+                <li class="nav-item dropdown"  style="left: -30px;">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                   COMISION NUCLEO BOLIVAR
+                  </a>
+                  <div class="dropdown-menu">                      
+                    <a class="dropdown-item" href="/info-bolivar">Informacion Institucional</a>
+                    <a class="dropdown-item" href="objetivos-crediudo.html">Eventos</a>
+                    <a class="dropdown-item" href="/noti-bolivar">Noticias Nucleo Bolivar</a>
+                  </div>
+                </li>
+
+
+                <!-- - - - - - BOLETINES INFORMATIVOS  - - - - - - -->
+          <li class="nav-item dropdown"  style="left: -20px;">
+                  <a style="color: black;" class="nav-link active" href="/boletines-bolivar" role="button" aria-haspopup="true" aria-expanded="false">Boletines Informativos 
+                  </a>
+                </li>
+
+
+                <!-- - - - - EVALUACION EN LOS NUCLEOS - - - - - - -->
+                <li class="nav-item dropdown"  style="left: -20px;">
+                  <a style="color: black;" class="nav-link active" href="/eva-nucleo-bolivar" role="button" aria-haspopup="true" aria-expanded="false">Evaluaciones en el Nucleo
+                  </a> 
+ 
+                </li>
+
+                <!-- - - - -    INFORME DE GESTION - - -  - - - - - -->
+                <li class="nav-item dropdown"  style="left: -20px;">
+                  <a style="color: black;" class="nav-link active" href="/contacto-bolivar" role="button" aria-haspopup="true" aria-expanded="false">Contacto
+                  </a> 
+                </li> 
+
+                        <% if(session.hasOwnProperty('cedula')){ %>
+                  <li class="nav-item dropdown">
+                    <a>
+                      <span  class="fa fa-user" style="color:#55d400ff;font-size:24px;"></span>
+                    </a>
+                    <div class="dropdown-menu" style="width: 20%;">
+                      <a class="dropdown-item" href="">Mi Cuenta</a>
+                      <a class="dropdown-item" href="">Actualizar Datos</a>
+                      <a class="dropdown-item" href="/cerrar/cerrar">Cerrar Sesion</a>
+                    </div>
+                  </li> 
+                <%} else{%>
+                <li class="nav-item dropdown">
+                  <a data-toggle="modal" data-target="#login-modal" >
+                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>
+                  </a>
+                </li> 
+                <% } %>
+
+                       <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                  <div class="modal-dialog">
+                    <div class="loginmodal-container">
+                      <h1>Iniciar Sesion</h1><br>
+                      <form action="/inicio/ingresar" method="post">
+                        <input type="text" name="cedula" placeholder="Cedula">
+                        <input type="password" name="password" placeholder="Password">
+                        <input type="submit" name="Ingresar" class="login loginmodal-submit" value="Ingresar" style="background:#55d400ff; ">
+                      </form>
+          
+                      <div class="login-help">
+                        <a href="/recuperarclave" >Recuperar Contraseña</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+               
+              </ul>  
+            </div>
+ 
+          </div>
+        </nav><!-- Navbar Ends -->

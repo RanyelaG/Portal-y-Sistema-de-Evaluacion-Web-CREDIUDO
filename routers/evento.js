@@ -2,7 +2,7 @@ let express = require('express') // instanciamos express
 let router = express.Router() // llamamos al manejador de rutas de express
 let models = require('../models/modelos')
 
-router.get('/add', function(req,res){
+router.get('/', function(req,res){console.log('estas agregando evento1')
 	models.Nucleo.findAll({
 
 	}).then(Nucleo => {
@@ -10,7 +10,9 @@ router.get('/add', function(req,res){
 	})
 })
 
-router.post('/add', function(req, res){
+router.get('/add1', function(req, res){
+	console.log('estas agregando evento2')
+
 	models.Evento.create({
 		nombre: req.body.nombre,
 		direccion: req.body.direccion,

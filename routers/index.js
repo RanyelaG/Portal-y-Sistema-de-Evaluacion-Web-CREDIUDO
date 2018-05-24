@@ -98,6 +98,12 @@ router.get('/eva-nucleo-monagas', function(req, res){ res.render('./paginas-nucl
 router.get('/detalle-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/detalle-monagas',{session: req.session})})
 router.get('/noti-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/noti-monagas',{session: req.session})})
 router.get('/contacto-monagas', function(req, res){ res.render('./paginas-nucleos/monagas/contacto-monagas',{session: req.session})})
+router.get('/detalle-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/detalle-bolivar',{session: req.session})})
+router.get('/noti-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/noti-bolivar',{session: req.session})})
+router.get('/info-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/info-bolivar',{session: req.session})})
+router.get('/boletines-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/boletines-bolivar',{session: req.session})})
+router.get('/eva-nucleo-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/eva-nucleo-bolivar',{session: req.session})})
+router.get('/contacto-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/contacto-bolivar',{session: req.session})})
 
 
 

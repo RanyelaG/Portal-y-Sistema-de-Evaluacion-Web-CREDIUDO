@@ -263,7 +263,7 @@ const Evaluacion = sequelize.define('Evaluacion', {
 
 
 
-Evento_Institucion = sequelize.define('Evento_Institucion', {
+const Evento_Institucion = sequelize.define('Evento_Institucion', {
 	id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
