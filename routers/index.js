@@ -104,6 +104,19 @@ router.get('/info-bolivar', function(req, res){ res.render('./paginas-nucleos/bo
 router.get('/boletines-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/boletines-bolivar',{session: req.session})})
 router.get('/eva-nucleo-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/eva-nucleo-bolivar',{session: req.session})})
 router.get('/contacto-bolivar', function(req, res){ res.render('./paginas-nucleos/bolivar/contacto-bolivar',{session: req.session})})
+router.get('/detalle-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/detalle-anzoategui',{session: req.session})})
+router.get('/boletines-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/boletines-anzoategui',{session: req.session})})
+router.get('/eva-nucleo-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/eva-nucleo-anzoategui',{session: req.session})})
+router.get('/info-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/info-anzoategui',{session: req.session})})
+router.get('/noti-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/noti-anzoategui',{session: req.session})})
+router.get('/contacto-anzoategui', function(req, res){ res.render('./paginas-nucleos/anzoategui/contacto-anzoategui',{session: req.session})})
+router.get('/contacto-nvaesparta', function(req, res){ res.render('./paginas-nucleos/nvaesparta/contacto-nvaesparta',{session: req.session})})
+router.get('/detalle-nva', function(req, res){ res.render('./paginas-nucleos/nvaesparta/detalle-nva',{session: req.session})})
+router.get('/info-nva', function(req, res){ res.render('./paginas-nucleos/nvaesparta/info-nva',{session: req.session})})
+router.get('/noti-nva', function(req, res){ res.render('./paginas-nucleos/nvaesparta/noti-nva',{session: req.session})})
+router.get('/boletines-nva', function(req, res){ res.render('./paginas-nucleos/nvaesparta/boletines-nva',{session: req.session})})
+router.get('/eva-nva2', function(req, res){ res.render('./paginas-nucleos/nvaesparta/eva-nucleo-nva',{session: req.session})})
+
 
 
 

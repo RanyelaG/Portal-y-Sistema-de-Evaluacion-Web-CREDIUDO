@@ -215,23 +215,22 @@ module.exports.Eventos_l = Eventos_l;
 //==============================================================Modelos de andres.
 
 var Institucion = sequelize.define('Instituciones', {
-            nombre: Sequelize.STRING,
-            representante: Sequelize.STRING,
-            rif: Sequelize.STRING,
-            email: Sequelize.STRING,
-            tmovil: Sequelize.STRING,
-            thabitacion: Sequelize.STRING,
-        });
+	nombre: Sequelize.STRING,
+	representante: Sequelize.STRING,
+	rif: Sequelize.STRING,
+	email: Sequelize.STRING,
+	tmovil: Sequelize.STRING,
+	thabitacion: Sequelize.STRING,
+});
         
 var Evento = sequelize.define('Eventos', {
-  nombre: Sequelize.STRING,
-  direccion: Sequelize.STRING,
-  dirigido_a: Sequelize.STRING,
-  fecha: Sequelize.DATE,
-  nucleo: Sequelize.ENUM('anz', 'bol', 'mon', 'nuv_esp', 'suc', 'rect', 'anac', 'carup'),
-  capacidad: Sequelize.INTEGER,
-  tipo: Sequelize.ENUM('nacional', 'charla', 'taller', 'conferencia', 'curso'),
-  descripcion: Sequelize.STRING,
+	nombre: Sequelize.STRING,
+	direccion: Sequelize.STRING,
+	dirigido_a: Sequelize.STRING,
+	fecha: Sequelize.DATE,
+	capacidad: Sequelize.INTEGER,
+	tipo: Sequelize.ENUM('nacional', 'otros'),
+	descripcion: Sequelize.STRING,
 });
 
 
@@ -263,6 +262,7 @@ const Evaluacion = sequelize.define('Evaluacion', {
 
 
 
+
 const Evento_Institucion = sequelize.define('Evento_Institucion', {
 	id: {
 		type: Sequelize.INTEGER,
@@ -276,18 +276,19 @@ const Evento_Institucion = sequelize.define('Evento_Institucion', {
 
 //RELACIONES
 Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
-Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
+	Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
 
-Institucion.hasMany(Evento_Institucion)
-Institucion.belongsToMany(Evento, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
+	Institucion.hasMany(Evento_Institucion)
+	Institucion.belongsToMany(Evento, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
 
-
-Evento_Institucion.belongsTo(Evento)
-Evento_Institucion.belongsTo(Institucion)
+	Evento_Institucion.belongsTo(Evento)
+	Evento_Institucion.belongsTo(Institucion)
 
 //AL FINAL
-module.exports.Institucion=Institucion;
-module.exports.Evento_Institucion = Evento_Institucion;
+module.exports.Evaluacion = Evaluacion;
+	module.exports.Evento = Evento;
+	module.exports.Institucion = Institucion;
+	module.exports.Evento_Institucion = Evento_Institucion;
 
 /*===================FIN MODELOS Y TABLAS========================*/
 
