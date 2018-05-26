@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('CREDIUDO', 'postgres', '123456',
+const sequelize = new Sequelize('CREDIUDO_3', 'Andres', '1234',
 {
 	
 	host: 'localhost',
@@ -275,7 +275,7 @@ const Evento_Institucion = sequelize.define('Evento_Institucion', {
 
 
 //RELACIONES
-Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
+	Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
 	Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
 
 	Institucion.hasMany(Evento_Institucion)
@@ -285,7 +285,7 @@ Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
 	Evento_Institucion.belongsTo(Institucion)
 
 //AL FINAL
-module.exports.Evaluacion = Evaluacion;
+	module.exports.Evaluacion = Evaluacion;
 	module.exports.Evento = Evento;
 	module.exports.Institucion = Institucion;
 	module.exports.Evento_Institucion = Evento_Institucion;
