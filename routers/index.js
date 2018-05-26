@@ -71,6 +71,7 @@ for(let i = 0; i < Sub_comision.length; i ++){
 })
 
 router.get('/etapas', function(req, res){ res.render('./informacion_crediudo/etapas-crediudo', {session: req.session}) })
+router.get('/eventos', function(req, res){ res.render('./informacion_crediudo/eventos', {session: req.session}) })
 router.get('/boletines', function(req, res){ res.render('./informacion_crediudo/boletines-informativos', {session: req.session}) })
 router.get('/detalle', function(req, res){ res.render('./informacion_crediudo/detalle-noticias', {session: req.session}) })
 router.get('/eva-anzo', function(req, res){ res.render('./informacion_crediudo/eva-anzo', {session: req.session}) })
