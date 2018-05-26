@@ -11,8 +11,6 @@ router.get('/add', function(req,res){console.log('estas agregando evento1')
 })
 
 router.post('/add', function(req, res){
-	console.log('estas agregando evento2')
-
 	models.Evento.create({
 		nombre: req.body.nombre,
 		direccion: req.body.direccion,
@@ -28,7 +26,6 @@ router.post('/add', function(req, res){
 		}).then(Nucleo => {
 			res.render('coor_evaluacion/evento/index', { Nucleos:Nucleo, fino:'' })	
 		})
-		
 		//res.redirect('/coord_eval/eventos/add')
 	})
 })
