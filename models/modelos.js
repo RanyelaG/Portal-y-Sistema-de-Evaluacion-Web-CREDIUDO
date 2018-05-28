@@ -235,6 +235,7 @@ module.exports.Eventos_l = Eventos_l;
 		capacidad: Sequelize.INTEGER,
 		tipo: Sequelize.ENUM('nacional', 'otros'),
 		descripcion: Sequelize.STRING,
+		urlImg: Sequelize.STRING
 	});
 	
 	var Institucion = sequelize.define('Instituciones', {

@@ -5,6 +5,8 @@ var session = require("express-session");
 var formidable = require('express-formidable');// para uso de sessiones
 var fs= require('fs');
 var path =require('path');
+var multer = require('multer'); //para el manejo de multipart/form usado para cargar archivos
+const ejs = require('ejs');
 
 //-----------------------------------------------------------------------------------
 var app = express(); // ejecutamos express en app para poder hacer uso de sus modulos

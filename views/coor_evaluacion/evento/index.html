@@ -119,7 +119,7 @@
                   
            <!-- seccion del formulario -->          
   <div class="col-sm-6 col-md-10 col-md-offset-1" style="margin-top: 10px;">
-    <form method="post" action="/coord_eval/eventos/add">
+    <form method="post" action="/coord_eval/eventos/add" enctype="multipart/form-data">
         <fieldset> 
           <p ><b>Nombre:</b></p>
           <input type="text" class="form-control" style="width: 50%;" placeholder="nombre del evento" name="nombre">
@@ -178,8 +178,8 @@
       </div>
                   
       <div class="form-group">
-        <label for="exampleInputFile" >Afiche Formato PNG,JPG 390x218 </label><br>
-        <input  type="file" id="exampleInputFile">        
+        <label for="urlImg">Afiche Formato PNG,JPG 390x218 </label><br>
+        <input type="file" name="urlImg">        
       </div>
 
     <!-- Team Item Starts -->
