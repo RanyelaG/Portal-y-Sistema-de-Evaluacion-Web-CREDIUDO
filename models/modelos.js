@@ -233,6 +233,13 @@ var Evento = sequelize.define('Eventos', {
 	descripcion: Sequelize.STRING,
 });
 
+const Evento_Institucion = sequelize.define('Evento_Institucion', {
+	id: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	}
+});
 
 const Instrument = sequelize.define('instruments', {
   name: Sequelize.STRING,
@@ -248,8 +255,6 @@ const Item = sequelize.define('items', {
   name: Sequelize.STRING
 });
 
-
-
 const Evaluacion = sequelize.define('Evaluacion', {
   tipo: Sequelize.ENUM('administrativos', 'centros'),
   name: Sequelize.STRING,
@@ -259,23 +264,20 @@ const Evaluacion = sequelize.define('Evaluacion', {
   fin: Sequelize.DATE
 });
 
+	//RELACIONES
+	Factor.hasMany(Item, { onDelete:'cascade' }) //un factor tienen muchos items
+	Item.belongsTo(Factor) //un item pertenece a un factor
+	
+	Instrument.hasMany(Item, { onDelete:'cascade' }) //un instrumento tiene muchos items
+	Item.belongsTo(Instrument) //un item pertenece a un instrumento
 
+	Instrument.hasMany(Factor, { onDelete:'cascade' }) //un instrumento tiene muchos factores
+	Factor.belongsTo(Instrument) //un factor pertenece a un instrumento
 
-
-
-const Evento_Institucion = sequelize.define('Evento_Institucion', {
-	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
-		autoIncrement: true
-	}
-});
-
-
-
-
-//RELACIONES
-Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
+	Nucleo.hasMany(Evento, { onDelete:'cascade' })	
+	Evento.belongsTo(Nucleo)
+			
+	Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
 	Evento.belongsToMany(Institucion, { as: 'EventoInstitucion', through: 'Evento_Institucion' })
 
 	Institucion.hasMany(Evento_Institucion)
@@ -284,34 +286,14 @@ Evento.hasMany(Evento_Institucion, { onDelete:'cascade' })
 	Evento_Institucion.belongsTo(Evento)
 	Evento_Institucion.belongsTo(Institucion)
 
-//AL FINAL
-module.exports.Evaluacion = Evaluacion;
+/*===========FIN ASOCIASIONES O RELACIONES ENTRE MODELOS=============*/
+	module.exports.Instrument = Instrument;
+	module.exports.Factor = Factor;
+	module.exports.Item = Item;
+	module.exports.Evaluacion = Evaluacion;
 	module.exports.Evento = Evento;
 	module.exports.Institucion = Institucion;
 	module.exports.Evento_Institucion = Evento_Institucion;
-
-/*===================FIN MODELOS Y TABLAS========================*/
-
-Factor.hasMany(Item)
-Item.belongsTo(Factor)
-
-Instrument.hasMany(Item)
-Item.belongsTo(Instrument)
-
-Instrument.hasMany(Factor)
-Factor.belongsTo(Instrument)
-
-
-/*===========FIN ASOCIASIONES O RELACIONES ENTRE MODELOS=============*/
-
-module.exports.Instrument = Instrument;
-module.exports.Factor = Factor;
-module.exports.Item = Item;
-module.exports.Evaluacion = Evaluacion;
-module.exports.Evento = Evento;
-
-
-
 // _________________________________________
 //!Sincronizacion con la base de datos      !
 //!_________________________________________!

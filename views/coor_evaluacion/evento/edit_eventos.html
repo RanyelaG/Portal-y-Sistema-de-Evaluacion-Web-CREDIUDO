@@ -7,7 +7,7 @@
           <meta charset="utf-8">
        <!-- Viewport Meta Tag -->
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Modificar Eventos: Encuentros Nacionales </title>
+          <title>Modificar Eventos Nacionales</title>
        <!-- Bootstrap -->
           <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
        <!-- Main Style -->
@@ -139,8 +139,8 @@
                   <th scope="col"><center>Nombre</center></th>
                   <th scope="col"><center>Direccion</center></th>
                   <th scope="col"><center>Nucleo</center></th>
-                  <th scope="col"><center>Accion</center></th>
-                  <th scope="col"><center>Accion</center></th>
+                  <th scope="col"><center>Editar</center></th>
+                  <th scope="col"><center>Eliminar</center></th>
                 </tr>
               </thead>
 
@@ -163,84 +163,83 @@
               </tbody>
   </table>
 
-                    <div class="modal fade" id="modievent" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            <h3 class="modal-title" id="lineModalLabel">Modificar Evento</h3>
-                          </div>
+                             <!-- line modal -->
+            <div class="modal fade" id="modievent" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+          <div class="modal-content">
 
-                          <div class="modal-body"> 
-                            <!-- content goes here -->
-                            <form method="POST" action="/coord_eval/eventos/update">
-                              <input type="hidden" name="id" id="evento-id">
-                              <fieldset> 
-                                <p><b>Nombre del Evento:</b></p>
-                                <input style="width: 80%;" type="text" class="form-control" id="evento-nombre" name="nombre" required>
-                              </fieldset>
+            <div class="modal-header">
+                       <h3 class="modal-title" style="margin-left: 125px;">Modificar Evento</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
 
-                              <fieldset> 
-                                <br>
-                                <p><b>Dirección:</b></p>
-                                <input style="width: 80%;" type="text" class="form-control" name="direccion" id="evento-dir" required>
-                              </fieldset>
+          
 
-                              <!--<fieldset> 
-                                <br>
-                                <p><b>Fecha y Hora:</b></p>
-                                <input style="width: 80%;" type='text' class="form-control" name="fecha" id="datetimepicker1">
-                              </fieldset>-->
+          <div class="modal-body">
+      
+            <!-- content goes here -->
+              <form method="POST" action="/coord_eval/eventos/update">
+                <input type="hidden" name="id" id="evento-id">
+            
+             <fieldset> 
+        <p ><b>Nombre del Evento:</b></p>
+        <input style="width: 80%;" type="name" class="form-control" id="evento-nombre" name="nombre" required>
+        </fieldset>
+        <fieldset> 
+        <br><p ><b>Dirección:</b></p>
+        <input style="width: 80%;" type="" class="form-control" name="direccion" id="evento-dir" required>
+        </fieldset>
 
-                              <fieldset> 
-                                <br>
-                                <p><b>Nucleo:</b></p>
-                                <select style="width: 80%;" class="form-control" name="NucleoCodigo">
-                                  <%for(let j=0; j < Nucleos.length; j++){%>
-                                    <option value="<%=Nucleos[j].codigo%>"><%=Nucleos[j].nombre%></option>
-                                  <%}%>
-                                </select>
-                              </fieldset>
 
-                              <br>
+        <!--<fieldset> 
+        <br><p ><b>Fecha y Hora:</b></p>
+        <input style="width: 80%;" type='text' class="form-control"  id='datetimepicker1'>
+        </fieldset>-->
 
-                              <div class="form-inline" >
-                                <div class="form-group">
-                                  <br>
-                                  <p><b>Dirigido a:</b></p>
-                                  <input style="width: 80%;" type="text" class="form-control" id="evento-receptor" name="dirigido_a">
-                                </div>
+           <fieldset> 
+        <br><p ><b>Nucleo:</b></p>
+         <select style="width: 80%;" class="form-control"  name="NucleoCodigo" >
+               <%for(let j=0; j < Nucleos.length; j++){%>
+              <option value="<%=Nucleos[j].codigo%>"><%=Nucleos[j].nombre%></option>
+                <%}%>
+           
+      </select>
+        </fieldset><br>
 
-                                <div class="form-group">
-                                  <p for="cantidad"><b>Cantidad de Asistentes:</b></p>
-                                  <input style="width: 80%;" type="number" name="capacidad" class="form-control" min="0" max="500" id="evento-capacidad">
-                                </div>
-                              </div>
+      <form class="form-inline" >
+     <div class="form-group">
+     <br><p ><b>Dirigido a:</b></p>
+     
+     <input  style="width: 80%;" type="nombre" class="form-control" id="evento-receptor" name="dirigido_a">
+  
+     </div>
+    <div class="form-group">
+    <p for="cantidad"><b>Cantidad de Asistentes:</b></p>
+     <input style="width: 80%;" type="number" name="cantidad" class="form-control" min="0" max="500" id="evento-capacidad">
+    </div>
 
-                              <br>
+     </form>
 
-                              <div class="form-group">
-                                <p><b>Descripcion del Evento:</b></p>
-                                <textarea rows="4" class="form-control" style="width: 80%; border-radius: 2px" id="evento-descripcion" name="descripcion"></textarea>
-                              </div>
+
+
+     <br><div class="form-group"><p ><b>Descripcion del Evento:</b></p>
+            <textarea rows="4" class="form-control" id="evento-descripcion" name="descripcion" style="width: 80%; border-radius: 2px"></textarea>
+        </div>
+        
                 
-                              <!--<div class="form-group">
-                                <label for="exampleInputFile" >Afiche Formato PNG,JPG 390x218 </label>
-                                <br>
-                                <input  type="file" id="exampleInputFile">
-                              </div>-->
+                   <!--<div class="form-group">
+                <label for="exampleInputFile" >Afiche Formato PNG,JPG 390x218 </label><br>
+                <input  type="file" id="exampleInputFile">
+                
+              </div>-->
 
-                              <button type="submit" class="btn btn-default" style="margin-top:20px;background:#00aad4ff; border-radius: 2px;">Guardar</button>
-                            </form>
-                          </div>
+
+            <button type="submit" class="btn btn-default" style="margin-top:20px;background:#00aad4ff; border-radius: 2px;">Guardar</button>
+             </form>
+    </div>
                         </div>
                       </div>
-</div>
 
-                  
-       
-
-    </div>
 
   </center>
 </div>
@@ -280,7 +279,7 @@
                          
 
 
-    <div class="bottom"> <a href="#" class="settings"></a> </div>
+      <div class="bottom"> <a href="#" class="settings"></a> </div>
 
     <!-- -----------------------------------JavaScript & jQuery Plugins --------------------------------------------->
     <!-- jQuery Load -->
@@ -304,7 +303,7 @@
     <script src="/assets/js/jquery.appear.js"></script>
     <script src="/assets/js/jquery.vide.js"></script>
      <!-- All JS plugin Triggers -->
-    
+    <script src="/assets/js/main.js"></script>
 
       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
@@ -313,7 +312,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
-  <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="../../assets/js/bootstrap-datetimepicker.min.js"></script>
         <script type="text/javascript">
             $(function () {
                 $('#datetimepicker1').datetimepicker();
@@ -333,8 +332,9 @@
   })();
 
 </script>
-
-  <script src="/js/mymain.js"></script>
+ <fieldset disabled=""></fieldset>
+  <script src="/assets/js/mymain.js"></script>
+  
   </body>
 
 </html>
