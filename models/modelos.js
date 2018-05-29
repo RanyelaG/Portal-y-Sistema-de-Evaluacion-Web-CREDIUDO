@@ -295,12 +295,7 @@ const Evaluacion = sequelize.define('Evaluacion', {
 	module.exports.Institucion = Institucion;
 	module.exports.Evento_Institucion = Evento_Institucion;
 // _________________________________________
-//!Sincronizacion con la base de datos      !
-//!_________________________________________!
- sequelize.sync().then(function(){
-console.log('modelos creados')
 
-});
 
 
  
@@ -379,3 +374,10 @@ console.log('modelos creados')
 
 //Universidad.belongsToMany(Enc_nace, {through: 'Univ_enc'});
 //Enc_nace.belongsToMany(Universidad, {through: 'Univ_enc'});
+
+//!Sincronizacion con la base de datos      !
+//!_________________________________________!
+ sequelize.sync().then(function(){
+console.log('modelos creados')
+
+});
