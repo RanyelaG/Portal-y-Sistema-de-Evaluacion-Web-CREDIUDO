@@ -80,26 +80,6 @@ router.post('/add', function(req, res){
 			}
 		}
 	});
-
-
-	/*models.Evento.create({
-		nombre: req.body.nombre,
-		direccion: req.body.direccion,
-		dirigido_a: req.body.dirigido_a,
-		fecha: req.body.fecha,
-		capacidad: req.body.capacidad,
-		tipo: req.body.tipo,
-		descripcion: req.body.descripcion,
-		NucleoCodigo: req.body.NucleoCodigo,
-		urlImg: req.file.filename
-	}).then(() => {
-		models.Nucleo.findAll({
-
-		}).then(Nucleo => {
-			res.render('coor_evaluacion/evento/index', { Nucleos:Nucleo, fino:'' })	
-		})
-		//res.redirect('/coord_eval/eventos/add')
-	})*/
 })
 
 router.get('/ver_instituciones', (req,res) => {
@@ -137,20 +117,68 @@ router.get('/edit', (req, res) => {
 })
 
 router.post('/update', (req,res) => {
-	models.Evento.update({
-		nombre: req.body.nombre,
-		direccion: req.body.direccion,
-		dirigido_a: req.body.dirigido_a,
-		//fecha: req.body.fecha,
-		capacidad: req.body.capacidad,
-		tipo: 'nacional',
-		descripcion: req.body.descripcion,
-		NucleoCodigo: req.body.NucleoCodigo
-	}, {
-		where: { id: req.body.id }
-	}).then(Evento => {
-		res.redirect('/coord_eval/eventos/edit')
-	})
+	//Set storage Engine
+	const storage = multer.diskStorage({
+		destination: './public/uploads/eventos',
+		filename: function(req, file, cb){
+			cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+		}
+	});
+
+	//Init Upload
+	const upload = multer({
+		storage: storage, 
+		limits: { fileSize: 1000000 },
+		fileFilter: function(req, file, cb){
+			checkFileType(file, cb);
+		}
+	}).single('urlImg');
+
+	// Check File Type
+	function checkFileType(file, cb){
+		//allowed ext
+		const filetypes = /jpeg|jpg|png|gif/;
+
+		//Check ext
+		const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+		//check mime
+		const mimetype = filetypes.test(file.mimetype);
+
+		if(mimetype && extname){
+			return cb(null,true);
+		} else{
+			cb('Error: Images Only!');
+		}
+	}
+
+	upload(req,res,(err) => {
+		if(err){
+			res.render('hola', { msg: err });
+		} else{
+			if(req.file == undefined){
+				console.log(req.file);
+				res.render('aaaaaa', { msg: 'Error: Ningun Archivo Seleccionado!' });
+			} else{
+				console.log(req.file.filename);
+				models.Evento.update({
+					nombre: req.body.nombre,
+					direccion: req.body.direccion,
+					dirigido_a: req.body.dirigido_a,
+					fecha: req.body.fecha,
+					capacidad: req.body.capacidad,
+					tipo: 'nacional',
+					descripcion: req.body.descripcion,
+					NucleoCodigo: req.body.NucleoCodigo,
+					urlImg: req.file.filename
+				}, {
+					where: { id: req.body.id }
+				}).then(Evento => {
+					res.redirect('/coord_eval/eventos/edit')
+				})
+			}
+		}
+	});
 })
 
 router.get('/delete/:id', (req,res) => {

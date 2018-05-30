@@ -487,8 +487,8 @@
                     </div>
                 </div>
             </div>
-                        <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
-                <div class="card card-inverse card-info">
+            <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
+              <div class="card card-inverse card-info">
                     <img class="card-img-top" src="../assets/img/noti1.jpg">
                     <div class="card-block" style="background:#f2f2f2ff;">
                         <figure class="profile profile-inline">
@@ -503,198 +503,177 @@
                         <small style="color: black;">Last updated 3 mins ago</small>
                         <a href="detalle"><button class="btn btn-info float-right btn-xs" style="border-radius: 2px;margin-left: 35px; background:#2a7fffff;">Ver Mas</button></a>
                     </div>
-                </div>
-            </div>
-                        <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
-                <div class="card card-inverse card-info">
-                    <img class="card-img-top" src="../assets/img/noti1.jpg">
-                    <div class="card-block" style="background:#f2f2f2ff;">
-                        <figure class="profile profile-inline">
-                            <img src="../assets/img/noti1.jpg" class="profile-avatar" alt="">
-                        </figure>
-                        <h4 class="card-title" style="color: black;">Junta Anual CREDIUDO</h4>
-                        <div class="card-text" style="color: black;">
-                            Reunion que se llevo a cabo el pasado mes de marzo.
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small style="color: black;">Last updated 3 mins ago</small>
-                        <a href="detalle"><button class="btn btn-info float-right btn-xs" style="border-radius: 2px;margin-left: 35px; background:#2a7fffff;">Ver Mas</button></a>
-                    </div>
-                </div>
-            </div>
-
-                        <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
-                <div class="card card-inverse card-info">
-                    <img class="card-img-top" src="../assets/img/noti1.jpg">
-                    <div class="card-block" style="background:#f2f2f2ff;">
-                        <figure class="profile profile-inline">
-                            <img src="../assets/img/noti1.jpg" class="profile-avatar" alt="">
-                        </figure>
-                        <h4 class="card-title" style="color: black;">Junta Anual CREDIUDO</h4>
-                        <div class="card-text" style="color: black;">
-                            Reunion que se llevo a cabo el pasado mes de marzo.
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <small style="color: black;">Last updated 3 mins ago</small>
-                        <a href="detalle"><button class="btn btn-info float-right btn-xs" style="border-radius: 2px;margin-left: 35px; background: #2a7fffff;">Ver Mas</button></a>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-</div>
-
-</div>
-
-
-  <!-- SECCION DONDE VA LA INFORMACION REFERENTE A LOS EVENTOS PROGRAMADOS DE CREDIUDO-->
-
-  <div class="container" >
-    <div class="event" style="background: #f9f9f9ff;">
-      <div class="container-fliud">
-        <div class="wrapper row">
-          <div class="preview col-md-6" style="margin-top: 60px;">
-            
-            <div class="preview-pic tab-content">
-              <div class="tab-pane active" id="pic-1">
-                <img style="margin-top: 10px;" src="../../uploads/eventos/<%=dataEvento.urlImg%>" class="img-thumbnail"/>
               </div>
             </div>
-         
-            
-          </div>
-          <div class="details col-md-6" style="margin-top: 30px;">
-            <center><h3 class="product-title"><%=dataEvento.nombre%></h3></center>
-           
-            <p style="margin-top: 30px;" class="product-description"><%=dataEvento.descripcion%></a></p>
-            <p>Dirigido a: <a style="color: black;"><%=dataEvento.dirigido_a%></a></h5>
-            <p>Tipo de Evento: <a style="color: black;"><%=dataEvento.tipo%></a></p>
-            <p>Fecha: <a style="color: black;"><%=dataEvento.fecha%></a></p>
-            <p>Capacidad de Asistentes: <a style="color: black;"><%=dataEvento.capacidad%> Personas</a></p>
 
-       <div class=" col-md-6" id="map" style="height: 150px; width: 40%; top:-110px; left:270px; position: relative;">
+            <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
+              <div class="card card-inverse card-info">
+                <img class="card-img-top" src="../assets/img/noti1.jpg">
+                <div class="card-block" style="background:#f2f2f2ff;">
+                  <figure class="profile profile-inline">
+                    <img src="../assets/img/noti1.jpg" class="profile-avatar" alt="">
+                  </figure>
+                  <h4 class="card-title" style="color: black;">Junta Anual CREDIUDO</h4>
+                  <div class="card-text" style="color: black;">
+                    Reunion que se llevo a cabo el pasado mes de marzo.
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <small style="color: black;">Last updated 3 mins ago</small>
+                    <a href="detalle"><button class="btn btn-info float-right btn-xs" style="border-radius: 2px;margin-left: 35px; background:#2a7fffff;">Ver Mas</button></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4 col-md-4 col-lg-3 mt-4">
+              <div class="card card-inverse card-info">
+                <img class="card-img-top" src="../assets/img/noti1.jpg">
+                  <div class="card-block" style="background:#f2f2f2ff;">
+                    <figure class="profile profile-inline">
+                      <img src="../assets/img/noti1.jpg" class="profile-avatar" alt="">
+                    </figure>
                     
-            <script>
-  function initMap() {
-    var uluru = {lat: 8.0000000, lng: -66.0000000};
-    var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: uluru
-      });
-     var marker = new google.maps.Marker({
-      position: uluru,
-       map: map
-       });
-  }
-</script>
-
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkvKN2zO7jw_h2M3jtbY7LTycXQP7MJKY&callback=initMap">
-</script>
-
-               </div>
-    
-            <div class="action">
-              <%if( dataEvento.tipo == 'nacional' ){%>
-                <button class="btn btn-info float-right btn-xs add-evento" type="button" data-toggle="modal" data-target="#encuentronacionales" data-id="<%=dataEvento.id%>" style="border-radius: 2px; margin-left:30px;position: relative;margin-top: -260px; ">
-                  Registrarme
-                </button>
-              <%} else{%>
-                <button class="btn btn-warning float-right btn-xs" type="button" data-toggle="modal" data-target="#tipodeevento" style="border-radius: 2px; margin-left:30px;position: relative;margin-top: -260px; ">
-                  Registrarme
-                </button>
-              <%}%>
-
-
-              <button class="btn btn-info float-right btn-xs" type="button" style="border-radius: 2px; margin-left:10px;position: relative;margin-top: -260px;">Mas Eventos</button>
-
-
+                    <h4 class="card-title" style="color: black;">Junta Anual CREDIUDO</h4>
+                    <div class="card-text" style="color: black;">
+                      Reunion que se llevo a cabo el pasado mes de marzo.
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <small style="color: black;">Last updated 3 mins ago</small>
+                    <a href="detalle"><button class="btn btn-info float-right btn-xs" style="border-radius: 2px;margin-left: 35px; background: #2a7fffff;">Ver Mas</button></a>
+                  </div>
+              </div>
             </div>
-          </div>
-
-<!-- AKI ESTA EL MODAL DE REGISTRO DE ENCUENTROS NACIONALES-->
-                   <!--inicio del modal-->
-    <div class="modal fade" id="encuentronacionales" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-            </button>
-            <center>
-              <h3 class="modal-title" id="lineModalLabel">Inscripcion</h3>
-              <p>Encuentros Nacionales</p>
-            </center>
-          </div>
-          
-          <form method="POST" action="/institucion/add-evento">
-            <input type="hidden" name="eventoId" id="evento-id">
-            <div class="modal-body">
-              <!-- content goes here -->
-              <center>
-                <div class="form-group">
-                  <p for="nombre">Nombre</p>
-                  <input style="width: 400px;" type="text" name="nombre" placeholder="Nombre de Institución" class="form-control" autofocus>
-                </div>
-              </center>
-
-              <center>
-                <div class="form-inline" >
-                  <div class="form-group">
-                    <p>Representante</p>
-                    <input  type="text" name="representante" placeholder="Nombre del Representante" class="form-control">
-                  </div>
-                  
-                  <div class="form-group">
-                    <p >Rif</p>
-                    <input  type="text" name="rif" placeholder="Ingrese su RIF" class="form-control">
-                  </div>
-                </div>
-              </center>
-
-              <br>
-              <center>
-                <div class="form-group">
-                  <p for="email">Correo</p>
-                  <input style="width: 400px;" type="email" name="email" placeholder="ejemplo@ejemplo.com" class="form-control">
-                </div>
-              </center>
-
-              <center>
-                <div class="form-inline" >
-                  <div class="form-group">
-                    <p>Telefono Celular</p>
-                    <input  type="text" name="tmovil" placeholder="0416-1234567" class="form-control">
-                  </div>
-                  
-                  <div class="form-group">
-                    <p >Telefono de Habitacion</p>
-                    <input  type="text" name="thabitacion" placeholder="0293-1234567" class="form-control">
-                  </div>
-                </div>
-              </center>
-            </div>
-
-            <div class="modal-footer">
-              <center>
-                <button class="btn btn-primary">Inscribirme</button>
-                    <!--<input type="radio" name="options" id="option1" autocomplete="off" checked> Inscribirme--> 
-              </center> 
-            </div>
-          </form>
         </div>
-      </div>
-    </div><!--fin del modal-->
+</div>
 
-<!--FIN DEL MODAL ENCUENTROS NACIONALES-->
+</div>
+  <!-- SECCION DONDE VA LA INFORMACION REFERENTE A LOS EVENTOS PROGRAMADOS DE CREDIUDO-->
+    <div class="container" >
+      <div class="event" style="background: #f9f9f9ff;">
+        <div class="container-fliud">
+          <div class="wrapper row">
+            <div class="preview col-md-6" style="margin-top: 60px;">
+              <div class="preview-pic tab-content">
+                <div class="tab-pane active" id="pic-1">
+                  <img style="margin-top: 10px;" src="../../uploads/eventos/<%=dataEvento.urlImg%>" class="img-thumbnail"/>
+                </div>
+              </div>
+            </div>
+            <div class="details col-md-6" style="margin-top: 30px;">
+              <center><h3 class="product-title"><%=dataEvento.nombre%></h3></center>
+              <p style="margin-top: 30px;" class="product-description"><%=dataEvento.descripcion%></a></p>
+              <p>Dirigido a: <a style="color: black;"><%=dataEvento.dirigido_a%></a></h5>
+              <p>Tipo de Evento: <a style="color: black;"><%=dataEvento.tipo%></a></p>
+              <p>Fecha: <a style="color: black;"><%=dataEvento.fecha%></a></p>
+              <p>Capacidad de Asistentes: <a style="color: black;"><%=dataEvento.capacidad%> Personas</a></p>
+              <div class=" col-md-6" id="map" style="height: 150px; width: 40%; top:-110px; left:270px; position: relative;">
+                <script>
+                  function initMap() {
+                  var uluru = {lat: 8.0000000, lng: -66.0000000};
+                  var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 4,
+                  center: uluru
+                    });
+                   var marker = new google.maps.Marker({
+                    position: uluru,
+                     map: map
+                     });
+                  }
+                </script>
 
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkvKN2zO7jw_h2M3jtbY7LTycXQP7MJKY&callback=initMap"></script>
+              </div>
+    
+              <div class="action">
+                <%if( dataEvento.tipo == 'nacional' ){%>
+                  <button class="btn btn-info float-right btn-xs add-evento" type="button" data-toggle="modal" data-target="#encuentronacionales" data-id="<%=dataEvento.id%>" style="border-radius: 2px; margin-left:30px;position: relative;margin-top: -260px; ">
+                    Registrarme
+                  </button>
+                <%} else{%>
+                  <button class="btn btn-warning float-right btn-xs" type="button" data-toggle="modal" data-target="#otros_encuentros" style="border-radius: 2px; margin-left:30px;position: relative;margin-top: -260px; ">
+                    Registrarme
+                  </button>
+                  <%}%>
 
+                  <button class="btn btn-info float-right btn-xs" type="button" style="border-radius: 2px; margin-left:10px;position: relative;margin-top: -260px;">Mas Eventos
+                  </button>
+              </div>
+            </div>
+            <!-- AKI ESTA EL MODAL DE REGISTRO DE ENCUENTROS NACIONALES-->
+              <!--inicio del modal-->
+              <div class="modal fade" id="encuentronacionales" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                          <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                        <center>
+                          <h3 class="modal-title" id="lineModalLabel">Inscripcion</h3>
+                          <p>Encuentros Nacionales</p>
+                        </center>
+                      </div>
+                      
+                      <form method="POST" action="/institucion/add-evento">
+                        <input type="hidden" name="eventoId" id="evento-id">
+                        <div class="modal-body">
+                          <!-- content goes here -->
+                          <center>
+                            <div class="form-group">
+                              <p for="nombre">Nombre</p>
+                              <input style="width: 400px;" type="text" name="nombre" placeholder="Nombre de Institución" class="form-control" autofocus>
+                            </div>
+                          </center>
 
+                          <center>
+                            <div class="form-inline" >
+                              <div class="form-group">
+                                <p>Representante</p>
+                                <input  type="text" name="representante" placeholder="Nombre del Representante" class="form-control">
+                              </div>
+                              
+                              <div class="form-group">
+                                <p >Rif</p>
+                                <input  type="text" name="rif" placeholder="Ingrese su RIF" class="form-control">
+                              </div>
+                            </div>
+                          </center>
 
+                          <br>
+                          <center>
+                            <div class="form-group">
+                              <p for="email">Correo</p>
+                              <input style="width: 400px;" type="email" name="email" placeholder="ejemplo@ejemplo.com" class="form-control">
+                            </div>
+                          </center>
 
+                          <center>
+                            <div class="form-inline" >
+                              <div class="form-group">
+                                <p>Telefono Celular</p>
+                                <input  type="text" name="tmovil" placeholder="0416-1234567" class="form-control">
+                              </div>
+                              
+                              <div class="form-group">
+                                <p >Telefono de Habitacion</p>
+                                <input  type="text" name="thabitacion" placeholder="0293-1234567" class="form-control">
+                              </div>
+                            </div>
+                          </center>
+                        </div>
+
+                        <div class="modal-footer">
+                          <center>
+                            <button class="btn btn-primary">Inscribirme</button>
+                                <!--<input type="radio" name="options" id="option1" autocomplete="off" checked> Inscribirme--> 
+                          </center> 
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+              </div><!--fin del modal-->
+            <!--FIN DEL MODAL ENCUENTROS NACIONALES-->
         </div>
       </div>
     </div>
@@ -707,7 +686,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkvKN2zO7jw_h2M3jtbY7LTyc
    <!-- Footer Section -->
    <footer >
     <div class="container" >
-
             <div class="footer-widget col-md-3 col-xs-12 wow fadeIn">
             <h5 class="small-title" style="top: 30px; text-align: center;">
               Ubicanos en las Redes Sociales
