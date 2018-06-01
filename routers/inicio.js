@@ -33,6 +33,7 @@ if(!req.body.cedula || !req.body.password){
         console.log('cedula ingresada en ', req.body.cedula)
         req.session.cedula = req.body.cedula;
         req.session.nombre = Personal.nombre;
+        req.session.apellido = Personal.apellido;
         models.Cargo.findOne({
           where: {cedula_personal: req.body.cedula}
         })

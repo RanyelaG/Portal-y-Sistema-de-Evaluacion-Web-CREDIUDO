@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('CREDIUDO', 'postgres', '123456',
 {
 	
-	host: 'localhost',
+	host: '127.0.0.1',
 	dialect: 'postgres'
 });
 
@@ -264,6 +264,56 @@ const Evaluacion = sequelize.define('Evaluacion', {
   fin: Sequelize.DATE
 });
 
+
+const Instrument_e = sequelize.define('Instrument_e', {
+  name: Sequelize.STRING,
+  category: Sequelize.STRING,
+  t_instrument: Sequelize.STRING
+});
+
+module.exports.Instrument_e = Instrument_e;
+
+const Factor_e = sequelize.define('Factor_e', {
+  nameFactor: Sequelize.STRING
+});
+
+module.exports.Factor_e = Factor_e;
+
+const Item_e = sequelize.define('Item_e', {
+  name: Sequelize.STRING,
+  calificacion: Sequelize.INTEGER
+});
+
+module.exports.Item_e = Item_e;
+
+const Examen = sequelize.define('Examen', {
+  category: Sequelize.STRING
+});
+
+module.exports.Examen = Examen;
+
+
+Examen.belongsTo(Instrument_e)
+Examen.belongsTo(Personal)
+
+/*===================FIN MODELOS Y TABLAS========================*/
+//asocion de instrumentos de Evaluacion aplicado al personal udo.
+Factor_e.hasMany(Item_e)
+Item_e.belongsTo(Factor_e)
+
+Instrument_e.hasMany(Item_e)
+Item_e.belongsTo(Instrument_e)
+
+Instrument_e.hasMany(Factor_e)
+Factor_e.belongsTo(Instrument_e)
+
+
+
+
+
+
+
+
 	//RELACIONES
 	Factor.hasMany(Item, { onDelete:'cascade' }) //un factor tienen muchos items
 	Item.belongsTo(Factor) //un item pertenece a un factor
@@ -295,7 +345,12 @@ const Evaluacion = sequelize.define('Evaluacion', {
 	module.exports.Institucion = Institucion;
 	module.exports.Evento_Institucion = Evento_Institucion;
 // _________________________________________
+//!Sincronizacion con la base de datos      !
+//!_________________________________________!
+ sequelize.sync().then(function(){
+console.log('modelos creados')
 
+});
 
 
  
@@ -374,10 +429,3 @@ const Evaluacion = sequelize.define('Evaluacion', {
 
 //Universidad.belongsToMany(Enc_nace, {through: 'Univ_enc'});
 //Enc_nace.belongsToMany(Universidad, {through: 'Univ_enc'});
-
-//!Sincronizacion con la base de datos      !
-//!_________________________________________!
- sequelize.sync().then(function(){
-console.log('modelos creados')
-
-});

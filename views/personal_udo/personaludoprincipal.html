@@ -6,7 +6,7 @@
           <meta charset="utf-8">
        <!-- Viewport Meta Tag -->
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Perfil Personal UDO</title>
+          <title>Perfil Personal</title>
        <!-- Bootstrap -->
           <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
        <!-- Main Style -->
@@ -67,59 +67,7 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 40px;">
-                     <a style="color:black;" class="nav-link active" href="Crear-usuario-perfil-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                      INICIO
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 80px;">
-                     <a style="color:black;" class="nav-link active" href="modificar-portal.html" role="button" aria-haspopup="true" aria-expanded="false">
-                       REALIZAR EVALUACION 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left:90px;">
-                    <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                    COMPARACION DE RESULTADOS DE EVALUACION
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-100px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp PERSONAL UDO
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+<%- include('../partials/personal-udo/nav-personal.html')%>
 </section>
 </header>
 
@@ -127,38 +75,6 @@
 
   <!-----------------------------------Seleccionar la vizualizacion de los diferentes reportes de las evaluaciones -->
 
-
-
-
- <div class="container">
-        <br>
-        <div class="row">
-          <div class="col-md-10 col-md-offset-1" style="margin-top: 30px;">
-
-            <center><form class="form-inline" >
-                  <div class="form-group">
-                  
-           <div class="form-group tituloselect">
-              <select class="form-control enlinea multiple" style="width: auto;margin-bottom: 10px;">
-              <option value="" style="white-space: pre-wrap; width: 50px;">selesciones tipo de evaluacion</option>
-              <option value="1" style="white-space: pre-wrap; width: 50px;">evluacion jefe-subordinado</option>
-              <option value="2" style="white-space: pre-wrap; width: 50px;">evluacion jefe-subordinado</option>
-              <option value="3" style="white-space: pre-wrap; width: 50px;">auto-evaluacion</option>
-              </select>
-
-            </div>
-   
-                </div>
-                 <div class="form-group">
-        
-                <a href=" " class="btn btn-primary" style="margin-top: -10px;border-radius: 2px;background:#2a7fffff;">Historial de Evaluaciones</a>
- 
-                </div>
-
-                </form></center>
-            </div>
-          </div>
-        </div>
 
 <!-- seccion de botones final-->
 
@@ -172,7 +88,7 @@
     <div class="row">
       <div class="main-section text-center" style="border-radius: 5px;width: 110%;border-color:#ccccccff;">
           <div class="p">
-              <div class=" profile-header" style="background:#00d4aaff;width: 100%;border-radius: 5px;"></div>
+              <div class=" profile-header" style="background:#00aad4ff;width: 100%;border-radius: 5px;"></div>
               <center>
                  <div class="user-detail">
                   <img src="assets/img/man1.png" class="rounded-circle img-thumbnail">
@@ -183,9 +99,9 @@
           </div>
                   <div class="alinearcent1 tituloselect propitext" style="margin-top: -55px;">Datos Personales</div>
                   <div class="alinearcuadrito">
-                    <h12 class="alineartextcuadrito salto">bienvenido(a): @empleado</h12>
-                    <h12 class="alineartextcuadrito">Dependencia: </h12>
-                    <h12 class="alineartextcuadrito">Nucleo: </h12>
+                    <h12 class="alineartextcuadrito salto">bienvenido(a): <%=session.nombre%> <%=session.apellido%></h12>
+                    <h12 class="alineartextcuadrito">Unidad: <%=Unidad.nombre%> </h12>
+                    <h12 class="alineartextcuadrito">Nucleo: <%=Nucleo.nombre%> </h12>
                   </div> 
       </div>
     </div>
@@ -200,7 +116,7 @@
     <div class="row">
       <div class=" main-section text-center" style="border-radius: 5px;width: 110%;border-color:#ccccccff;">
           <div class="p">
-              <div class=" profile-header" style="background:#99ff55ff;width: 100%;border-radius: 5px;"></div>
+              <div class=" profile-header" style="background:#5fd3bcff;width: 100%;border-radius: 5px;"></div>
               <center>
                  <div class=" user-detail">
                   <img src="assets/img/man3.png" class="rounded-circle img-thumbnail">
@@ -223,7 +139,17 @@
 
 </div>
 
+<%if(!Eva_jefe && !Eva_sub && !Eva_auto){%>
+           <div id="rectangulo" class="container col-7 ml-sm-auto col-lg-7 px-4" style="background: #0088aaff; border-radius: 2px; margin-left: 50px; width: 68.7%">
+  <div id="headingOne" style="height: auto;">
+         <span style="margin: auto;color: white; ">No Hay Evaluaciones Activas en este Momento
+         </span>
+       
+         </div>
 
+        
+      </div>
+      <%}else{%>    
 
  
      <div id="rectangulo" class="container col-7 ml-sm-auto col-lg-7 px-4" style="background: #00aad4ff; border-radius: 2px; margin-left: 50px; width: 68.7%">
@@ -232,8 +158,10 @@
          </span>
        
          </div>
-      </div>
-           
+     </div>
+      <%}%>
+
+ 
 
      
     
@@ -250,51 +178,61 @@
           
               <div class="container">
                   <div class="row">
+                     <%if(Eva_jefe){%>
+                    <%if(jefe_sub){%>
+                 
                      <div class="col-md-6" style="">
                       <center>
                         <div class=" user-detail1">
-                            <img src="assets/img/eva1.png" class="rounded-circle img-thumbnail1">
+                            <img src="assets/img/jefe.png" class=" img-thumbnail1">
                         </div>
-                        <div>
-                           <input class="btn btn-primary botones2" type="button" value="Evaluacion Jefe-Subordinado" style="background:#2a7fffff;color: white; white-space: normal; ">
+                        <div> 
+                          <form action="/evaluar" method="post">
+                            <input type="hidden" name="id_instrumento" value="<%=jefe_sub.id%>">
+                           <input class="btn botones2" type="submit" value="Evaluacion Jefe-Subordinado" style="background:#00aad4ff;color: white; white-space: normal;border-radius: 2px; ">
+                           </form>
                         </div>
-                       
                       </center>
-                        
-
-                     </div> 
-            
+                    </div> 
+                    <%}}%>
+                    <%if(Eva_sub){%>
+                     <%if(sub_jefe){%>
                      <div class="col-md-6">
                       <center>
                         <div class=" user-detail1">
-                            <img src="assets/img/eva2.png" class="rounded-circle img-thumbnail1">
+                         <img src="assets/img/subordinado.png" class=" img-thumbnail1">
                         </div>
                         <div>
-                          <input class="btn btn-primary botones2" type="button" value="Evaluacion Subordinado-Jefe" style="background:#2a7fffff;color: white; white-space: normal; ">
+                          <form action="/evaluar" method="post">
+                          <input type="hidden" name="id_instrumento" value="<%=sub_jefe.id%>">
+                          <input class="btn botones2" type="submit" value="Evaluacion Subordinado-Jefe" style="background:#00aad4ff;color: white; white-space: normal; border-radius: 2px;">
+                        </form>
                         </div>
-                        
                       </center>
-                        
                     </div>
-                     
+                      <%}}%>
                  
                   </div>
                 </div>
 
                 <div class="container">
+                  <%if(Eva_auto){%>
+                  <%if(auto){%>
                   <div class="row">
                      <div class="col-md-6 col-md-offset-3" style="">
                       <center>              
-                      <div class=" user-detail1">
-                            <img src="assets/img/eva3.png" class="rounded-circle img-thumbnail1">
+                      <div class=" ">
+                            <img src="assets/img/auto.png" class="img-thumbnail1">
                         </div>
                         <div class=" ml-sm-auto">
-                          <input class="btn btn-primary botones2" type="button" value="Auto-Evaluacion" style="background:#2a7fffff;color: white; text-align: justify-all; white-space: normal;">
-                          </div>
+                        <form action="/evaluar" method="post">
+                          <input type="hidden" name="id_instrumento" value="<%=auto.id%>">
+                          <input class="btn  botones2" type="submit" value="Auto-Evaluacion" style="background:#00aad4ff;color: white; text-align: justify-all; white-space: normal;border-radius: 2px;">
+                        </form>
+                        </div>
                        </center>
-                        
-                     </div>                     
-                     
+                    </div>                     
+                    <%}}%> 
                   </div>
                 </div>
 

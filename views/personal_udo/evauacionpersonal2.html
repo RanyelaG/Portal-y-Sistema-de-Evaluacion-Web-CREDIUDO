@@ -6,7 +6,7 @@
           <meta charset="utf-8">
        <!-- Viewport Meta Tag -->
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Evaluacion Personal </title>
+          <title>Evaluacion Personal 2</title>
        <!-- Bootstrap -->
           <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
        <!-- Main Style -->
@@ -79,7 +79,7 @@
 
 
 
-          <!--<div class="container">
+          <div class="container">
         <br>
         <div class="row">
           <div class="col-md-10 col-md-offset-1" style="margin-top: 20px;">
@@ -89,7 +89,7 @@
             <div class="form-group">       
               <br> 
               <select class="form-control enlinea" style="width: 450px;margin-bottom: 10px;" name="buscar">
-                <option value="pers_admin">Evaluacion a las que Califica el Usuario</option>
+                <option value="pers_admin">Nombre de los Subordinados a Evaluar</option>
                 
               </select>
             </div>
@@ -107,7 +107,7 @@
 
             </div>
           </div>
-        </div>-->
+        </div>
 
 <!-- seccion de botones final-->
 
@@ -219,7 +219,7 @@
           <form  action="/evaluar/evaluar" method="post" style="display:inline">
           
           <input type="hidden"   value="<%=dataFactor[i].id%>"></input>
-     <button class="btn botones1" name="factor" type="submit" style="background:#ff7f2adc;"  value="<%=dataFactor[i].id%>"><%=dataFactor[i].nameFactor%> </button>
+     <button class="btn botones1" name="factor" type="submit" style="background:#5599ffff;"  value="<%=dataFactor[i].id%>"><%=dataFactor[i].nameFactor%> </button>
         
         <%}}%> 
         </div></center>
@@ -647,11 +647,11 @@
          <input type="hidden" name="cedula" value="<%= dataPersonal.cedula%>">
          <input type="hidden" name="id_instrument_e" value="<%= dataInstrument_e.id%>">
            <%if(inicio==1){ %>
-           <center><fieldset disabled>
+           <fieldset disabled>
               <input class="btn btn-primary botones2"  type="submit" value="Finalizar Evaluacion" style="margin-left: 10px;background:#00aad4ff; color: white;">
-           </fieldset></center>
+           </fieldset>
          <%}else{%>
-          <center><input class="btn btn-primary botones2"  type="submit" value="Finalizar Evaluacion" style="margin-left: 10px;background:#00aad4ff; color: white;"></center>
+          <input class="btn btn-primary botones2"  type="submit" value="Finalizar Evaluacion" style="margin-left: 10px;background:#00aad4ff; color: white;">
           <%}%>
        </form>
       </div>
