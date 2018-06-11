@@ -68,13 +68,13 @@ var res = pdf.autoTableHtmlToJson(document.getElementById("basic-table"));
     margin: {top: 53, right: 15, bottom: 10, left: 15}
 });
 
+
+
   /*pdf.save('Formato instrumento de evaluación ' + filename + '.pdf');*/
 
   pdf.save('CREDIUDO Instrumento de evaluación.pdf');
 
 });
-
-
 
 
 

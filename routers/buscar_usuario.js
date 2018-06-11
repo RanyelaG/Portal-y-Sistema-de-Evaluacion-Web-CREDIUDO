@@ -120,23 +120,19 @@ router.get('/modificar_usuario', function(req, res){
 */
 
 router.get('/modificar_usuario', function(req, res){
-console.log('estamos aqui')
-      models.Cargo.findAll({ where:{codigo_unidad:'12', cedula_personal:{[Op.ne]: null }}})
+
+      models.Cargo.findAll({ include: [models.Personal], where:{codigo_unidad:'12',[Op.and]:{ cedula_personal:{[Op.ne]: null}}}})
       .then(function(Cargo){
-console.log(Cargo)
-        models.Cargo.findAll({ include: [models.Personal], where:{cedula_personal:{[Op.ne]: null }}
-        })
-        .then(function(Cargo1){
-          console.log(Cargo1)
-          console
-          res.render('./usuario_master/modificar-usuario-master', {dataCargo:Cargo1, session: req.session})
+      
+          
+          res.render('./usuario_master/modificar-usuario-master', {dataCargo:Cargo, session: req.session})
         
         })
       
       })
    
     
-     })
+  
   
 //================================================================================
 router.post('/modificar', function(req, res){
@@ -147,8 +143,8 @@ router.post('/modificar', function(req, res){
     direccion: req.body.direccion
    },{where: {cedula: req.body.cedula}})
 .then(function(Personal){
-   models.Cargo.findAll({include: [models.Personal], where:{codigo_unidad:'12', cedula_personal:{[Op.ne]: null}}})
-     .then(function(Cargo){
+  models.Cargo.findAll({ include: [models.Personal], where:{codigo_unidad:'12',[Op.and]:{ cedula_personal:{[Op.ne]: null}}}})
+       .then(function(Cargo){
       models.Personal.findOne({})
       .then(function(Personal){
       res.render('./usuario_master/modificar-usuario-master',{ dataCargo:Cargo, session: req.session})
@@ -161,8 +157,8 @@ router.post('/modificar', function(req, res){
 //================================================================= eliminar usuario
 
 router.get('/eliminar_usuario', function(req, res){
-models.Cargo.findAll({include: [models.Personal], where:{codigo_unidad:'12', cedula_personal:{[Op.ne]: null}}})
-     .then(function(Cargo){
+   models.Cargo.findAll({ include: [models.Personal], where:{codigo_unidad:'12',[Op.and]:{ cedula_personal:{[Op.ne]: null}, [Op.and]:{ referencia:{[Op.ne]:'jefe' }}}}})
+    .then(function(Cargo){
       models.Personal.findOne({})
       .then(function(Personal){
       res.render('./usuario_master/eliminar-usuario-perfil-master',{ dataCargo:Cargo ,session: req.session})
@@ -178,8 +174,8 @@ cedula_personal: null
   },{where: {cedula_personal: req.params.cedula_personal}})
   .then(function(Cargo){
 
-models.Cargo.findAll({include: [models.Personal], where:{codigo_unidad:'12', cedula_personal:{[Op.ne]: null}}})
-     .then(function(Cargo){
+     models.Cargo.findAll({ include: [models.Personal], where:{codigo_unidad:'12',[Op.and]:{ cedula_personal:{[Op.ne]: null}, [Op.and]:{ referencia:{[Op.ne]:'jefe' }}}}})
+       .then(function(Cargo){
       models.Personal.findOne({})
       .then(function(Personal){
       res.render('./usuario_master/eliminar-usuario-perfil-master',{ dataCargo:Cargo , session: req.session})

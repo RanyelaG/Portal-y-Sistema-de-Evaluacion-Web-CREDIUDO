@@ -20,8 +20,19 @@ if(!req.body.cedula || !req.body.password){
    console.log('clave es ', req.body.password)
 
 	console.log('estas en la primera parte')
-    res.render('inicio')
-  } else {
+   
+
+        models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
+    .then(function(Evaluacion){
+      models.Evaluacion.findOne({where: {tipo:'centros'}})
+      .then(function(Evaluacion1){
+        var backUrl=req.header('referer')
+        res.redirect(backUrl, 302,{session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
+              //{session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1}
+        })
+})
+
+} else {
       models.Personal.findOne({ where: {cedula: req.body.cedula} })
       .then(function(Personal){
         let secret = Personal.salt
@@ -38,23 +49,30 @@ if(!req.body.cedula || !req.body.password){
           where: {cedula_personal: req.body.cedula}
         })
         .then(function(Cargo){
-          if(Cargo.codigo_unidad='12'){
-            console.log('el personal es de crediudo')}
-
+        req.session.cargo =Cargo.descripcion;
+        models.Unidad.findOne({
+          where:{codigo:Cargo.codigo_unidad}
         })
-        .catch(function(){
-          console.log(' el personal no es crediudo')
-        })
+        .then(function(Unidad){
+        req.session.unidad=Unidad.nombre;
+        models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo}})
+        .then(function(Nucleo){
+        req.session.nucleo= Nucleo.nombre;
+    
 
-        models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
+    models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
     .then(function(Evaluacion){
       models.Evaluacion.findOne({where: {tipo:'centros'}})
       .then(function(Evaluacion1){
         var backUrl=req.header('referer')
         res.redirect(backUrl, 302,{session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
               //{session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1}
+        })      
       })
     })
+  })
+})
+
         } else {
          console.log('error al iniciar sesion 1')
         }

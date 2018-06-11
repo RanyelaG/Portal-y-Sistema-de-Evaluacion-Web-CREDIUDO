@@ -268,27 +268,37 @@ top:4px;
 }
 
 .btn-secondary1 {
-    color: #373a3c;
-    background-color: #1dddf1;
+	background-color: white;
+	color:black;
+	 width: 15px; 
+	 height: 35px;
+    /*color: #373a3c;
+    background-color: #1dddf1;*/
     border-color: black;
 }
 
 .btn-secondary1.active.focus, .btn-secondary1.active:focus, .btn-secondary1.active:hover, .btn-secondary1:active.focus, .btn-secondary1:active:focus, .btn-secondary1:active:hover, .open>.btn-secondary1.dropdown-toggle.focus, .open>.btn-secondary1.dropdown-toggle:focus, .open>.btn-secondary1.dropdown-toggle:hover {
-    color: #373a3c;
-    background-color: #d4d4d4;
+    background-color:#00aad4ff;
+	color:black;
+	 width: 15px; 
+	 height: 35px;
     border-color: #8c8c8c;
 }
 
 .btn-secondary1.active, .btn-secondary1:active, .open>.btn-secondary1.dropdown-toggle {
-    color: #373a3c;
-    background-color: #e6e6e6;
+    background-color:#00aad4ff;
+	color:black;
+	 width: 15px; 
+	 height: 35px;
     background-image: none;
     border-color: #adadad;
 }
 
 .btn-secondary1:hover {
-    color: #373a3c;
-    background-color: #e6e6e6;
+   background:#00aad4ff;
+	color:black;
+	 width: 15px; 
+	 height: 35px;
     border-color: #adadad;
     }
 

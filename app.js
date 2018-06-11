@@ -39,6 +39,7 @@ var demo1 = require('./routers/demo1.js')
 var demo2 = require('./routers/demo2.js')
 var recuperarclave = require('./routers/recuperarclave.js')
 var evaluar = require('./routers/evaluar.js')
+var reporte_master = require('./routers/reporte_master.js')
 //var paginas_nucleos = require('./routers/paginas-nucleos.js')
 //var personal = require ('./routers/personal.js')
 //var nucleo = require ('./routers/nucleo.js')
@@ -66,6 +67,7 @@ app.use('/demo1', demo1);
 app.use('/demo2', demo2);
 app.use('/recuperarclave', recuperarclave);
 app.use('/evaluar', evaluar);
+app.use('/reporte_master', reporte_master);
 //app.use('/paginas_nucleos', paginas_nucleos);
 //app.use('/indexSucre', indexSucre);
 //app.use('/indexMonagas', indexMonagas);

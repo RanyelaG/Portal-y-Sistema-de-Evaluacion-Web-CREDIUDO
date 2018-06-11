@@ -5,12 +5,23 @@ var nl2br  = require('nl2br');// paquete para reconocer los saltos de lineas al 
 
 router.get('/', function(req, res){
 	if(req.session.hasOwnProperty('cedula')) {
-
-		 models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
+ models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
 		.then(function(Evaluacion){
 			models.Evaluacion.findOne({where: {tipo:'centros'}})
 			.then(function(Evaluacion1){
-			   res.render('index-web-principal-definitivo', {session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
+				models.Evento.findOne({
+					order: [
+						['id', 'DESC']
+					]
+				}).then(Evento => {
+					res.render('index-web-principal-definitivo', {
+						session: req.session, 
+						dataEvaluacion:Evaluacion, 
+						dataEvaluacion1:Evaluacion1,
+						dataEvento:Evento
+					})	
+				})
+			   
                console.log('Administravos Evaluacion', Evaluacion)
                console.log(' Centros evaluacion', Evaluacion1)
  			})
@@ -20,7 +31,19 @@ router.get('/', function(req, res){
 		.then(function(Evaluacion){
 			models.Evaluacion.findOne({where: {tipo:'centros'}})
 			.then(function(Evaluacion1){
-			   res.render('index-web-principal-definitivo', {session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
+				models.Evento.findOne({
+					order: [
+						['id', 'DESC']
+					]
+				}).then(Evento => {
+					res.render('index-web-principal-definitivo', {
+						session: req.session, 
+						dataEvaluacion:Evaluacion, 
+						dataEvaluacion1:Evaluacion1,
+						dataEvento:Evento
+					})	
+				})
+			   
                console.log('Administravos Evaluacion', Evaluacion)
                console.log(' Centros evaluacion', Evaluacion1)
  			})
@@ -63,15 +86,27 @@ router.get('/sub-comi', function(req, res){
 	.then(function(Sub_comision){
 		
    
-var informacion= {Sub_comi:nl2br(Sub_comision)}
+var informacion= nl2br(Sub_comision)
 for(let i = 0; i < Sub_comision.length; i ++){ 
-	console.log('la informacion cargada es =======================', Sub_comision[i].informacion)
-} res.render('./informacion_crediudo/sub-comi', {dataSub:Sub_comision, informacion, session: req.session}) 
+//	console.log('la informacion cargada es =======================', Sub_comision[i].informacion)
+}
+
+
+ res.render('./informacion_crediudo/sub-comi1', {dataSub:Sub_comision, informacion, session: req.session}) 
 })
 })
 
 router.get('/etapas', function(req, res){ res.render('./informacion_crediudo/etapas-crediudo', {session: req.session}) })
-router.get('/eventos', function(req, res){ res.render('./informacion_crediudo/eventos', {session: req.session}) })
+
+router.get('/eventos', function(req, res){ 
+	models.Evento.findAll({
+
+	}).then(Evento => {
+		res.render('./informacion_crediudo/eventos', {session: req.session, dataEvento:Evento})	
+	})
+})
+
+
 router.get('/boletines', function(req, res){ res.render('./informacion_crediudo/boletines-informativos', {session: req.session}) })
 router.get('/detalle', function(req, res){ res.render('./informacion_crediudo/detalle-noticias', {session: req.session}) })
 router.get('/eva-anzo', function(req, res){ res.render('./informacion_crediudo/eva-anzo', {session: req.session}) })

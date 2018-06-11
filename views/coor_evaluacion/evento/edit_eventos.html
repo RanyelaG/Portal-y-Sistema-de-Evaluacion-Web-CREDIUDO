@@ -7,32 +7,29 @@
           <meta charset="utf-8">
        <!-- Viewport Meta Tag -->
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Modificar Eventos Nacionales</title>
+          <title>Modificar Evento</title>
        <!-- Bootstrap -->
-          <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
-       <!-- Main Style -->
-          <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-        <!-- Responsive Style -->
-          <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-        <!--Fonts-->
-          <link rel="stylesheet" media="screen" href="/assets/fonts/font-awesome/font-awesome.min.css">
-          <link rel="stylesheet" media="screen" href="/assets/fonts/simple-line-icons.css">    
-        <!-- Extras -->
-          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.carousel.css">
-          <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.theme.css">
-          <link rel="stylesheet" type="text/css" href="/assets/extras/animate.css">
-          <link rel="stylesheet" type="text/css" href="/assets/extras/normalize.css">
-          <link rel="stylesheet" type="text/css" href="/assets/extras/settings.css">
-        <!-- Color CSS Styles  -->
-          <link rel="stylesheet" type="text/css" href="/assets/css/colors/green.css" media="screen" /> 
-
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-           <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-            
-            <link rel="stylesheet" href="/assets/css/bootstrap-datetimepicker.min.css">
-            <link rel="stylesheet" href="/assets/css/tecnoTiempo.min.css">
-
-      
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+    <!-- Responsive Style -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
+    <!--Fonts-->
+    <link rel="stylesheet" media="screen" href="/assets/fonts/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" media="screen" href="/assets/fonts/simple-line-icons.css">    
+    <!-- Extras -->
+    <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="/assets/extras/owl/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/extras/animate.css">
+    <link rel="stylesheet" type="text/css" href="/assets/extras/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/assets/extras/settings.css">
+    <!-- Color CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/colors/green.css" media="screen" /> 
+    <!-- CALENDARIO  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../../assets/css/tecnoTiempo.min.css">      
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -129,127 +126,128 @@
 
                 </form></center>                      
 
-<br><div class="table-responsive">
-
-  <table class="table" style="margin-top: 10px;">
-
-              <thead >
+<br>
+<div class="table-responsive">
+            <table class="table" style="margin-top: 10px;">
+              <thead>
                 <tr>
-                  <th scope="col"><center>Fecha</center></th>
+                  <th style="width: 30%"><center>Fecha</center></th>
                   <th scope="col"><center>Nombre</center></th>
                   <th scope="col"><center>Direccion</center></th>
                   <th scope="col"><center>Nucleo</center></th>
-                  <th scope="col"><center>Editar</center></th>
-                  <th scope="col"><center>Eliminar</center></th>
+                  <th scope="col"><center>Accion</center></th>
+                  <th scope="col"><center>Accion</center></th>
                 </tr>
               </thead>
 
               <tbody>
-                  <%for(let i=0; i < Eventos.length; i++){%>
-                      <tr>
-                        <td><center><%=Eventos[i].fecha%></center></td>
-                        <td><center><%=Eventos[i].nombre%></center></td>
-                        <td><center><%=Eventos[i].direccion%></center></td>
-                        <td><center><%=Eventos[i].NucleoCodigo%></center></td>
-
-                        <td>
-                          <center><a href="detalle-instrumento.html" data-toggle="modal" data-target="#modievent" class="fa fa-pencil edit-evento" style="color:black;font-size:24px;" data-id="<%=Eventos[i].id%>" data-nombre="<%=Eventos[i].nombre%>" data-dir="<%=Eventos[i].direccion%>" data-fecha="<%=Eventos[i].fecha%>" data-receptor="<%=Eventos[i].dirigido_a%>" data-capacidad="<%=Eventos[i].capacidad%>" data-descripcion="<%=Eventos[i].descripcion%>"></a></center>
-                        </td>
-                        <td>
-                            <center><a href="/coord_eval/eventos/delete/<%=Eventos[i].id%>" class="fa fa-trash-o"" style="color:#00aad4ff;font-size:24px;"></a></center>  
-                        </td>    
-                      </tr>
-                    <%}%>
-              </tbody>
-  </table>
-
-                             <!-- line modal -->
-            <div class="modal fade" id="modievent" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-          <div class="modal-content">
-
-            <div class="modal-header">
-                       <h3 class="modal-title" style="margin-left: 125px;">Modificar Evento</h3>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-
-          
-
-          <div class="modal-body">
-      
-            <!-- content goes here -->
-              <form method="POST" action="/coord_eval/eventos/update">
-                <input type="hidden" name="id" id="evento-id">
-            
-             <fieldset> 
-        <p ><b>Nombre del Evento:</b></p>
-        <input style="width: 80%;" type="name" class="form-control" id="evento-nombre" name="nombre" required>
-        </fieldset>
-        <fieldset> 
-        <br><p ><b>Dirección:</b></p>
-        <input style="width: 80%;" type="" class="form-control" name="direccion" id="evento-dir" required>
-        </fieldset>
-
-
-        <!--<fieldset> 
-        <br><p ><b>Fecha y Hora:</b></p>
-        <input style="width: 80%;" type='text' class="form-control"  id='datetimepicker1'>
-        </fieldset>-->
-
-           <fieldset> 
-        <br><p ><b>Nucleo:</b></p>
-         <select style="width: 80%;" class="form-control"  name="NucleoCodigo" >
-               <%for(let j=0; j < Nucleos.length; j++){%>
-              <option value="<%=Nucleos[j].codigo%>"><%=Nucleos[j].nombre%></option>
+                <%for(let i=0; i < Eventos.length; i++){%>
+                  <tr>
+                    <% 
+                      var fecha = Eventos[i].fecha
+                    %>
+                    <td><center><%=fecha.toDateString()%></center></td>
+                    <td><center><%=Eventos[i].nombre%></center></td>
+                    <td><center><%=Eventos[i].direccion%></center></td>
+                    <td><center><%=Eventos[i].Nucleo.nombre%></center></td>
+                    <td>
+                      <center><a href="detalle-instrumento.html" data-toggle="modal" data-target="#modievent" class="fa fa-pencil edit-evento" style="color:black;font-size:24px;" data-id="<%=Eventos[i].id%>" data-nombre="<%=Eventos[i].nombre%>" data-dir="<%=Eventos[i].direccion%>" data-fecha="<%=Eventos[i].fecha%>" data-receptor="<%=Eventos[i].dirigido_a%>" data-capacidad="<%=Eventos[i].capacidad%>" data-descripcion="<%=Eventos[i].descripcion%>"></a></center>
+                    </td>
+                    <td>
+                      <center>
+                        <a href="/coord_eval/eventos/delete/<%=Eventos[i].id%>" class="fa fa-trash-o"" style="color:#00aad4ff;font-size:24px;"></a>
+                      </center>  
+                    </td>    
+                  </tr>
                 <%}%>
-           
-      </select>
-        </fieldset><br>
+              </tbody>
+            </table>
 
-      <form class="form-inline" >
-     <div class="form-group">
-     <br><p ><b>Dirigido a:</b></p>
-     
-     <input  style="width: 80%;" type="nombre" class="form-control" id="evento-receptor" name="dirigido_a">
-  
-     </div>
-    <div class="form-group">
-    <p for="cantidad"><b>Cantidad de Asistentes:</b></p>
-     <input style="width: 80%;" type="number" name="cantidad" class="form-control" min="0" max="500" id="evento-capacidad">
-    </div>
+    <div class="modal fade" id="modievent" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+      <div class="modal-content">
 
-     </form>
+          <div class="modal-header">
+                        
+            <h3 class="modal-title" id="lineModalLabel" style="margin-left: 125px;">Modificar Evento</h3>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+                          <div class="modal-body"> 
+                            <!-- content goes here -->
+                            <form method="POST" action="/coord_eval/eventos/update" enctype="multipart/form-data">
+                              <input type="hidden" name="id" id="evento-id">
 
 
+                              <fieldset> 
+                                <p><b>Nombre del Evento:</b></p>
+                                <input style="width: 80%;" type="text" class="form-control" id="evento-nombre" name="nombre" required>
+                              </fieldset>
 
-     <br><div class="form-group"><p ><b>Descripcion del Evento:</b></p>
-            <textarea rows="4" class="form-control" id="evento-descripcion" name="descripcion" style="width: 80%; border-radius: 2px"></textarea>
-        </div>
-        
+                              <fieldset> 
+                                <br>
+                                <p><b>Dirección:</b></p>
+                                <input style="width: 80%;" type="text" class="form-control" name="direccion" id="evento-dir" required>
+                              </fieldset>
+
+                              <fieldset> 
+                                <br>
+                                <p><b>Fecha y Hora:</b></p>
+                                <input style="width: 80%;" type='text' class="form-control" name="fecha" id="datetimepicker1">
+                              </fieldset>
+
+                              <fieldset> 
+                                <br>
+                                <p><b>Nucleo:</b></p>
+                                <select style="width: 80%;" class="form-control" name="NucleoCodigo">
+                                  <%for(let j=0; j < Nucleos.length; j++){%>
+                                    <option value="<%=Nucleos[j].codigo%>"><%=Nucleos[j].nombre%></option>
+                                  <%}%>
+                                </select>
+                              </fieldset>
+
+                              <br>
+
+                              
+                                <div class="form-group">
+                                  <br>
+                                  <p><b>Dirigido a:</b></p>
+                                  <input style="width: 80%;" type="text" class="form-control" id="evento-receptor" name="dirigido_a">
+                                </div>
+
+                                <div class="form-group">
+                                  <p for="cantidad"><b>Cantidad de Asistentes:</b></p>
+                                  <input style="width: 80%;" type="number" name="capacidad" class="form-control" min="0" max="500" id="evento-capacidad">
+                                </div>
+                              
+
+                              <br>
+
+                              <div class="form-group">
+                                <p><b>Descripcion del Evento:</b></p>
+                                <textarea rows="4" class="form-control" style="width: 80%; border-radius: 2px" id="evento-descripcion" name="descripcion"></textarea>
+                              </div>
                 
-                   <!--<div class="form-group">
-                <label for="exampleInputFile" >Afiche Formato PNG,JPG 390x218 </label><br>
-                <input  type="file" id="exampleInputFile">
-                
-              </div>-->
+                              <div class="form-group">
+                                <label for="urlImg" >Afiche Formato PNG,JPG 390x218 </label>
+                                <br>
+                                <input type="file" name="urlImg">
+                              </div>
 
-
-            <button type="submit" class="btn btn-default" style="margin-top:20px;background:#00aad4ff; border-radius: 2px;">Guardar</button>
-             </form>
-    </div>
+                              <button type="submit" class="btn btn-default" style="margin-top:20px;background:#00aad4ff; border-radius: 2px;">Guardar</button>
+                            </form>
+                          </div>
                         </div>
                       </div>
-
-
-  </center>
-</div>
-</div>
-</nav>
-</section>
-</div>
-
-         <footer>
-
+                  </div>
+                </div>
+              </center>
+            </div>
+          </div>
+        </nav>
+      </section>
+    </div>
+    <footer>
       <div class="footer wow fadeIn">
             <div id="free-promo" style="text-align: center; margin-top: 200px;">
             <br>
@@ -263,26 +261,10 @@
                 </div>
                 <br>           
             </div>
-
-
       </div>
-      
     </footer>
+    <div class="bottom"> <a href="#" class="settings"></a> </div>
 
-
-
-
-
-
-    <!-- Footer Section End-->
-
-                         
-
-
-      <div class="bottom"> <a href="#" class="settings"></a> </div>
-
-    <!-- -----------------------------------JavaScript & jQuery Plugins --------------------------------------------->
-    <!-- jQuery Load -->
     <script src="/assets/js/jquery-min.js"></script>
     <!-- Bootstrap JS -->
     <script src="/assets/js/bootstrap.min.js"></script>
@@ -332,9 +314,7 @@
   })();
 
 </script>
- <fieldset disabled=""></fieldset>
-  <script src="/assets/js/mymain.js"></script>
-  
+    <script src="/assets/js/mymain.js"></script>
   </body>
 
 </html>

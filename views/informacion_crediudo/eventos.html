@@ -21,12 +21,6 @@
      <link rel="stylesheet" media="screen" href="assets/css/info.css">
      <link rel="stylesheet" media="screen" href="assets/css/eva.css">
      <link rel="stylesheet" media="screen" href="../assets/css/login.css">
-
-
-      
-
-     
-     
     <!-- Extras -->
     <link rel="stylesheet" type="text/css" href="assets/extras/owl/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="assets/extras/owl/owl.theme.css">
@@ -46,195 +40,131 @@
       <section id="header">                                                                           <!--SECCIÓN 1-->
         <!-- Navbar Starts -->
         <%- include('../partials/web_principal/navbar.html')%>
-   <!--seccion donde va la informacion de la pagina-->
-<div class="container">
-  <div class="row" style="margin-top: 40px;">
-    <h3>Eventos Programados CREDIUDO</h3><br>
-                     <p>Informacion referente a los distintos eventos o actividades programadas por la dependencia </p><br>
-    <br><div class="row"> 
-                    <div class="col-xs-12 col-sm-3 col-md-3">
-                        <a href="#">
-                            <img src="assets/img/evento1.jpg" class="img-responsive"> 
-                        </a>
-                    </div> 
-                    <div class="col-xs-12 col-sm-9 col-md-9" >
-                        <div class="list-group">
-                            
-                               
-                                
-                                    <div class="list-group-item-heading" style="margin-left: 130px;">
-                                        <h5 class="product-title">Nombre del Evento: Gestion del Conocimiento</h5>
-
-                                           
-
-                                    </div>
-
-                    <div class="pull-right" style="margin-top: -30px;">
-                        <center>
-                          <i class="fa fa-list-alt" type="button"  style="font-size:24px;color:#5fd3bcff; "></i><br><p style="font-size: 10px;color: black;font-weight: 800;">Registrarse</p>
-                        </center>
-                      </div>
-
-
-                    
-                                
-                            
-                        </div>
-                
-                        <br><p style="margin-left: 130px;"><b>Descricion del evento: </b><a class="product-description" style="color: black;">Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios</a></p>
-
-                        <p style="margin-left: 130px;"><b>Direcion:</b><a style="color: black;">Av. gran mariscal edificio rectorado- Cumana Edo-Sucre</a></p>
-
-                        <p style="margin-left: 130px;"><b>Dirigido a:</b><a style="color: black;">Personal Docente</p>
-                          <p style="margin-left: 130px;"><b>Tipo de Evento:</b><a style="color: black;">Taller</a></p>
-                            <p style="margin-left: 130px;"><b>Capacidad de Asistentes:</b><a style="color: black;">20 Personas</p>
-                          
-                          
-                    </div> 
+    <!--seccion donde va la informacion de la pagina-->
+    <div class="container">
+      
+      <div class="row" style="margin-top: 40px;">
+        <h3>Eventos Programados CREDIUDO</h3><br>
+        <p>Informacion referente a los distintos eventos o actividades programadas por la dependencia </p><br>
+        <br>
+        <% var i=0 %>
+        <%do{%>
+          <div class="row"> 
+            <div class="col-xs-12 col-sm-3 col-md-3">
+              <a href="#">
+                <img src="../../uploads/eventos/<%=dataEvento[i].urlImg%>" > 
+              </a>
+            </div> 
+            <div class="col-xs-12 col-sm-9 col-md-9" >
+              <div class="list-group">                     
+                <div class="list-group-item-heading" style="margin-left: 130px;">
+                  <h5 class="product-title">Nombre del Evento: <%=dataEvento[i].nombre%></h5>
                 </div>
-                <hr>
-
-
-    <br><div class="row" style="margin-top: 30px;"> 
-                    <div class="col-xs-12 col-sm-3 col-md-3">
-                        <a href="#">
-                            <img src="assets/img/evento2.jpg" class="img-responsive "> 
-                        </a>
-                    </div> 
-                    <div class="col-xs-12 col-sm-9 col-md-9">
-                        <div class="list-group">
-                            
-                               
-                                
-                           
-                                
-                                    <div class="list-group-item-heading" style="margin-left: 130px;">
-                                        <h5 class="product-title">Nombre del Evento: Gestion del Conocimiento</h5>
-
-                                           
-
-                                    </div>
-
-                    <div class="pull-right" style="margin-top: -30px;">
-                        <center>
-                          <i class="fa fa-list-alt" type="button"  style="font-size:24px;color:#5fd3bcff; "></i><br><p style="font-size: 10px;color: black;font-weight: 800;">Registrarse</p>
-                        </center>
-                      </div>
-
-
-                    
-                                
-                            
-                        </div>
-                
-                        <br><p style="margin-left: 130px;"><b>Descricion del evento: </b><a class="product-description" style="color: black;">Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios</a></p>
-
-                        <p style="margin-left: 130px;"><b>Direcion:</b><a style="color: black;">Av. gran mariscal edificio rectorado- Cumana Edo-Sucre</a></p>
-
-                        <p style="margin-left: 130px;"><b>Dirigido a:</b><a style="color: black;">Personal Docente</p>
-                          <p style="margin-left: 130px;"><b>Tipo de Evento:</b><a style="color: black;">Taller</a></p>
-                            <p style="margin-left: 130px;"><b>Capacidad de Asistentes:</b><a style="color: black;">20 Personas</p>
-                    </div> 
-                </div>
-                <hr>
-
-<div class="row" style="margin-top: 30px;"> 
-                    <div class="col-xs-12 col-sm-3 col-md-3">
-                        <a href="#">
-                            <img src="assets/img/evento3.png" class="img-responsive "> 
-                        </a>
-                    </div> 
-                    <div class="col-xs-12 col-sm-9 col-md-9">
-                        <div class="list-group">
-                            
-                               
-                                
-                            
-                                
-                                    <div class="list-group-item-heading" style="margin-left: 130px;">
-                                        <h5 class="product-title">Nombre del Evento: Gestion del Conocimiento</h5>
-
-                                           
-
-                                    </div>
-
-                    <div class="pull-right" style="margin-top: -30px;">
-                        <center>
-                          <i class="fa fa-list-alt" type="button"  style="font-size:24px;color:#5fd3bcff; "></i><br><p style="font-size: 10px;color: black;font-weight: 800;">Registrarse</p>
-                        </center>
-                      </div>
-
-
-                    
-                                
-                            
-                        </div>
-                
-                        <br><p style="margin-left: 130px;"><b>Descricion del evento: </b><a class="product-description" style="color: black;">Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios</a></p>
-
-                        <p style="margin-left: 130px;"><b>Direcion:</b><a style="color: black;">Av. gran mariscal edificio rectorado- Cumana Edo-Sucre</a></p>
-
-                        <p style="margin-left: 130px;"><b>Dirigido a:</b><a style="color: black;">Personal Docente</p>
-                          <p style="margin-left: 130px;"><b>Tipo de Evento:</b><a style="color: black;">Taller</a></p>
-                            <p style="margin-left: 130px;"><b>Capacidad de Asistentes:</b><a style="color: black;">20 Personas</p>
-                    </div> 
-                </div>
-                <hr>
-
-                <div class="row" style="margin-top: 30px;"> 
-                    <div class="col-xs-12 col-sm-3 col-md-3">
-                        <a href="#">
-                            <img src="assets/img/evento4.jpg" class="img-responsive "> 
-                        </a>
-                    </div> 
-                    <div class="col-xs-12 col-sm-9 col-md-9">
-                        <div class="list-group">
-                            
-                               
-                                     
-                                
-                                    <div class="list-group-item-heading" style="margin-left: 130px;">
-                                        <h5 class="product-title">Nombre del Evento: Gestion del Conocimiento</h5>
-
-                                           
-
-                                    </div>
-
-                    <div class="pull-right" style="margin-top: -30px;">
-                        <center>
-                          <i class="fa fa-list-alt" type="button"  style="font-size:24px;color:#5fd3bcff; "></i><br><p style="font-size: 10px;color: black;font-weight: 800;">Registrarse</p>
-                        </center>
-                      </div>
-
-
-                    
-                                
-                            
-                        </div>
-                
-                        <br><p style="margin-left: 130px;"><b>Descricion del evento: </b><a class="product-description" style="color: black;">Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios Conociemientos previos del conocimiento y su enlace para generar nuevas oportunidades de negocios</a></p>
-
-                        <p style="margin-left: 130px;"><b>Direcion:</b><a style="color: black;">Av. gran mariscal edificio rectorado- Cumana Edo-Sucre</a></p>
-
-                        <p style="margin-left: 130px;"><b>Dirigido a:</b><a style="color: black;">Personal Docente</p>
-                          <p style="margin-left: 130px;"><b>Tipo de Evento:</b><a style="color: black;">Taller</a></p>
-                            <p style="margin-left: 130px;"><b>Capacidad de Asistentes:</b><a style="color: black;">20 Personas</p>
-                    </div> 
-                </div>
-                <hr>
-
-
-
-                
-  </div>
-</div><br><br><br><br>
-
- 
-                 
-
-
-
+                <div class="pull-right" style="margin-top: -30px;">
+                  <% if(dataEvento[i].tipo == 'nacional') {%>
+                    <button class="btn btn-link add-evento" type="button" data-toggle="modal" data-target="#encuentronacionales" data-id="<%=dataEvento[i].id%>">
+                      <center>
+                        <i class="fa fa-list-alt" style="font-size:24px;color:#5fd3bcff; margin-top: 30px;"></i>
+                        <br>
+                        <p style="font-size: 10px;color:grey;font-weight: 800;">Registrarse</p>
+                      </center>
+                    </button>
+                  <%}%>
+                </div>                  
+              </div>        
+              <br>
+              <p style="margin-left: 130px;"><b>Descricion del evento: </b><a class="product-description" style="color: black;"><%=dataEvento[i].descripcion%></a></p>
+              <p style="margin-left: 130px;"><b>Direcion: </b><a style="color: black;"><%=dataEvento[i].direccion%></a></p>
+              <p style="margin-left: 130px;"><b>Dirigido a: </b><a style="color: black;"><%=dataEvento[i].dirigido_a%></p>
+              <p style="margin-left: 130px;"><b>Tipo de Evento: </b><a style="color: black;"><%=dataEvento[i].tipo%></a></p>
+              <p style="margin-left: 130px;"><b>Capacidad de Asistentes: </b><a style="color: black;"><%=dataEvento[i].capacidad%> Personas</p>                  
+            </div> 
+          </div>
+          <hr>
+          <% i++ %>
+        <%} while(i < dataEvento.length-1)%>
+                        
+      </div>
+      
+    </div>
+    <br><br><br><br>
 </div>
+    
+    <!-- AKI ESTA EL MODAL DE REGISTRO DE ENCUENTROS NACIONALES-->
+      <!--inicio del modal-->
+      <div class="modal fade" id="encuentronacionales" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                          <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                        <center>
+                          <h3 class="modal-title" id="lineModalLabel">Inscripcion</h3>
+                          <p>Encuentros Nacionales</p>
+                        </center>
+                      </div>
+                      
+                      <form method="POST" action="/institucion/add-evento">
+                        <input type="hidden" name="eventoId" id="evento-id">
+                        <div class="modal-body">
+                          <!-- content goes here -->
+                          <center>
+                            <div class="form-group">
+                              <p for="nombre">Nombre</p>
+                              <input style="width: 400px;" type="text" name="nombre" placeholder="Nombre de Institución" class="form-control" autofocus>
+                            </div>
+                          </center>
+
+                          <center>
+                            <div class="form-inline" >
+                              <div class="form-group">
+                                <p>Representante</p>
+                                <input  type="text" name="representante" placeholder="Nombre del Representante" class="form-control">
+                              </div>
+                              
+                              <div class="form-group">
+                                <p >Rif</p>
+                                <input  type="text" name="rif" placeholder="Ingrese su RIF" class="form-control">
+                              </div>
+                            </div>
+                          </center>
+
+                          <br>
+                          <center>
+                            <div class="form-group">
+                              <p for="email">Correo</p>
+                              <input style="width: 400px;" type="email" name="email" placeholder="ejemplo@ejemplo.com" class="form-control">
+                            </div>
+                          </center>
+
+                          <center>
+                            <div class="form-inline" >
+                              <div class="form-group">
+                                <p>Telefono Celular</p>
+                                <input  type="text" name="tmovil" placeholder="0416-1234567" class="form-control">
+                              </div>
+                              
+                              <div class="form-group">
+                                <p >Telefono de Habitacion</p>
+                                <input  type="text" name="thabitacion" placeholder="0293-1234567" class="form-control">
+                              </div>
+                            </div>
+                          </center>
+                        </div>
+
+                        <div class="modal-footer">
+                          <center>
+                            <button class="btn btn-primary">Inscribirme</button>
+                                <!--<input type="radio" name="options" id="option1" autocomplete="off" checked> Inscribirme--> 
+                          </center> 
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+      </div><!--fin del modal-->
+    <!--FIN DEL MODAL ENCUENTROS NACIONALES-->
+
 
   <!-- Footer Section -->
    <!-- Footer Section -->
@@ -346,6 +276,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkvKN2zO7jw_h2M3jtbY7LTyc
   <script type="text/javascript" src="assets/js/jquery.mousewheel-3.0.6.pack.js"></script>
 
 
-
+<script src="../../assets/js/mymain.js"></script>
 
 </html>

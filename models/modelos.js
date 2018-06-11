@@ -231,6 +231,7 @@ var Evento = sequelize.define('Eventos', {
 	capacidad: Sequelize.INTEGER,
 	tipo: Sequelize.ENUM('nacional', 'otros'),
 	descripcion: Sequelize.STRING,
+	urlImg: Sequelize.STRING
 });
 
 const Evento_Institucion = sequelize.define('Evento_Institucion', {
@@ -287,7 +288,11 @@ const Item_e = sequelize.define('Item_e', {
 module.exports.Item_e = Item_e;
 
 const Examen = sequelize.define('Examen', {
-  category: Sequelize.STRING
+	nombre:Sequelize.STRING,
+  category: Sequelize.STRING,
+   tipo: Sequelize.STRING,
+    fecha_examen: Sequelize.DATE
+
 });
 
 module.exports.Examen = Examen;

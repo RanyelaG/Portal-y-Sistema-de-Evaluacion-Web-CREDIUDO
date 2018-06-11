@@ -9,218 +9,686 @@ router.use('/', function(req, res, next){
 	 next();
      }else{
       models.Evaluacion.findOne({where: {tipo: 'administrativos'}})
-		.then(function(Evaluacion){
-			models.Evaluacion.findOne({where: {tipo:'centros'}})
-			.then(function(Evaluacion1){
-			   res.render('index-web-principal-definitivo', {session: req.session, dataEvaluacion:Evaluacion,dataEvaluacion1:Evaluacion1})
-               console.log('Administravos Evaluacion', Evaluacion)
-               console.log(' Centros evaluacion', Evaluacion1)
- 			})
-		})
+        .then(function(Evaluacion){
+            models.Evaluacion.findOne({where: {tipo:'centros'}})
+            .then(function(Evaluacion1){
+                models.Evento.findOne({
+                    order: [
+                        ['id', 'DESC']
+                    ]
+                }).then(Evento => {
+                    res.render('index-web-principal-definitivo', {
+                        session: req.session, 
+                        dataEvaluacion:Evaluacion, 
+                        dataEvaluacion1:Evaluacion1,
+                        dataEvento:Evento
+                    })  
+                })
+               
+               
+            })
+        })
 }
 
 });
 
 router.get('/',function(req, res){
 
-	models.Evaluacion.findAll({})
-	.then(function(Eva){
-		console.log(Eva)
-	})
+
+
 
 // buscamos cargos unidad y mostramos los botones de pertencer a un nucle la evaluacion o unidad
 models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el cargo que tiene el personal logueado
   .then(function(Cargo){
   	models.Unidad.findOne({where:{codigo: Cargo.codigo_unidad}})// buscamos a unidad a la que pertnece ese cargo asociado
   	 .then(function(Unidad){ 
-  	   models.Evaluacion.findOne({	where: {codigo_unidad: Unidad.codigo_nucleo}})// verificamos que la unidad de a evaluacion sea el nucleo de la unidad del personal
+
+  	   var fecha= new Date();
+  	   models.Evaluacion.findOne({	where: {codigo_unidad: Unidad.codigo_nucleo,[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}} /* hasta aqui la fecha y hora */}})// verificamos que la unidad de a evaluacion sea el nucleo de la unidad del personal
+	   
 	    .then(function(Evaluacion){
-	    	console.log('verificacion de nucleo o unidad', Evaluacion)
-	    if(Evaluacion){// primer si es un nucleo if
+	    	if(Evaluacion){// primer si es un nucleo if
 	  		
 	  		if(Cargo.referencia =='coordinador'){ // tengo que llamar es a instrumento
- 				
-	            
-            	  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_jefe', [Op.and]: {category:'cent_inves'}}
-                 })
+ 				 
+ 				  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_jef', 
+                 			[Op.and]: {category:'cent_inves'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
-	  			 		}).then(function(Instrument1){
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'cent_inves'}}
+	  			 		})
+	  			 		.then(function(Instrument1){
+
 	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
+	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, 
+	  			 					[Op.and]: {tipo:'centros', 
+	  			 					[Op.and]: {enfoque:'Jefe-Subordinado',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
-	  			 			.then(function(Evaluacion){
+	  			 			.then(function(Evaluacion){// 1
                            
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session, Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
-	  			 		})
-	  			 		    }else{
-                            
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'eval_jef',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:Evaluacion, 
+                             		     Eva_jefe:Instrument, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
+                            models.Evaluacion.findOne({
+                           		where: {codigo_unidad: Unidad.codigo_nucleo, 
+                           			[Op.and]: {tipo:'centros' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad,jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
-	  			 		})
-                            
+                            })
 
-                            }
+                        } //fin del if else evaluacion
 
-	  			 				
-	  			 			})
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session, Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
-	  			 			})
+	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
 	  			 			}) 
 	  			 		})
-	  			 	}
+	  			 		})
+	  			 	} // fin del if else instrument
 	  			 })
+	  			
 
+	            
+            	
 
 	  		}else if(Cargo.referencia == 'jefe'){
-	  			console.log('la unidad de la evaluacion=============================',Unidad )
+	  			
 
-	   			 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_jef', [Op.and]: {category:'pers_admin'}}
-                 })
+   						 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_jef', 
+                 			[Op.and]: {category:'pers_admin'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
-	  			 		}).then(function(Instrument1){
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'pers_admin'}}
+	  			 		})
+	  			 		.then(function(Instrument1){
+
 	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Jefe-Subordinado'}}}
+	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, 
+	  			 					[Op.and]: {tipo:'administrativos', 
+	  			 					[Op.and]: {enfoque:'Jefe-Subordinado',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
-	  			 			.then(function(Evaluacion){
+	  			 			.then(function(Evaluacion){// 1
                            
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'eval_jef',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
+                            models.Evaluacion.findOne({
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
-	  			 			models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
 	  			 			.then(function(Nucleo){
-	  			 				
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:Instrument, 
+                             		     Eva_jefe:Evaluacion, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
 	  			 			
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Unidad:Unidad, Nucleo:Nucleo, jefe_sub:Instrument, Eva_jefe:Evaluacion, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:null, auto:Instrument1})
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
-	  			 			})
-	  			 		    }else{
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
                             
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                           		where: {codigo_unidad: Unidad.codigo_nucleo, 
+                           			[Op.and]: {tipo:'administrativos' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session, Nucleo:Nucleo, Unidad:Unidad,  jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
-	  			 				console.log('la evaluacion es estas aquiiiii', Evaluacion )
-	  			 			})
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
-	  			 	}else{ models.Instrument.findOne({
+	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 	console.log(' estas en este else=================================1')	
+	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session, Unidad:Unidad, Nucleo:Nucleo, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
-	  			 			})
+	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
 	  			 			}) 
-
 	  			 		})
-	  			 	}
-	  			 })	  		
-
+	  			 		})
+	  			 	} // fin del if else instrument
+	  			 })
+                
 
 
 	  		 }else if(Cargo.referencia == 'subordinado'){
 //=====================================================Subordinado==================================
-	  		  	    models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_sub', [Op.and]: {category:'pers_admin'}}
-                 })
+				  	    models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_sub', 
+                 			[Op.and]: {category:'pers_admin'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
-	  			 		}).then(function(Instrument1){
-	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion){
-                           
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'pers_admin'}}
 	  			 		})
-	  			 		    }else{
-                            
+	  			 		.then(function(Instrument1){
+
+	  			 			models.Evaluacion.findOne({
+	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, 
+	  			 					[Op.and]: {tipo:'administrativos', 
+	  			 					[Op.and]: {enfoque:'Subordinado-Jefe',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion){// 1
+                           
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'eval_sub',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:Instrument, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
+                            models.Evaluacion.findOne({
+                           		where: {codigo_unidad: Unidad.codigo_nucleo, 
+                           			[Op.and]: {tipo:'administrativos' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
 	  			 				console.log('la evaluacion es', Evaluacion )
-	  			 			})
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -229,72 +697,226 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			}) 
 	  			 		})
 	  			 		})
-	  			 	}
+	  			 	} // fin del if else instrument
 	  			 })
                 
                 
             }else if(Cargo.referencia == 'investigador'){
-            	console.log('estas en investigador')
             	  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_sub', [Op.and]: {category:'cent_inves'}}
-                 })
+                 		where: {t_instrument: 'eval_sub', 
+                 			[Op.and]: {category:'cent_inves'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
-	  			 		}).then(function(Instrument1){
-	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion){
-                           
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
-	  			 		    }else{
-                            
+	  			 		.then(function(Instrument1){
+
+	  			 			models.Evaluacion.findOne({
+	  			 				where: {codigo_unidad: Unidad.codigo_nucleo, 
+	  			 					[Op.and]: {tipo:'centros', 
+	  			 					[Op.and]: {enfoque:'Subordinado-Jefe',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion){// 1
+                           
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'eval_sub',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:Instrument, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Unidad.codigo_nucleo, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
+                            models.Evaluacion.findOne({
+                           		where: {codigo_unidad: Unidad.codigo_nucleo, 
+                           			[Op.and]: {tipo:'centros' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
 	  			 				console.log('la evaluacion es', Evaluacion )
-	  			 			})
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
 	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
-	  			 			})
 	  			 			}) 
 	  			 		})
-	  			 	}
+	  			 		})
+	  			 	} // fin del if else instrument
 	  			 })
-	  			 }
+	  			
+
+	  			 } // aqui termina el if
 
             	
              // termina tu
@@ -310,63 +932,217 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 //                                                                                        //
 //========================================================================================//
 
-	  models.Evaluacion.findOne({where: {codigo_unidad: Cargo.codigo_unidad}})
+	  models.Evaluacion.findOne({where: {codigo_unidad: Cargo.codigo_unidad,[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}/*Aqui termina */}})
 	  .then(function(Evaluacion){console.log('el codigo de la unidad a evaluar es',Evaluacion)
 	  	console.log('la unidad de la evaluacion=============================',Unidad )
 	  	if(Evaluacion){// segundo if si es una unidad
 	  		console.log('es una unidad estasssss aqui===============================================')
-	  		if(Cargo.referencia =='coordinador'){ // tengo que llamar es a instrumento
- 				
-	             console.log('estas en coordinador===========================================')
-            	  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_jefe', [Op.and]: {category:'cent_inves'}}
-                 })
+	  		
+	  		if(Cargo.referencia =='coordinador'){ 
+
+
+ 				  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_jef', 
+                 			[Op.and]: {category:'cent_inves'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
-	  			 		}).then(function(Instrument1){
-	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion){
-                           
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
-	  			 		    }else{
-                            
+	  			 		.then(function(Instrument1){
+
+	  			 			models.Evaluacion.findOne({
+	  			 				where: {codigo_unidad: Cargo.codigo_unidad, 
+	  			 					[Op.and]: {tipo:'centros', 
+	  			 					[Op.and]: {enfoque:'Jefe-Subordinado',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion){// 1
+                           
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'eval_jef',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:Evaluacion, 
+                             		     Eva_jefe:Instrument, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
+                            models.Evaluacion.findOne({
+                           		where: {codigo_unidad: Cargo.codigo_unidad, 
+                           			[Op.and]: {tipo:'centros' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
-	  			 				
-	  			 			})
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -375,190 +1151,438 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			}) 
 	  			 		})
 	  			 		})
-	  			 	}
+	  			 	} // fin del if else instrument
 	  			 })
+	  			
+
+	            
+
+
+
+	  		// tengo que llamar es a instrumento
+ 				
 
 
 	  		}else if(Cargo.referencia == 'jefe'){
-console.log('estas en jefe===========================================')
-	   			 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_jef', [Op.and]: {category:'pers_admin'}}
-                 })
+	  			 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_jef', 
+                 			[Op.and]: {category:'pers_admin'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
-	  			 		}).then(function(Instrument1){
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'pers_admin'}}
+	  			 		})
+	  			 		.then(function(Instrument1){
+
 	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Jefe-Subordinado'}}}
+	  			 				where: {codigo_unidad: Cargo.codigo_unidad, 
+	  			 					[Op.and]: {tipo:'administrativos', 
+	  			 					[Op.and]: {enfoque:'Jefe-Subordinado',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
-	  			 			.then(function(Evaluacion){
+	  			 			.then(function(Evaluacion){// 1
                            
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'eval_jef',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
+                            models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:Instrument, Eva_jefe:Evaluacion, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:null, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:Instrument, 
+                             		     Eva_jefe:Evaluacion, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
-	  			 		})
-	  			 		    }else{
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
                             
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                           		where: {codigo_unidad: Cargo.codigo_unidad, 
+                           			[Op.and]: {tipo:'administrativos' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
-	  			 				
-	  			 			})
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
-	  			 	}else{ models.Instrument.findOne({
+	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 	console.log(' estas en este else=================================1')	
+	  			 		models.Instrument.findOne({
 	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session, Unidad:Unidad,Nucleo:Nucleo, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
-	  			 			})
+	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
 	  			 			}) 
 	  			 		})
+	  			 		})
+	  			 	} // fin del if else instrument
+	  			 })
 
-	  			 	}
-	  			 })	  		
 
 
 
 	  		 }else if(Cargo.referencia == 'subordinado'){
-//=====================================================Subordinado==================================
-console.log('estas en Subordinado===========================================')
-	  		  	    models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_sub', [Op.and]: {category:'pers_admin'}}
-                 })
+
+	  		 	 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_sub', 
+                 			[Op.and]: {category:'pers_admin'}}
+                    })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
+                         
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
-	  			 		}).then(function(Instrument1){
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'pers_admin'}}
+	  			 		})
+	  			 		.then(function(Instrument1){
+
 	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
+	  			 				where: {codigo_unidad: Cargo.codigo_unidad, 
+	  			 					[Op.and]: {tipo:'administrativos', 
+	  			 					[Op.and]: {enfoque:'Subordinado-Jefe',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
-	  			 			.then(function(Evaluacion){
+	  			 			.then(function(Evaluacion){// 1
                            
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
-	  			 		})
-	  			 		    }else{
-                            
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'eval_sub',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad:Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
-	  			 		})
-                            
-
-                            }
-
-	  			 				console.log('la evaluacion es', Evaluacion )
-	  			 			})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:Instrument, 
+                             		     auto:Instrument1})
 	  			 			
-	  			 		})
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
 
-	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
-	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
-	  			 		}).then(function(Instrument1){
-	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'administrativos', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
-	  			 			.then(function(Nucleo){
-	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad,jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
-	  			 			}) 
-	  			 		})
-	  			 		})	
-	  			 	}
-	  			 })
-                
-                
-            }else if(Cargo.referencia == 'investigador'){
-            console.log('estas en investigador===========================================')
-            	  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 	where: {t_instrument: 'eval_sub', [Op.and]: {category:'cent_inves'}}
-                 })
-                 	.then(function(Instrument){
-	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
-	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
-	  			 		}).then(function(Instrument1){
-	  			 			models.Evaluacion.findOne({
-	  			 				where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Subordinado-Jefe'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion){
-                           
-                            if(Evaluacion){  
-                           	models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
-	  			 			})
-	  			 			.then(function(Evaluacion1){
-	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'pers_admin', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:Evaluacion, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
-	  			 			})
-	  			 		})
-	  			 		    }else{
-                            
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
                             models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                           		where: {codigo_unidad: Cargo.codigo_unidad, 
+                           			[Op.and]: {tipo:'administrativos' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
-                             res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, Eva_auto:Evaluacion1, sub_jefe:Instrument, auto:Instrument1})
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
 	  			 			})
                             })
 
-                            }
+                        } //fin del if else evaluacion
 
-	  			 				console.log('la evaluacion es aqui====================', Evaluacion )
-	  			 			})
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
 	  			 			
-	  			 		})
+	  			 		})// fin del then(instrument1)
 
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion'}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -567,10 +1591,237 @@ console.log('estas en Subordinado===========================================')
 	  			 			}) 
 	  			 		})
 	  			 		})
-	  			 	}
+	  			 	} // fin del if else instrument
 	  			 })
+                
+
+                
+            }else if(Cargo.referencia == 'investigador'){
+
+            	 models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
+                 		where: {t_instrument: 'eval_sub', 
+                 			[Op.and]: {category:'cent_inves'}}
+                    })
+                 	.then(function(Instrument){
+	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
+
+                         
+	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
+	  			 			where: {t_instrument: 'aut_eval', 
+	  			 				[Op.and]: {category:'cent_inves'}}
+	  			 		})
+	  			 		.then(function(Instrument1){
+
+	  			 			models.Evaluacion.findOne({
+	  			 				where: {codigo_unidad: Cargo.codigo_unidad, 
+	  			 					[Op.and]: {tipo:'centros', 
+	  			 					[Op.and]: {enfoque:'Subordinado-Jefe',
+	  			 					[Op.and]: { inicio:{[Op.lte]:fecha}, 
+	  			 					[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion){// 1
+                           
+                        if(Evaluacion){ 
+
+                        models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'eval_sub',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
+
+                    if(!Examen){
+                    	console.log('estas en el !examen=======================')
+
+                            models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:Instrument, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:Evaluacion, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:Instrument, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+	  			 	}else{ //else !examen     
+
+    						models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, 
+                            	[Op.and]: {tipo:'centros', 
+                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                            	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+
+	  			 			models.Examen.findOne({
+                        	where:{PersonalCedula: req.session.cedula,
+                        	 	[Op.and]: {category:'cent_inves', 
+                        		[Op.and]: {tipo:'aut_eval',
+                        	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
+                        	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
+                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+
+                        if(!Examen1){
+                        	console.log('esta en el examen1 del else ===============')
+
+	  			 				models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:Evaluacion1,
+                             		     sub_jefe:null, 
+                             		     auto:Instrument1})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+	  			 		}else{
+
+	  			 			//aqui va la ejecucion del codigo si hay evaluacion 1
+	  			 			models.Nucleo.findOne({
+	  			 					where:{codigo:Unidad.codigo_nucleo }
+	  			 				})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		     Nucleo:Nucleo, 
+                             		     Unidad:Unidad, 
+                             		     jefe_sub:null, 
+                             		     Eva_jefe:null, 
+                             		     Eva_sub:null, 
+                             		     Eva_auto:null,
+                             		     sub_jefe:null, 
+                             		     auto:null})
+	  			 			
+	  			 			})//fin del then(Nucleo)
+
+	  			 		}// fin del if-else()
+
+	  			 		})//fin del then(Examen1)
+                        }) //fin del then(Evaluacion1)
+
+	  			 			}//fin del if-else(!examen)
+	  			 			})// fin del then(examen)
+
+	  			 		}else{
+                            console.log(' estas en este else=================================2')
+                            models.Evaluacion.findOne({
+                           		where: {codigo_unidad:Cargo.codigo_unidad, 
+                           			[Op.and]: {tipo:'centros' , 
+                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: { inicio:{[Op.lte]:fecha}, 
+                           			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+	  			 			.then(function(Nucleo){
+                             res.render("./personal_udo/personaludoprincipal", 
+                             	{session:req.session,
+                             		Nucleo:Nucleo, 
+                             		Unidad:Unidad, 
+                             		jefe_sub:null, 
+                             		Eva_jefe:null, 
+                             		Eva_sub:null, 
+                             		Eva_auto:Evaluacion1, 
+                             		sub_jefe:Instrument, 
+                             		auto:Instrument1})
+	  			 			})
+                            })
+
+                        } //fin del if else evaluacion
+
+	  			 				console.log('la evaluacion es', Evaluacion )
+	  			 			})// fin del then(evaluacion) 1
+	  			 			
+	  			 		})// fin del then(instrument1)
+
+	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
+	  			 		
+	  			 		console.log(' estas en este else=================================1')
+	  			 		models.Instrument.findOne({
+	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 		}).then(function(Instrument1){
+	  			 			models.Evaluacion.findOne({
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+	  			 			})
+	  			 			.then(function(Evaluacion1){
+	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
+	  			 			.then(function(Nucleo){
+	  			 		res.render("./personal_udo/personaludoprincipal", {session:req.session,Nucleo:Nucleo, Unidad:Unidad, jefe_sub:null, Eva_jefe:null, Eva_sub:null, sub_jefe:null, Eva_auto:Evaluacion1, auto:Instrument1})
+	  			 			}) 
+	  			 		})
+	  			 		})
+	  			 	} // fin del if else instrument
+	  			 })
+	  			
+           
 
 	  		 }// termina aqui
+	  
+
+
+
+
+
+
+
 	  	}else{
 	  	models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
 	  			 			.then(function(Nucleo){
@@ -585,9 +1836,69 @@ console.log('estas en Subordinado===========================================')
 // aqui listamos las diferentes opciones de evaluacion para los distintos tipos de personal.
 
 
-
-
 })//router
+
+router.get('/historial', function(req, res){
+models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})
+.then(function(Cargo){
+
+if(Cargo.referencia=='subordinado'){
+	 models.Examen.findAll({where:{PersonalCedula:req.session.cedula, [Op.and]:{tipo:{[Op.ne]:'eval_jef'}}}, order: [['fecha_examen','DESC']]})
+       .then(function(Examen1){
+       res.render('./personal_udo/historial-eva-personal-udo',{session:req.session,Examen1:Examen1} )})
+   }else if(Cargo.referencia=='jefe'){
+    models.Cargo.findAll({ where:{codigo_unidad:Cargo.codigo_unidad, [Op.and]:{cedula_personal:{[Op.ne]:null}}  }})
+    .then(function(Cargo1){
+
+   
+
+    models.Examen.findAll({where:{PersonalCedula:req.session.cedula}, order: [['fecha_examen','DESC']]})
+       .then(function(Examen1){
+        console.log('estas en el historial de evaluacion de jefe')
+       res.render('./personal_udo/historial-eva-personal-udo',{session:req.session,Examen1:Examen1} )})
+
+        })
+   }else if(Cargo.referencia=='coordinador'){
+   models.Examen.findAll({where:{PersonalCedula:req.session.cedula, [Op.and]:{tipo:{[Op.ne]:'eval_sub'}}}, order: [['fecha_examen','DESC']]})
+       .then(function(Examen1){
+       res.render('./personal_udo/historial-eva-personal-udo',{session:req.session,Examen1:Examen1} )})
+
+   }else if(Cargo.referencia=='investigador'){
+    models.Examen.findAll({where:{PersonalCedula:req.session.cedula, [Op.and]:{tipo:{[Op.ne]:'eval_jef'}}}, order: [['fecha_examen','DESC']]})
+       .then(function(Examen1){
+       res.render('./personal_udo/historial-eva-personal-udo',{session:req.session,Examen1:Examen1} )})
+  
+
+   }
+
+})	
+      
+})
+
+router.get('/reporte_usuario/:id', function(req, res){
+
+models.Examen.findOne({
+	where:{id:req.params.id}
+})
+.then(function(Examen){
+models.Instrument_e.findOne({
+ where:{id:Examen.InstrumentEId}
+}).then(function(Instrument_e){
+models.Factor_e.findAll({include:[models.Item_e], where:{InstrumentEId:Examen.InstrumentEId}})
+.then(function(Factor_e){
+    models.Item_e.findAll({
+       where:{FactorEId:Factor_e.id}
+    }).then(function(Item_e){
+
+     
+res.render('./personal_udo/reporte-personal-udo', {session:req.session,Examen:Examen,dataFactor:Factor_e, dataItem:Item_e})
+})// fin then Item_e
+})// fin then Factor_e
+})// fin then Instrument_e
+})// fin Then Examen
+})
+
+
 
 
 

@@ -116,6 +116,7 @@ router.post('/agregar_comision', function(req, res){
 
 	})
 
+router.get('/siguiente', function(req, res){ res.render('./usuario_master/modificar-portal1',{session: req.session})})
 
 
 

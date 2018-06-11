@@ -9,29 +9,29 @@
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Modificar Portal Web </title>
        <!-- Bootstrap -->
-          <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
        <!-- Main Style -->
-          <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/main.css">
         <!-- Responsive Style -->
-          <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/responsive.css">
         <!--Fonts-->
-          <link rel="stylesheet" media="screen" href="assets/fonts/font-awesome/font-awesome.min.css">
-          <link rel="stylesheet" media="screen" href="assets/fonts/simple-line-icons.css">    
+          <link rel="stylesheet" media="screen" href="../../assets/fonts/font-awesome/font-awesome.min.css">
+          <link rel="stylesheet" media="screen" href="../../assets/fonts/simple-line-icons.css">    
         <!-- Extras -->
-          <link rel="stylesheet" type="text/css" href="assets/extras/owl/owl.carousel.css">
-          <link rel="stylesheet" type="text/css" href="assets/extras/owl/owl.theme.css">
-          <link rel="stylesheet" type="text/css" href="assets/extras/animate.css">
-          <link rel="stylesheet" type="text/css" href="assets/extras/normalize.css">
-          <link rel="stylesheet" type="text/css" href="assets/extras/settings.css">
-          <link rel="stylesheet" type="text/css" href="assets/css/drop.css">
-          <link rel="stylesheet" type="text/css" href="assets/js/drop.js">
+          <link rel="stylesheet" type="text/css" href="../../assets/extras/owl/owl.carousel.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/extras/owl/owl.theme.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/extras/animate.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/extras/normalize.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/extras/settings.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/drop.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/js/drop.js">
           
           
-          <link rel="stylesheet" type="text/css" href="assets/css/tablas.css">
-          <link rel="stylesheet" type="text/css" href="assets/css/modal.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/tablas.css">
+          <link rel="stylesheet" type="text/css" href="../../assets/css/modal.css">
           
         <!-- Color CSS Styles  -->
-          <link rel="stylesheet" type="text/css" href="assets/css/colors/green.css" media="screen" /> 
+          <link rel="stylesheet" type="text/css" href="../../assets/css/colors/green.css" media="screen" /> 
 
      
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -57,7 +57,7 @@
               <div class="row" style="width: 100%">
               <div class="container">
                   <center>
-                      <img src="assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
+                      <img src="../../assets/img/testimonial/banner-sistema.jpg" alt="" style="width: 100%;"> 
                    </center>
                    <!-- Search Ends -->                  
                 
@@ -80,59 +80,7 @@
          <!-- Roof area starts --> <!-- Roof area Ends --> <!-- Header area starts -->
 <section id="header">
              <!-- Navbar Starts -->
-<nav class="navbar navbar-light" data-spy="affix" data-offset-top="50">
-              <div class="container">
-              <button class='navbar-toggler hidden-md-up pull-xs-right' data-target='#main-menu' data-toggle='collapse'   type='button'>
-                  ☰
-              </button>
-                <!-- Brand -->
-                <a class="navbar-brand" href="index.html">
-              <img src="assets/img/crediudo1.png" alt="">
-            </a>
-            <div class="collapse navbar-toggleable-sm pull-xs-left pull-md-center" id="main-menu">
-               <!-- Navbar Starts -->
-               <div class="container">
-                  <center>
-
-                  <ul class="nav nav-inline">
-                     <li class="nav-item dropdown " style="left: 50px;">
-                     <a style="color:black;" class="nav-link active" href="Crear-usuario-perfil-master.html" role="button" aria-haspopup="true" aria-expanded="false">
-                      GESTIONAR USUARIO
-                     </a>
-                     </li> 
-
-                     <li class="nav-item dropdown" style="left: 90px;" >
-                     <a   style="color:black;" class="nav-link active" href="modificar-portal.html" role="button" aria-haspopup="true" aria-expanded="false">
-                       MODIFICAR PORTAL WEB 
-                     </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="left: 110px;">
-                    <a style="color:black;" class="nav-link active" href=" " role="button" aria-haspopup="true" aria-expanded="false">
-                    INSTRUMENTO DE EVALUACIÓN
-                    </a> 
-                   </li>
-
-                <li class="nav-item dropdown" style=" right:-120px;">
-                    <a href="iniciosesion/inicio1.html" class="fancybox fancybox.iframe" >
-                    <span  class="fa fa-user" style="color: black;font-size:24px;"></span>&nbsp USUARIO MASTER
-                    </a>
-
-                    <div class="dropdown-menu" style="width: 20%;">                      
-                    <a class="dropdown-item" href=" ">Actualizar Datos</a>
-                    <a class="dropdown-item" href=" ">Cerrar Sesion</a>
-                    </div>
-                </li> 
-
-
-                   </ul>
-                </center>
-                   <!-- Search Ends -->                  
-                
-                </div> 
-             </div>
-          </div>
-</nav>
+<%- include('../partials/usuario_master/navbar-master.html')%>
 </section>
 </header>
 
@@ -663,27 +611,27 @@
 
     <!-- -----------------------------------JavaScript & jQuery Plugins --------------------------------------------->
     <!-- jQuery Load -->
-    <script src="assets/js/jquery-min.js"></script>
+    <script src="../../assets/js/jquery-min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <!--<script src="../../assets/js/bootstrap.min.js"></script>-->
     <!--Text Rotator-->
-    <script src="assets/js/jquery.mixitup.js"></script>
+    <script src="../../assets/js/jquery.mixitup.js"></script>
     <!--WOW Scroll Spy-->
-    <script src="assets/js/wow.js"></script>
+    <script src="../../assets/js/wow.js"></script>
     <!-- OWL Carousel -->
-    <script src="assets/js/owl.carousel.js"></script>
+    <script src="../../assets/js/owl.carousel.js"></script>
  
     <!-- WayPoint -->
-    <script src="assets/js/waypoints.min.js"></script>
+    <script src="../../assets/js/waypoints.min.js"></script>
     <!-- CounterUp -->
-    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="../../assets/js/jquery.counterup.min.js"></script>
     <!-- ScrollTop -->
-    <script src="assets/js/scroll-top.js"></script>
+    <script src="../../assets/js/scroll-top.js"></script>
     <!-- Appear -->
-    <script src="assets/js/jquery.appear.js"></script>
-    <script src="assets/js/jquery.vide.js"></script>
+    <script src="../../assets/js/jquery.appear.js"></script>
+    <script src="../../assets/js/jquery.vide.js"></script>
      <!-- All JS plugin Triggers -->
-    <script src="assets/js/main.js"></script>
+    <script src="../../assets/js/main.js"></script>
 
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> 

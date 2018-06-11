@@ -133,10 +133,11 @@
           </div>
                   <div class="alinearcent1 tituloselect propitext" style="margin-top: -55px;">Datos Personales</div>
                   <div class="alinearcuadrito">
-                    <h12 class="alineartextcuadrito salto">bienvenido(a): </h12>
-                    <h12 class="alineartextcuadrito">Unidad: </h12>
-                    <h12 class="alineartextcuadrito">Nucleo: </h12>
-                  </div> 
+                    <h12 class="alineartextcuadrito salto">bienvenido(a): <%=session.nombre%><%=session.apellido%></h12>
+                     <h12 class="alineartextcuadrito">Cargo: <%=session.cargo%></h12>
+                    <h12 class="alineartextcuadrito">Unidad: <%=session.unidad%></h12>
+                    <h12 class="alineartextcuadrito">Nucleo: <%=session.nucleo%> </h12>
+                    </div> 
       </div>
     </div>
   </div>
@@ -159,10 +160,20 @@
           </div>
                   <div class="alinearcent1 tituloselect propitext" style="margin-top: -55px;">Datos De Evaluacion</div>
                   <div class="alinearcuadrito">
-                    <h12 class="alineartextcuadrito">Categoria: </h12>
-                    <h12 class="alineartextcuadrito">Tipo: </h12>
-                    <h12 class="alineartextcuadrito">Evaluando a: </h12>
-                  </div> 
+                    <%if(dataInstrument.category=='pers_admin'){%>
+                    <h12 class="alineartextcuadrito">Categoria: Personal Administrativo </h12>
+                    <%}else{%>
+                    <h12 class="alineartextcuadrito">Categoria: Centros de Investigacion </h12>
+                    <%}%>
+                    <%if(dataInstrument.t_instrument=='eval_jef'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Jefe Subordinado </h12>
+                    <%}else if(dataInstrument.t_instrument=='aut_eval'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion </h12>
+                    <%}else{%>
+                    <h12 class="alineartextcuadrito">Tipo: Subordinado Jefe </h12>
+                    <%}%>
+                    
+                  </div>
       </div>
     </div>
   </div>
@@ -197,6 +208,7 @@
 </div>
 
 
+
  
      <div id="rectangulo" class="container col-7 ml-sm-auto col-lg-7 px-4" style="background: #00aad4ff; border-radius: 2px; margin-left: 50px; width: 68.7%">
         <div id="headingOne" style="height: auto; ">
@@ -205,462 +217,114 @@
        
          </div>
       </div>
+
+
+
            
 
      
     
     <div class="container col-7 ml-sm-auto col-lg-7 px-4" id="cajapricipal" style="margin-left: 50px;width: 68.7%;border-radius: 2px;margin-top:-3px; background: white;border-color:#ccccccff;">
 
-
-
-        <center><div class="form-inline" style="margin-left: -12px;">
-         <% for(let i = 0; i < dataFactor.length; i ++){%>
-              <% if(dataFactor[i]){%>
-          <form  action="/evaluar/evaluar" method="post" style="display:inline">
-          
-          <input type="hidden"   value="<%=dataFactor[i].id%>"></input>
-     <button class="btn botones1" name="factor" type="submit" style="background:#ff7f2adc;"  value="<%=dataFactor[i].id%>"><%=dataFactor[i].nameFactor%> </button>
-        
-        <%}}%> 
-        </div></center>
-<input type="hidden" name="dataInstrument" value="<%=dataInstrument.id%>">
-<input type="hidden" name="dataInstrument_e" value="<%=dataInstrument_e.id%>">
-          
-        <div id="cajad" style="border-radius: 2px;border-color:#ccccccff;">
-
-          <div class="container">
-
-            <div id="ditem" style="border-radius: 2px; background: #00aad4ff; width: 100%;">
-               <Center><p id="nfactor" name="factor1" value="<%=dataFactor1.id%>" style="text-align: center; color: white;"><%=dataFactor1.nameFactor%></p></Center>
+       <div id="encabezado" style=" border-radius: 2px; width: 750px; margin-left: -15px;">
+              <p class="encabezado propitext">Descripción del item</p>
+              <p class="encabezado propitext">Escala de Ponderacion</p>
             </div>
-            
 
-          
-               <%if(dataItem){ %> 
-               
-                <!--primer Item-->
-                <input type="hidden" name="Item_e1" value="<%=dataItem_e1.id %>">
-               
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p type="hidden"  id="pitem" name="item1" value="<%=dataItem.id%>" style=";"><%=dataItem.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
 
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion1" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
+ <% for(let i = 0; i < dataFactor.length; i ++) {%>
+  <% if(dataFactor) {%>
+  <form action="/evaluar/finalizar" method="post">
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion1" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
+    <div class="accordion " id="accordion" style=" border-radius: 2px; width: 750px; margin-left: -15px;">
+            <div class="card">
+    
+   
+ 
+    <div class="card-header" id="headingOne">
+       <input type="hidden" name="factor" value="<%=dataFactor[i].nameFactor %>">
+        <h6 class="text-center marginauto"><%=dataFactor[i].nameFactor%></h6>
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion1" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
+    </div>
 
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion1" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
+          <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+        <% for(let z = 0; z < dataFactor[i].items.length; z ++) {%>
+          <% if(dataFactor[i].items){%>
+       
+            <tbody>
+              <tr>
                  
-                  </div>
-                </div>
-                <%}%> 
-               <%if(dataItem2){ %> 
-               <!--SEGUNDO ITEM-->
-               <input type="hidden" name="Item_e2" value="<%=dataItem_e2.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem2.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <td width="60%"><%=dataFactor[i].items[z].name%></td>
+                <td width="40%">
+                   <input type="hidden" name="Item" value="<%=dataFactor[i].items[z].id%>">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <% var codigo = dataFactor[i].items[z].id%>
+                    <% var Item = dataFactor[i].items[z].id%>
+                   
+                    
 
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion2" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
+                   <label  class="btn btn-secondary1 active">
+                    <input type="radio"    name="Item<%= i %><%= z %>" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
                   </label>
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion2" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
+                  <label  class="btn btn-secondary1 ">
+                    <input type="radio"    name="Item<%= i %><%= z %>" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
                   </label>
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion2" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
+                  <label  class="btn btn-secondary1 ">
+                    <input type="radio"    name="Item<%= i %><%= z %>" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
                   </label>
 
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion2" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
+                  <label  class="btn btn-secondary1 ">
+                    <input type="radio"    name="Item<%= i %><%= z %>" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
                   </label>
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion2" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
+                  <label  class="btn btn-secondary1 ">
+                    <input type="radio"    name="Item<%= i %><%= z %>" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
                   </label>
 
-                </div>
+              
 
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem3){ %> 
-               <!--SEGUNDO ITEM-->
-             <input type="hidden" name="Item_e3" value="<%=dataItem_e3.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem3.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  
+    
 
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion3" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
+                   
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion3" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
+                </div></td>
+                
+              </tr>
+            </tbody>
+     <%}}%>
 
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion3" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion3" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion3" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem4){ %> 
-               <!--SEGUNDO ITEM-->
-               <input type="hidden" name="Item_e4" value="<%=dataItem_e4.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem4.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion4" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion4" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion4" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion4" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion4" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-              <%if(dataItem5){ %> 
-               <!--SEGUNDO ITEM-->
-               <input type="hidden" name="Item_e5" value="<%=dataItem_e5.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem5.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion5" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion5" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion5" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion5" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion5" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                <%if(dataItem6){ %> 
-               <!--SEGUNDO ITEM-->
-              <input type="hidden" name="Item_e6" value="<%=dataItem_e6.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem6.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion6" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion6" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion6" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion6" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion6" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem7){ %> 
-               <!--SEGUNDO ITEM-->
-               <input type="hidden" name="Item_e7" value="<%=dataItem_e7.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem7.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion7" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion7" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion7" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion7" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion7" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem8){ %> 
-               <!--SEGUNDO ITEM-->
-              <input type="hidden" name="Item_e8" value="<%=dataItem_e8.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem8.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion8" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion8" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion8" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion8" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion8" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem9){ %> 
-               <!--SEGUNDO ITEM-->
-                <input type="hidden" name="Item_e9" value="<%=dataItem_e9.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem9.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion9" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion9" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion9" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion9" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion9" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-                 <%if(dataItem10){ %> 
-               <!--SEGUNDO ITEM-->
-               <input type="hidden" name="Item_e10" value="<%=dataItem_e10.id %>">
-              <div class="container">
-                <div class="row">
-                     <div class="col-md-6" style="">
-                      <label><p id="pitem" style=";"><%=dataItem10.name%></p></label>
-                     </div> 
-                 <center>
-                        <div class="col-md-6">
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                   <label  class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio"   name="calificacion10" value="1" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">1</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion10" value="2" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">2</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion10" value="3" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">3</b>
-                  </label>
-
-                    <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion10" value="4" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">4</b>
-                  </label>
-
-                   <label class="btn btn-secondary1 active" style="background: white;color:black; width: 15px; height: 35px;">
-                    <input type="radio" name="calificacion10" value="5" id="option1" autocomplete="off" checked ><b style="margin-left: -3px;">5</b>
-                  </label>
-
-                </div>
-
-                 </div>
-                     </center>
-                 
-                  </div>
-                </div>
-                <%}%> 
-              </form>
-           </div>  
+          </table>
+        </div>
       </div>
+    </div>
+   
+    
+     
+      
+     
 
-      <div>
-        <form action="/evaluar/finalizar" method="post">
-         <input type="hidden" name="cedula" value="<%= dataPersonal.cedula%>">
-         <input type="hidden" name="id_instrument_e" value="<%= dataInstrument_e.id%>">
-           <%if(inicio==1){ %>
-           <center><fieldset disabled>
+     </div>
+ <%}}%> 
+        <div>    <input type="hidden" name="instrumento" value="<%= dataInstrument.id%>">
+                 <input type="hidden" name="cedula" value="<%= session.cedula%>">
+          <center><fieldset>
               <input class="btn btn-primary botones2"  type="submit" value="Finalizar Evaluacion" style="margin-left: 10px;background:#00aad4ff; color: white;">
            </fieldset></center>
-         <%}else{%>
-          <center><input class="btn btn-primary botones2"  type="submit" value="Finalizar Evaluacion" style="margin-left: 10px;background:#00aad4ff; color: white;"></center>
-          <%}%>
-       </form>
+        </form>
       </div>
-      </div>
-  </div>
-</div>
-  
+   </div>
 
+      </div>
+
+   </div>
+ </div>
 </div>
+
 
 
 

@@ -243,6 +243,25 @@ router.get('/', function(req,res){
       })
     /*============================VISUALIZAR INSTRUMENTO================*/
 
+    /*======================VER FORMATO=================================*/
+      router.get('/:id/ver_formato', (req,res) => {
+        models.Factor.findAll({
+          where: {
+            instrumentId: req.params.id
+          }
+        }).then(Factor => {
+          models.Item.findAll({
+            where: {
+              instrumentId: req.params.id
+            }
+          }).then(Item => {
+            //res.send(Item);
+            res.render('coor_evaluacion/instrumento/ver_formato', { dataFactor:Factor, dataItem:Item });
+          })
+        })
+      })
+    /*======================FIN VER FORMATO=================================*/
+
 /*====================================FIN DETALLES============================================*/
 
 module.exports = router;
