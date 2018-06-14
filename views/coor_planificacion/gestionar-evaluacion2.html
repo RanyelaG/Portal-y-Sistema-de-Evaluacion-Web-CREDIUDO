@@ -206,53 +206,9 @@
                 </select>             
                 </div>
 
-                <div class="form-group">
-                  
-                  <div class="col-md-3 col-md-offset-3">
-                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Auto-Evaluacion" checked>
-                           <label class="form-check-label" for="defaultCheck1">
-                            Auto-Evaluacion
-                          </label>
-                        </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value=" Jefe-Subordinado" checked>
-                          <label class="form-check-label" for="defaultCheck1">
-                            Jefe-Subordinado
-                          </label>
-                        </div>
-                  </div>
-
-                  <div class="col-md-3">
-                        <div class="form-check">
-                           <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value=" Subordinado-Jefe" checked>
-                           <label class="form-check-label" for="defaultCheck1">
-                            Subordinado-Jefe
-                           </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Co-Evaluación" checked>
-                          <label class="form-check-label" for="defaultCheck1">
-                            Co-Evaluación
-                          </label>
-                        </div>
-                  </div>
-                 <br>
-              </div>
-               <div class="col md-4"> 
-                      <br><p ><b></b></p>
-                       <!-- <input type='text' class="form-control" style="width: 50%;" id='datetimepicker1'>-->
-
-                        <fieldset> 
-                        <br><p ><b></b></p>
-                          
-                  </fieldset> 
-                  </div>
-            
-                    <div class="form-inline" >
-                        <div  class="form-group">
+                   <div class="form-inline" >
+                        <div  class="form-group" >
                         <p ><b>Fecha de Inicio:</b></p>
    
                        <input type="text" name="fechai" class="form-control" id='datetimepicker1'>
@@ -266,6 +222,64 @@
                      </div>
 
                      </div>
+
+
+                <div class="form-group" style="margin-top: 30px;">
+                  
+                  <div class="col-md-3 col-md-offset-3">
+                       <div class="form-check" style="margin-top: -10px;">
+                        <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Auto-Jefe" checked>
+                           <label class="form-check-label" for="defaultCheck1">
+                            Auto-Evaluacion-Jefe
+                          </label>
+                        </div>
+                       
+
+                        <div class="form-check" style="margin-top: 10px;">
+                            <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Jefe-Subordinado" checked>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Evaluacion-Jefe-Subordinado
+                          </label>
+                        </div>
+                  </div>
+
+                  <div class="col-md-3">
+
+                     <div class="form-check" style="margin-top: -10px;">
+                        <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Auto-Subordinado" checked>
+                           <label class="form-check-label" for="defaultCheck1">
+                            Auto-Evaluacion-Subordinado
+                          </label>
+                        </div>
+
+                        <div class="form-check" style="margin-top: -9px;">
+                           <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Subordinado-Jefe" checked>
+                           <label class="form-check-label" for="defaultCheck1">
+                            Evaluacion-Subordinado-Jefe
+                           </label>
+                        </div>
+
+                        
+                        <!--<div class="form-check">
+                            <input class="form-check-input" type="radio" name="enfoque" id="exampleRadios1" value="Co-Evaluación" checked>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Co-Evaluación
+                          </label>
+                        </div>--Z
+                  </div>
+                 <br>
+              </div>
+               <div class="col md-4"> 
+                      <br><p ><b></b></p>
+                       <!-- <input type='text' class="form-control" style="width: 50%;" id='datetimepicker1'>-->
+
+                        <fieldset> 
+                        <br><p ><b></b></p>
+                          
+                  </fieldset> 
+                  </div>
+            
+               
 
                  
             <!-- Team Item Starts -->
@@ -283,7 +297,7 @@
 
     <center>
 
-      <button type="submit" action="/evaluacion" method="post" style="background:#00aad4ff; border-radius: 2px; margin-top: 15px;" class="btn btn-default">
+      <button type="submit" action="/evaluacion" method="post" style="background:#00aad4ff; border-radius: 2px; margin-top: -20px;" class="btn btn-default">
           <center><a  style="color: white;">Crear</a></center>
 
     </button>

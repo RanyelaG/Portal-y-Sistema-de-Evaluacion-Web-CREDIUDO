@@ -50,11 +50,14 @@ if(!req.body.cedula || !req.body.password){
         })
         .then(function(Cargo){
         req.session.cargo =Cargo.descripcion;
+        req.session.tipo=Cargo.referencia;
         models.Unidad.findOne({
           where:{codigo:Cargo.codigo_unidad}
         })
         .then(function(Unidad){
         req.session.unidad=Unidad.nombre;
+        req.session.codigo_unidad=Unidad.codigo;
+
         models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo}})
         .then(function(Nucleo){
         req.session.nucleo= Nucleo.nombre;

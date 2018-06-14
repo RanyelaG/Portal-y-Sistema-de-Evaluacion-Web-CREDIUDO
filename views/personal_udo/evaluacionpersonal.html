@@ -43,11 +43,20 @@
               <div id="free-promo" style="text-align: center; margin-top: 0px;">
               <div class="row" style="width: 100%">
               <div class="container">
+                  <% if(session.tipo=='coordinador'){%>
                   <center>
-                      <img src="../../assets/img/testimonial/banner-sistema1.jpg" alt="" style="width: 100%;"> 
+                       <img src="assets/img/testimonial/banner-sistema1.png" alt="" style="width: 100%;">  
                    </center>
                    <!-- Search Ends -->                  
-                
+                <%}else if(session.tipo=='investigador'){%>
+                 <center>
+                       <img src="assets/img/testimonial/banner-sistema2.png" alt="" style="width: 100%;">  
+                   </center>
+                <%}else{%>
+                 <center>
+                      <img src="assets/img/testimonial/banner-sistema1.jpg" alt="" style="width: 100%;"> 
+                 </center>
+               <%}%>
               </div> 
               </div>
               </div>
@@ -137,6 +146,8 @@
                      <h12 class="alineartextcuadrito">Cargo: <%=session.cargo%></h12>
                     <h12 class="alineartextcuadrito">Unidad: <%=session.unidad%></h12>
                     <h12 class="alineartextcuadrito">Nucleo: <%=session.nucleo%> </h12>
+                     <h12 class="alineartextcuadrito">Nucleo: <%=session.tipo%> </h12>
+                     <h12 class="alineartextcuadrito">Nucleo: <%=session.codigo_unidad%> </h12>
                     </div> 
       </div>
     </div>
@@ -167,8 +178,10 @@
                     <%}%>
                     <%if(dataInstrument.t_instrument=='eval_jef'){%>
                     <h12 class="alineartextcuadrito">Tipo: Jefe Subordinado </h12>
-                    <%}else if(dataInstrument.t_instrument=='aut_eval'){%>
-                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion </h12>
+                    <%}else if(dataInstrument.t_instrument=='aut_eval_jefe'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion-Jefe </h12>
+                    <%}else if(dataInstrument.t_instrument=='aut_eval_sub'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion-Subordinado </h12>
                     <%}else{%>
                     <h12 class="alineartextcuadrito">Tipo: Subordinado Jefe </h12>
                     <%}%>

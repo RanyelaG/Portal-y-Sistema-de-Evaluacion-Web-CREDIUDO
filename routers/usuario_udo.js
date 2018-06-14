@@ -52,15 +52,15 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  		if(Cargo.referencia =='coordinador'){ // tengo que llamar es a instrumento
  				 
  				  models.Instrument.findOne({  // buscamos el intrumenyo tipo eval_sub para la categoria pers_admin
-                 		where: {t_instrument: 'eval_jef', 
+                 		where: {t_instrument: 'aut_eval_jefe', 
                  			[Op.and]: {category:'cent_inves'}}
                     })
                  	.then(function(Instrument){
 	  			 	if(Instrument){// si encontramos instrumento tipo eval_jef  
 
                          
-	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria cen_inves
+	  			 			where: {t_instrument: 'aut_eval_jefe', 
 	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -90,7 +90,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -99,7 +99,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -152,7 +152,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -161,7 +161,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -218,7 +218,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Unidad.codigo_nucleo, 
                            			[Op.and]: {tipo:'centros' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Jefe',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -249,10 +249,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 			where: {t_instrument: 'aut_eval_jefe', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Jefe',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -280,7 +280,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_jefe', 
 	  			 				[Op.and]: {category:'pers_admin'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -310,7 +310,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -319,10 +319,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
-                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+                        }).then(function(Examen1){console.log('el examennnnn1 aqui en Nuc es ===============================', Examen1)
 
                         if(!Examen1){
                         	console.log('esta en el examen1===============')
@@ -354,11 +354,11 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                              	{session:req.session,
                              		     Nucleo:Nucleo, 
                              		     Unidad:Unidad, 
-                             		     jefe_sub:null, 
-                             		     Eva_jefe:null, 
-                             		     Eva_sub:Evaluacion, 
+                             		     jefe_sub:Instrument, 
+                             		     Eva_jefe:Evaluacion, 
+                             		     Eva_sub:null, 
                              		     Eva_auto:null,
-                             		     sub_jefe:Instrument, 
+                             		     sub_jefe:null, 
                              		     auto:null})
 	  			 			
 	  			 			})//fin del then(Nucleo)
@@ -372,7 +372,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -381,7 +381,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -438,7 +438,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Unidad.codigo_nucleo, 
                            			[Op.and]: {tipo:'administrativos' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Jefe',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -468,10 +468,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
 	  			 	console.log(' estas en este else=================================1')	
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
+	  			 			where: {t_instrument: 'aut_eval_jefe', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Jefe',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -496,7 +496,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_sub', 
 	  			 				[Op.and]: {category:'pers_admin'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -526,7 +526,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -535,7 +535,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -588,7 +588,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -597,7 +597,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -654,7 +654,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Unidad.codigo_nucleo, 
                            			[Op.and]: {tipo:'administrativos' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Subordinado',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -685,10 +685,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
+	  			 			where: {t_instrument: 'aut_eval_sub', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Subordinado',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -711,7 +711,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_sub', 
 	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -730,7 +730,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                         models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'eval_sub',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen){console.log('el examennnnn es ===============================', Examen)
@@ -741,7 +741,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -750,7 +750,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -803,7 +803,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Unidad.codigo_nucleo, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -812,7 +812,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -869,7 +869,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Unidad.codigo_nucleo, 
                            			[Op.and]: {tipo:'centros' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Subordinado',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -900,10 +900,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 			where: {t_instrument: 'aut_eval_sub', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Unidad.codigo_nucleo, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Subordinado',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -931,6 +931,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 //                                                                                        //
 //                                                                                        //
 //========================================================================================//
+console.log('estas en el else==========================================================================')
 
 	  models.Evaluacion.findOne({where: {codigo_unidad: Cargo.codigo_unidad,[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}/*Aqui termina */}})
 	  .then(function(Evaluacion){console.log('el codigo de la unidad a evaluar es',Evaluacion)
@@ -950,7 +951,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_jefe', 
 	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -980,7 +981,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -989,7 +990,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -1042,7 +1043,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1051,7 +1052,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -1108,7 +1109,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Cargo.codigo_unidad, 
                            			[Op.and]: {tipo:'centros' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Jefe',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -1139,10 +1140,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 			where: {t_instrument: 'aut_eval_jefe', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Jefe',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -1173,7 +1174,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_jefe', 
 	  			 				[Op.and]: {category:'pers_admin'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -1203,7 +1204,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1212,10 +1213,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
-                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+                        }).then(function(Examen1){console.log('el examennnnn1 estas aqui chamacon es ===============================', Examen1)
 
                         if(!Examen1){
                         	console.log('esta en el examen1===============')
@@ -1247,11 +1248,11 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                              	{session:req.session,
                              		     Nucleo:Nucleo, 
                              		     Unidad:Unidad, 
-                             		     jefe_sub:null, 
-                             		     Eva_jefe:null, 
-                             		     Eva_sub:Evaluacion, 
+                             		     jefe_sub:Instrument, 
+                             		     Eva_jefe:Evaluacion, 
+                             		     Eva_sub:null, 
                              		     Eva_auto:null,
-                             		     sub_jefe:Instrument, 
+                             		     sub_jefe:null, 
                              		     auto:null})
 	  			 			
 	  			 			})//fin del then(Nucleo)
@@ -1265,7 +1266,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Jefe',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1274,10 +1275,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_jefe',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
-                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+                        }).then(function(Examen1){console.log('el examennnnn1 es  estas aqui en unidad jefe===============================', Examen1)
 
                         if(!Examen1){
                         	console.log('esta en el examen1 del else ===============')
@@ -1331,7 +1332,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Cargo.codigo_unidad, 
                            			[Op.and]: {tipo:'administrativos' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Jefe',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -1361,10 +1362,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 	}else{ // si no encontramos instrumento tipo eval_je lo declaramos null y buscamos el intrumenyo tipo aut_eval para la categoria pers_admin 
 	  			 	console.log(' estas en este else=================================1')	
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
+	  			 			where: {t_instrument: 'aut_eval_jefe', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Jefe',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -1390,7 +1391,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_sub', 
 	  			 				[Op.and]: {category:'pers_admin'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -1420,7 +1421,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad:Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1429,7 +1430,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -1482,7 +1483,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'administrativos', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1491,10 +1492,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'pers_admin', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
-                        }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
+                        }).then(function(Examen1){console.log('el examennnnn1 es estas aqui en unidad ===============================', Examen1)
 
                         if(!Examen1){
                         	console.log('esta en el examen1 del else ===============')
@@ -1548,7 +1549,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad: Cargo.codigo_unidad, 
                            			[Op.and]: {tipo:'administrativos' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Subordinado',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -1579,10 +1580,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'pers_admin'}}
+	  			 			where: {t_instrument: 'aut_eval_sub', [Op.and]: {category:'pers_admin'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'administrativos' , [Op.and]: {enfoque:'Auto-Subordinado',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -1607,7 +1608,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 
                          
 	  			 		models.Instrument.findOne({// buscamos el intrumenyo tipo aut_eval para la categoria pers_admin
-	  			 			where: {t_instrument: 'aut_eval', 
+	  			 			where: {t_instrument: 'aut_eval_sub', 
 	  			 				[Op.and]: {category:'cent_inves'}}
 	  			 		})
 	  			 		.then(function(Instrument1){
@@ -1637,7 +1638,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1646,7 +1647,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -1699,7 +1700,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
     						models.Evaluacion.findOne({
                             where: {codigo_unidad: Cargo.codigo_unidad, 
                             	[Op.and]: {tipo:'centros', 
-                            	[Op.and]: {enfoque:'Auto-Evaluacion',
+                            	[Op.and]: {enfoque:'Auto-Subordinado',
                             	[Op.and]: { inicio:{[Op.lte]:fecha}, 
                             	[Op.and]:{fin: {[Op.gte]:fecha}} }  }}}
 	  			 			})
@@ -1708,7 +1709,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 			models.Examen.findOne({
                         	where:{PersonalCedula: req.session.cedula,
                         	 	[Op.and]: {category:'cent_inves', 
-                        		[Op.and]: {tipo:'aut_eval',
+                        		[Op.and]: {tipo:'aut_eval_sub',
                         	 	[Op.and]: {fecha_examen:{[Op.gte]:Evaluacion.inicio}, 
                         	 	[Op.and]:{fecha_examen: {[Op.lte]:Evaluacion.fin}}}}}}
                         }).then(function(Examen1){console.log('el examennnnn1 es ===============================', Examen1)
@@ -1765,7 +1766,7 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
                             models.Evaluacion.findOne({
                            		where: {codigo_unidad:Cargo.codigo_unidad, 
                            			[Op.and]: {tipo:'centros' , 
-                           			[Op.and]: {enfoque:'Auto-Evaluacion',
+                           			[Op.and]: {enfoque:'Auto-Subordinado',
                            			[Op.and]: { inicio:{[Op.lte]:fecha}, 
                            			[Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
@@ -1796,10 +1797,10 @@ models.Cargo.findOne({where:{cedula_personal:req.session.cedula}})// buscamos el
 	  			 		
 	  			 		console.log(' estas en este else=================================1')
 	  			 		models.Instrument.findOne({
-	  			 			where: {t_instrument: 'aut_eval', [Op.and]: {category:'cent_inves'}}
+	  			 			where: {t_instrument: 'aut_eval_sub', [Op.and]: {category:'cent_inves'}}
 	  			 		}).then(function(Instrument1){
 	  			 			models.Evaluacion.findOne({
-                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Evaluacion',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
+                            where: {codigo_unidad: Cargo.codigo_unidad, [Op.and]: {tipo:'centros' , [Op.and]: {enfoque:'Auto-Subordinado',[Op.and]: { inicio:{[Op.lte]:fecha}, [Op.and]:{fin: {[Op.gte]:fecha}}}}}}
 	  			 			})
 	  			 			.then(function(Evaluacion1){
 	  			 				models.Nucleo.findOne({where:{codigo:Unidad.codigo_nucleo }})
@@ -1881,14 +1882,51 @@ models.Examen.findOne({
 	where:{id:req.params.id}
 })
 .then(function(Examen){
+
 models.Instrument_e.findOne({
  where:{id:Examen.InstrumentEId}
 }).then(function(Instrument_e){
 models.Factor_e.findAll({include:[models.Item_e], where:{InstrumentEId:Examen.InstrumentEId}})
 .then(function(Factor_e){
+     var promedio=0;
+      for(let i = 0; i < Factor_e.length; i ++){
+     
+     console.log(' los factores son',Factor_e[i] )
+        
+
+          var suma=0 
+          var cantidad=0
+          for(let z = 0; z < Factor_e[i].Item_es.length; z ++) {
+        if(Factor_e[i].Item_es) {
+          var suma= suma+Factor_e[i].Item_es[z].calificacion 
+          console.log('la suma es=============================',suma )
+          cantidad= z
+}}
+
+var promedio= suma/(cantidad+1);
+
+ models.Reportes.findOrCreate({
+  where: { Factor:Factor_e[i].nameFactor, 
+          [Op.and]: { Instrument_eId:Instrument_e.id}},
+  defaults: { Cedula:req.session.cedula,
+              nombre:Instrument_e.name,
+            Instrument_eId:Instrument_e.id,
+            tipo: Instrument_e.t_instrument,
+            category: Instrument_e.category,
+           fecha_examen:Examen.fecha_examen,
+           promedio:promedio.toFixed(2),
+           cedula:req.session.cedula }})
+           
+
+
+}
+
+
     models.Item_e.findAll({
+
        where:{FactorEId:Factor_e.id}
     }).then(function(Item_e){
+
 
      
 res.render('./personal_udo/reporte-personal-udo', {session:req.session,Examen:Examen,dataFactor:Factor_e, dataItem:Item_e})

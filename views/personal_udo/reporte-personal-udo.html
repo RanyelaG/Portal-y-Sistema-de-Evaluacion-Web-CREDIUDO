@@ -134,13 +134,26 @@
                     <%}else{%>
                     <h12 class="alineartextcuadrito">Categoria: Centros de Investigacion </h12>
                     <%}%>
-                    <%if(Examen.tipo=='eval_jef'){%>
+                  
+
+                   <%if(Examen.tipo=='eval_jef'){%>
                     <h12 class="alineartextcuadrito">Tipo: Jefe Subordinado </h12>
-                    <%}else if(Examen.tipo=='aut_eval'){%>
-                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion </h12>
+                    <%}else if(Examen.tipo=='aut_eval_jefe'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion-Jefe </h12>
+                    <%}else if(Examen.tipo=='aut_eval_sub'){%>
+                    <h12 class="alineartextcuadrito">Tipo: Auto-evaluacion-Subordinado </h12>
                     <%}else{%>
                     <h12 class="alineartextcuadrito">Tipo: Subordinado Jefe </h12>
-                    <%}%>
+                    <%}%>                    
+
+
+
+
+                   
+                    
+
+
+
                     <h12 class="alineartextcuadrito">Fecha:<%=Examen.fecha_examen%> </h12>
                   </div> 
       </div>

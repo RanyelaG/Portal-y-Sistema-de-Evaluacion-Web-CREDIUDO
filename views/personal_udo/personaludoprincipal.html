@@ -43,10 +43,20 @@
               <div id="free-promo" style="text-align: center; margin-top: 0px;">
               <div class="row" style="width: 100%">
               <div class="container">
+                <% if(session.tipo=='coordinador'){%>
                   <center>
-                      <img src="assets/img/testimonial/banner-sistema1.jpg" alt="" style="width: 100%;"> 
+                       <img src="assets/img/testimonial/banner-sistema2.png" alt="" style="width: 100%;">  
                    </center>
                    <!-- Search Ends -->                  
+                <%}else if(session.tipo=='investigador'){%>
+                 <center>
+                       <img src="assets/img/testimonial/banner-sistema2.png" alt="" style="width: 100%;">  
+                   </center>
+                <%}else{%>
+                 <center>
+                      <img src="assets/img/testimonial/banner-sistema1.jpg" alt="" style="width: 100%;"> 
+                 </center>
+               <%}%>
                 
               </div> 
               </div>

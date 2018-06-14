@@ -259,7 +259,7 @@ const Item = sequelize.define('items', {
 const Evaluacion = sequelize.define('Evaluacion', {
   tipo: Sequelize.ENUM('administrativos', 'centros'),
   name: Sequelize.STRING,
-  enfoque: Sequelize.ENUM('Auto-Evaluacion', 'Jefe-Subordinado', 'Subordinado-Jefe', 'Co-Evaluación'),
+  enfoque: Sequelize.STRING,
   cantidad: Sequelize.INTEGER,
   inicio: Sequelize.DATE,
   fin: Sequelize.DATE
@@ -294,12 +294,30 @@ const Examen = sequelize.define('Examen', {
     fecha_examen: Sequelize.DATE
 
 });
-
 module.exports.Examen = Examen;
 
 
+const Reportes = sequelize.define('Reportes', {
+	Factor:Sequelize.STRING,
+	promedio: Sequelize.FLOAT,
+    category: Sequelize.STRING,
+   tipo: Sequelize.STRING,
+    fecha_examen: Sequelize.DATE,
+    cedula:Sequelize.INTEGER,
+    Instrument_eId: Sequelize.INTEGER
+
+});
+
+module.exports.Reportes = Reportes;
+
+
 Examen.belongsTo(Instrument_e)
+
+Personal.hasMany(Examen)
 Examen.belongsTo(Personal)
+
+Unidad.hasMany(Examen)
+Examen.belongsTo(Unidad)
 
 /*===================FIN MODELOS Y TABLAS========================*/
 //asocion de instrumentos de Evaluacion aplicado al personal udo.

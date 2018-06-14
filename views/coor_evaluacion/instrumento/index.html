@@ -84,8 +84,8 @@
 
               
                 <select  style="width: 25%;"  name="t_instrument" class="form-control">
-                          <option value="aut_eval">Auto-Evaluación</option>
-                          <option value="coo_eval">Co-Evaluación</option>
+                          <option value="aut_eval_jefe">Auto-Evaluación-jefe</option>
+                           <option value="aut_eval_sub">Auto-Evaluación-Subordinado</option>
                           <option value="eval_sub">Evaluación Subordinado-Jefe</option>
                           <option value="eval_jef">Evaluación Jefe-Subordinado</option> 
                 </select>
@@ -132,14 +132,14 @@
                         </td>
                         <td>
                           <center>
-                            <% if( dataInstrument[i].t_instrument == 'aut_eval' ) {%>
-                              Auto-Eval
+                            <% if( dataInstrument[i].t_instrument == 'aut_eval_jefe' ) {%>
+                              Auto-Evaluación Jefe
                             <%} else if( dataInstrument[i].t_instrument == 'eval_sub' ){%>
                               Eval-Subordinado
                             <%} else if( dataInstrument[i].t_instrument == 'eval_jef' ){%>
                               Eval-Jefe
-                            <%} else if( dataInstrument[i].t_instrument == 'coo_eval' ){%>
-                              Coo-Eval
+                            <%} else if( dataInstrument[i].t_instrument == 'aut_eval_sub' ){%>
+                               Auto-Evaluación Subordinado
                             <%}%>
                           </center>
                         </td>
@@ -205,10 +205,10 @@
                         <div class="form-group">
                           <label for="t_instrument">Tipo de Instrumento </label>
                           <select name="t_instrument" id="edit-form-tipo" class="form-control">
-                            <option value="aut_eval">Auto-Evaluación</option>
-                            <option value="coo_eval">Co-Evaluación</option>
-                            <option value="eval_sub">Evaluación-Subordinado</option>
-                            <option value="eval_jef">Evaluación-Jefe</option>          
+                          <option value="aut_eval_jefe">Auto-Evaluación-jefe</option>
+                          <option value="aut_eval_sub">Auto-Evaluación-Subordinado</option>
+                          <option value="eval_sub">Evaluación Subordinado-Jefe</option>
+                          <option value="eval_jef">Evaluación Jefe-Subordinado</option>          
                           </select>
                         </div>
                       </div>  

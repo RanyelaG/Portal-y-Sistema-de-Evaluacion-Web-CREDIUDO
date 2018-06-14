@@ -127,8 +127,10 @@
                 <% }else{ %>
                     <td><center>Centros de Investigacion</center></td>
                 <% } %>
-                <% if(Examen1[i].tipo=='aut_eval'){%>
-                <td><center>Auto-Avaluacion</center></td>
+                <% if(Examen1[i].tipo=='aut_eval_jefe'){%>
+                <td><center>Auto-Avaluacion-Jefe</center></td>
+                 <% }else if(Examen1[i].tipo=='aut_eval_sub'){%>
+                <td><center>Auto-Evaluación-Subordinado</center></td>
                 <% }else if(Examen1[i].tipo=='eval_sub'){ %>
                  <td><center>Subordinado-Jefe</center></td>
                 <% }else if(Examen1[i].tipo=='eval_jef'){ %>
